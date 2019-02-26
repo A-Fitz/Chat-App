@@ -9,5 +9,6 @@ namespace Mock_UI
     interface IMessageService
     {
         bool SendMessage(string message);
+        bool ValidateMessage(string message);
     }
 }

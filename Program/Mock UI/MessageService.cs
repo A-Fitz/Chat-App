@@ -12,5 +12,12 @@ namespace Mock_UI
         {
             return true;
         }
+
+        public bool ValidateMessage(string message)
+        {
+
+
+            return true;
+        }
     }
 }
