@@ -28,29 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.components = new System.ComponentModel.Container();
+            this.messageField = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.chatroomList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.visualPreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.displayField = new System.Windows.Forms.TextBox();
+            this.chatUsersList = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // messageField
             // 
-            this.textBox1.Location = new System.Drawing.Point(208, 484);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(564, 107);
-            this.textBox1.TabIndex = 0;
+            this.messageField.Location = new System.Drawing.Point(208, 484);
+            this.messageField.Multiline = true;
+            this.messageField.Name = "messageField";
+            this.messageField.Size = new System.Drawing.Size(564, 107);
+            this.messageField.TabIndex = 0;
             // 
             // button1
             // 
@@ -60,11 +62,12 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Send";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listBox1
+            // chatroomList
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
+            this.chatroomList.FormattingEnabled = true;
+            this.chatroomList.Items.AddRange(new object[] {
             "Chatroom 1",
             "Chatroom 2",
             "Chatroom 3",
@@ -100,10 +103,10 @@
             "Chatroom 33",
             "Chatroom 34",
             "Chatroom 35"});
-            this.listBox1.Location = new System.Drawing.Point(13, 67);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(117, 238);
-            this.listBox1.TabIndex = 2;
+            this.chatroomList.Location = new System.Drawing.Point(13, 67);
+            this.chatroomList.Name = "chatroomList";
+            this.chatroomList.Size = new System.Drawing.Size(117, 238);
+            this.chatroomList.TabIndex = 2;
             // 
             // label1
             // 
@@ -139,17 +142,6 @@
             this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.visualPreferencesToolStripMenuItem.Text = "Visual Preferences";
             // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox2.Location = new System.Drawing.Point(208, 67);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.textBox2.Size = new System.Drawing.Size(564, 387);
-            this.textBox2.TabIndex = 5;
-            // 
             // accountToolStripMenuItem
             // 
             this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -171,10 +163,21 @@
             this.signOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.signOutToolStripMenuItem.Text = "Sign Out";
             // 
-            // listBox2
+            // displayField
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Items.AddRange(new object[] {
+            this.displayField.BackColor = System.Drawing.SystemColors.Control;
+            this.displayField.Location = new System.Drawing.Point(208, 67);
+            this.displayField.Multiline = true;
+            this.displayField.Name = "displayField";
+            this.displayField.ReadOnly = true;
+            this.displayField.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.displayField.Size = new System.Drawing.Size(564, 387);
+            this.displayField.TabIndex = 5;
+            // 
+            // chatUsersList
+            // 
+            this.chatUsersList.FormattingEnabled = true;
+            this.chatUsersList.Items.AddRange(new object[] {
             "User 1",
             "User 2",
             "User 3",
@@ -196,10 +199,10 @@
             "User 19",
             "User 20",
             "User 21"});
-            this.listBox2.Location = new System.Drawing.Point(13, 354);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 238);
-            this.listBox2.TabIndex = 6;
+            this.chatUsersList.Location = new System.Drawing.Point(13, 354);
+            this.chatUsersList.Name = "chatUsersList";
+            this.chatUsersList.Size = new System.Drawing.Size(120, 238);
+            this.chatUsersList.TabIndex = 6;
             // 
             // label2
             // 
@@ -210,18 +213,22 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Chat Users";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 644);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.chatUsersList);
+            this.Controls.Add(this.displayField);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.chatroomList);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.messageField);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -235,9 +242,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox messageField;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox chatroomList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
@@ -245,9 +252,10 @@
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signInToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.TextBox displayField;
+        private System.Windows.Forms.ListBox chatUsersList;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

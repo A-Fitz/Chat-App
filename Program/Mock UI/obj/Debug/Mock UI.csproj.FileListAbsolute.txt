@@ -8,3 +8,14 @@ J:\SE3330\Mock UI\Mock UI\obj\Debug\Mock UI.csproj.GenerateResource.cache
 J:\SE3330\Mock UI\Mock UI\obj\Debug\Mock UI.csproj.CoreCompileInputs.cache
 J:\SE3330\Mock UI\Mock UI\obj\Debug\Mock UI.exe
 J:\SE3330\Mock UI\Mock UI\obj\Debug\Mock UI.pdb
+J:\1-nullreferenceexception\Program\Mock UI\bin\Debug\Mock UI.exe.config
+J:\1-nullreferenceexception\Program\Mock UI\bin\Debug\Mock UI.exe
+J:\1-nullreferenceexception\Program\Mock UI\bin\Debug\Mock UI.pdb
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock UI.csprojResolveAssemblyReference.cache
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock_UI.Form1.resources
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock_UI.Properties.Resources.resources
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock UI.csproj.GenerateResource.cache
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock UI.csproj.CoreCompileInputs.cache
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock UI.exe
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock UI.pdb
+J:\1-nullreferenceexception\Program\Mock UI\obj\Debug\Mock_UI.Form2.resources
