@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock UI", "Mock UI\Mock UI.csproj", "{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramUnitTests", "ProgramUnitTests.csproj\ProgramUnitTests.csproj", "{B67656D3-35D8-4493-BA48-17F6E2A206DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67656D3-35D8-4493-BA48-17F6E2A206DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67656D3-35D8-4493-BA48-17F6E2A206DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67656D3-35D8-4493-BA48-17F6E2A206DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67656D3-35D8-4493-BA48-17F6E2A206DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
