@@ -36,36 +36,39 @@ namespace Mock_UI
             return messageList;            
         }
 
-        public string SendMessage(TCPMessage message)
+        public EnumMessageStatus SendMessage(TCPMessage message)
         {
             if (!ValidateMessage(message.message))
-                return "Invalid Message";
+                return EnumMessageStatus.invalid;
             try
             {
                 var serializedMessage = JsonConvert.SerializeObject(message);
                 byte[] data = Encoding.ASCII.GetBytes(serializedMessage);
 
                 socketStream.Write(data, 0, data.Length);
-                status = "Message sent successfully.";
+                //status = "Message sent successfully.";
+                return EnumMessageStatus.successful;
             }
             catch (ArgumentNullException ex)
             {
-                status = "Message cannot be empty. " + ex.Message;
+                //status = "Message cannot be empty. " + ex.Message;
+                return EnumMessageStatus.empty;
             }
             catch (SocketException ex)
             {
-                status = "Message could not be sent. " + ex.Message;
+                //status = "Message could not be sent. " + ex.Message;
+                return EnumMessageStatus.notSent;
             }
             catch (ObjectDisposedException ex)
             {
-                status = "The connection has been closed. " + ex.Message;
+                //status = "The connection has been closed. " + ex.Message;
+                return EnumMessageStatus.connectionClosed;
             }
             catch (Exception ex)
             {
-                status = "unknown exception occured. " + ex.Message;
+                //status = "unknown exception occured. " + ex.Message;
+                return EnumMessageStatus.unknown;
             }
-
-            return status;
         }
 
         private byte[] ReadInMessage()
@@ -94,7 +97,7 @@ namespace Mock_UI
 
         // Check that a message contains at least one character, contains only ASCII characters, and does not contain only spaces.
         // Returns true if the message is valid, false if the message is not valid
-        public bool ValidateMessage(string message)
+        private bool ValidateMessage(string message)
         {
             // If the message is empty (length is 0), it is invalid
             if (message.Length == 0)
