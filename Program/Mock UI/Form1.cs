@@ -12,8 +12,8 @@ namespace Mock_UI
 {
     public partial class Form1 : Form
     {
-        // Message Services
-        private static TcpClient tcpClient = new TcpClient();
+      // Message Services
+      private static TcpClient tcpClient = new TcpClient("127.0.0.1", 12345);
         private static NetworkStream stream = tcpClient.GetStream();
         private IMessageService messageService = new MessageService(stream);
 
@@ -28,6 +28,7 @@ namespace Mock_UI
         {
             TCPMessage tcpMessage = new TCPMessage();
             tcpMessage.message = messageField.Text;
+            tcpMessage.chatID = 0;
 
             EnumMessageStatus status = messageService.SendMessage(tcpMessage);
 

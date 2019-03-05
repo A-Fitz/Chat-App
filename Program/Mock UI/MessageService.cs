@@ -14,15 +14,15 @@ namespace Mock_UI
     {
         string status;
         TcpClient clientSocket;
-        NetworkStream socketStream;
-        public MessageService(NetworkStream socketStream)
+        NetworkStream networkStream;
+        public MessageService(NetworkStream networkStream)
         {
-            this.socketStream = socketStream;
+            this.networkStream = networkStream;
         }
 
         public bool CheckForMessages()
         {
-            return socketStream.DataAvailable;
+            return networkStream.DataAvailable;
         }
 
         public IList<TCPMessage> GetMessages()
@@ -31,21 +31,22 @@ namespace Mock_UI
             while (CheckForMessages())
             {
                 var message = ReadInMessage();
-                messageList.Add(JsonConvert.DeserializeObject<TCPMessage>(message.ToString()));
+                messageList.Add(JsonConvert.DeserializeObject<TCPMessage>(ASCIIEncoding.ASCII.GetString(message)));
             }
             return messageList;            
         }
 
         public EnumMessageStatus SendMessage(TCPMessage message)
         {
-            if (!ValidateMessage(message.message))
-                return EnumMessageStatus.invalid;
+            //if (!ValidateMessage(message.message))
+            //    return EnumMessageStatus.invalid;
             try
             {
                 var serializedMessage = JsonConvert.SerializeObject(message);
+               serializedMessage = serializedMessage.Length + ":" + serializedMessage;
                 byte[] data = Encoding.ASCII.GetBytes(serializedMessage);
 
-                socketStream.Write(data, 0, data.Length);
+            networkStream.Write(data, 0, data.Length);
                 //status = "Message sent successfully.";
                 return EnumMessageStatus.successful;
             }
@@ -73,25 +74,17 @@ namespace Mock_UI
 
         private byte[] ReadInMessage()
         {
-            var dataSize = socketStream.Length;
-            char character;
-            List<char> check = new List<char>();
-            character = (char)socketStream.ReadByte();
-            while (character != ':')
-            {
-                character = (char)socketStream.ReadByte();
-                check.Add(character);
-            }
-
-            int messageLength = 0;
-            if (!int.TryParse(check.Where(x => x != ':').ToString(), out messageLength))
-            {
-                return null;
-            }
-
-            byte[] message = new byte[messageLength];
-            socketStream.Read(message, 0, messageLength);
-            return message;
+         List<Char> integerStringList = new List<char>();
+         char character = (char)networkStream.ReadByte();
+         while (character != ':')
+         {
+            integerStringList.Add(character);
+            character = (char)networkStream.ReadByte();
+         }
+         int length = int.Parse(new string(integerStringList.ToArray()));
+         byte[] data = new byte[length];
+         networkStream.Read(data, 0, data.Length);
+         return data;
 
         }
 
