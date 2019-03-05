@@ -1,0 +1,12 @@
+F:\SE2\Spike1_C\bin\Debug\Spike1_C.exe.config
+F:\SE2\Spike1_C\bin\Debug\Spike1_C.exe
+F:\SE2\Spike1_C\bin\Debug\Spike1_C.pdb
+F:\SE2\Spike1_C\obj\Debug\Spike1_C.exe
+F:\SE2\Spike1_C\obj\Debug\Spike1_C.pdb
+D:\SE2\Spike1_C\bin\Debug\Spike1_C.exe.config
+D:\SE2\Spike1_C\bin\Debug\Spike1_C.exe
+D:\SE2\Spike1_C\bin\Debug\Spike1_C.pdb
+D:\SE2\Spike1_C\obj\Debug\Spike1_C.csprojResolveAssemblyReference.cache
+D:\SE2\Spike1_C\obj\Debug\Spike1_C.csproj.CoreCompileInputs.cache
+D:\SE2\Spike1_C\obj\Debug\Spike1_C.exe
+D:\SE2\Spike1_C\obj\Debug\Spike1_C.pdb
