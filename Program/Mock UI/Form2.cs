@@ -44,7 +44,7 @@ namespace Mock_UI
 
             var newUser = new TCPMessage { chatID = 0, message = userNameText.Text, command = "SETNAME" };
             var msg = JsonConvert.SerializeObject(newUser);
-
+            msg = msg.Length + ":" + msg;
             stream.Write(Encoding.ASCII.GetBytes(msg), 0, msg.Length);
 
             return stream;

@@ -8,9 +8,9 @@ namespace Server
 {
    class Message
    {
-      public ChatroomLogic toChatroom { get; }
-      public string text { get; }
-      public string command { get; }
+      public ChatroomLogic toChatroom { get;}
+      public string text { get; set; }
+      public string command { get;}
 
       public Message(TCPMessage tMsg)
       {
