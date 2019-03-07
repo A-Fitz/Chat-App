@@ -31,7 +31,7 @@ namespace Mock_UI
             //get message from textbox
             String message = messageField.Text;
             byte [] dataOut = UTF8Encoding.ASCII.GetBytes(message.ToCharArray());
-
+            
             //send message through server
             stream.Write(dataOut, 0, dataOut.Length);
 
