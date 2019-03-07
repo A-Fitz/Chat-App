@@ -58,23 +58,23 @@ namespace Mock_UI.Tests
         public void ValidationTest_EmptyMessage_FAILS()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage(""));
+            Assert.IsFalse(ms.ValidateMessage(""));
         }
 
         [TestMethod()]
         public void ValidationTest_OnlySpaces_FAILS()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage(" "));
-            Assert.IsTrue(ms.ValidateMessage("     "));
+            Assert.IsFalse(ms.ValidateMessage(" "));
+            Assert.IsFalse(ms.ValidateMessage("     "));
         }
 
         [TestMethod()]
         public void ValidationTest_ContainsNonASCII_FAILS()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage("è"));
-            Assert.IsTrue(ms.ValidateMessage("      ↨"));
+            Assert.IsFalse(ms.ValidateMessage("è"));
+            Assert.IsFalse(ms.ValidateMessage("      ↨"));
         }
     }
 }
