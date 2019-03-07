@@ -23,8 +23,7 @@ namespace Mock_UI
         {
             if (validUserName(userNameText.Text))
                 {
-                //TcpClient socket = new TcpClient("127.0.0.1", 12345);
-                    TcpClient socket = new TcpClient();
+                    TcpClient socket = new TcpClient("127.0.0.1", 12345);
                     NetworkStream stream = socket.GetStream();
                     this.Hide();
                     var form1 = new Form1(stream);
