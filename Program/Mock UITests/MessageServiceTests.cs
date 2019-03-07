@@ -43,38 +43,38 @@ namespace Mock_UI.Tests
         public void ValidationTest_ASCIICharacters_PASSES()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage(" \n !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"));
-            Assert.IsTrue(ms.ValidateMessage("a            d               $"));
+            Assert.IsTrue(ms.ValidateMessage(" \n !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"));
+            Assert.IsTrue(ms.ValidateMessage("a            d               $"));
         }
 
         [TestMethod()]
         public void ValidationTest_OneCharacterNonSpace_PASSES()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage("-"));
+            Assert.IsTrue(ms.ValidateMessage("-"));
         }
 
         [TestMethod()]
         public void ValidationTest_EmptyMessage_FAILS()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage(""));
+            Assert.IsTrue(ms.ValidateMessage(""));
         }
 
         [TestMethod()]
         public void ValidationTest_OnlySpaces_FAILS()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage(" "));
-            Assert.IsTrue(ms.ValidateMessage("     "));
+            Assert.IsTrue(ms.ValidateMessage(" "));
+            Assert.IsTrue(ms.ValidateMessage("     "));
         }
 
         [TestMethod()]
         public void ValidationTest_ContainsNonASCII_FAILS()
         {
             MessageService ms = new MessageService();
-            Assert.IsTrue(ms.ValidateMessage("è"));
-            Assert.IsTrue(ms.ValidateMessage("      ↨"));
+            Assert.IsTrue(ms.ValidateMessage("è"));
+            Assert.IsTrue(ms.ValidateMessage("      ↨"));
         }
     }
 }
