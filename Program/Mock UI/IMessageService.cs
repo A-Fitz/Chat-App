@@ -8,6 +8,8 @@ namespace Mock_UI
 {
     interface IMessageService
     {
-        bool SendMessage(string message);
+        EnumMessageStatus SendMessage(TCPMessage message);
+        IList<TCPMessage> GetMessages();
+        bool CheckForMessages();
     }
 }
