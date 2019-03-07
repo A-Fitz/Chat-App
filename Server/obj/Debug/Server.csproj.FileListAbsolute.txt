@@ -1,0 +1,17 @@
+F:\SE2\Server\bin\Debug\Server.exe.config
+F:\SE2\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+F:\SE2\Server\bin\Debug\Server.exe
+F:\SE2\Server\bin\Debug\Server.pdb
+F:\SE2\Server\obj\Debug\Server.exe
+F:\SE2\Server\obj\Debug\Server.pdb
+D:\SE2\Server\bin\Debug\Server.exe.config
+D:\SE2\Server\bin\Debug\Server.exe
+D:\SE2\Server\bin\Debug\Server.pdb
+D:\SE2\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+D:\SE2\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\SE2\Server\obj\Debug\Server.exe
+D:\SE2\Server\obj\Debug\Server.pdb
+D:\SE2\Server\bin\Debug\Newtonsoft.Json.dll
+D:\SE2\Server\bin\Debug\Newtonsoft.Json.pdb
+D:\SE2\Server\bin\Debug\Newtonsoft.Json.xml
+D:\SE2\Server\obj\Debug\Server.csproj.CopyComplete
