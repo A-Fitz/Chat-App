@@ -20,6 +20,11 @@ namespace Mock_UI
             this.networkStream = networkStream;
         }
 
+        public MessageService()
+        {
+
+        }
+
         public bool CheckForMessages()
         {
             return networkStream.DataAvailable;
@@ -38,8 +43,8 @@ namespace Mock_UI
 
         public EnumMessageStatus SendMessage(TCPMessage message)
         {
-            //if (!ValidateMessage(message.message))
-            //    return EnumMessageStatus.invalid;
+            if (!ValidateMessage(message.message))
+                return EnumMessageStatus.invalid;
             try
             {
                 var serializedMessage = JsonConvert.SerializeObject(message);
@@ -47,27 +52,22 @@ namespace Mock_UI
                 byte[] data = Encoding.ASCII.GetBytes(serializedMessage);
 
             networkStream.Write(data, 0, data.Length);
-                //status = "Message sent successfully.";
                 return EnumMessageStatus.successful;
             }
             catch (ArgumentNullException ex)
             {
-                //status = "Message cannot be empty. " + ex.Message;
                 return EnumMessageStatus.empty;
             }
             catch (SocketException ex)
             {
-                //status = "Message could not be sent. " + ex.Message;
                 return EnumMessageStatus.notSent;
             }
             catch (ObjectDisposedException ex)
             {
-                //status = "The connection has been closed. " + ex.Message;
                 return EnumMessageStatus.connectionClosed;
             }
             catch (Exception ex)
             {
-                //status = "unknown exception occured. " + ex.Message;
                 return EnumMessageStatus.unknown;
             }
         }
@@ -90,7 +90,7 @@ namespace Mock_UI
 
         // Check that a message contains at least one character, contains only ASCII characters, and does not contain only spaces.
         // Returns true if the message is valid, false if the message is not valid
-        private bool ValidateMessage(string message)
+        public bool ValidateMessage(string message)
         {
             // If the message is empty (length is 0), it is invalid
             if (message.Length == 0)
@@ -111,7 +111,7 @@ namespace Mock_UI
                     messageContainsNonSpaces = true;
             }
 
-            if (!messageContainsNonSpaces)
+            if (messageContainsNonSpaces)
                 return true;
             else
                 return false;

@@ -13,7 +13,7 @@ namespace Mock_UI
     public partial class Form1 : Form
     {
       // Message Services
-      private static TcpClient tcpClient = new TcpClient("127.0.0.1", 12345);
+        private static TcpClient tcpClient = new TcpClient("127.0.0.1", 12345);
         private static NetworkStream stream = tcpClient.GetStream();
         private IMessageService messageService = new MessageService(stream);
 

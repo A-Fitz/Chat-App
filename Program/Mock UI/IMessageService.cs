@@ -11,5 +11,6 @@ namespace Mock_UI
         EnumMessageStatus SendMessage(TCPMessage message);
         IList<TCPMessage> GetMessages();
         bool CheckForMessages();
+        bool ValidateMessage(string message);
     }
 }
