@@ -15,17 +15,14 @@ namespace Mock_UI
 {
     public partial class Form1 : Form
     {
-      // Message Services
-      private static TcpClient tcpClient = new TcpClient("127.0.0.1", 12345);
-        private static NetworkStream stream = tcpClient.GetStream();
-        private IMessageService messageService = new MessageService(stream);
-
-        
-        public Form1(NetworkStream s)
+        // Message Services
+        private NetworkStream stream;
+        private IMessageService messageService;
+        public Form1(NetworkStream stream)
         {
-            stream = s;
+            this.stream = stream;
+            messageService = new MessageService(stream);
             InitializeComponent();
-            timer1.Start();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -56,7 +53,6 @@ namespace Mock_UI
             {
                 stream.Read(dataIn, 0, dataIn.Length);
                 String inputStr = new String(ASCIIEncoding.UTF8.GetChars(dataIn, 0, dataIn.Length));
-                displayField.AppendText(inputStr + "\r\n"); //"\r\n" is new line for textbox
             }
             this.Update();
 #else
