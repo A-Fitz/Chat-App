@@ -14,6 +14,7 @@ namespace Server
       private NetworkStream networkStream;
       private string username;
       private int userID;
+      private static int numClients = 0;
       private ChatroomList chatroomList;
       private List<IDisposable> subsribedChatroomDisposibles = new List<IDisposable>();
 
@@ -21,6 +22,7 @@ namespace Server
       {
          this.networkStream = ns;
          this.chatroomList = chatroomList;
+         userID = numClients++;
       }
       public void subsribeToChat(ChatroomLogic crl)
       {
@@ -40,7 +42,21 @@ namespace Server
             {
                TCPMessage a = parseStream();
                Message b = new Message(a);
-               chatroomList.update(b);
+               switch (b.command)
+               {
+                  case "SETNAME":
+                     username = b.text;
+                     break;
+                  case "SEND":
+                     b.text = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + b.text;
+                     chatroomList.update(b);
+                     break;
+                  default:
+                     b.text = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + b.text;
+                     chatroomList.update(b);
+                     break;
+               }
+               
             }
          }
          finally
@@ -84,21 +100,26 @@ namespace Server
          throw new NotImplementedException();
       }
 
-      public void OnNext(Message value)
+      private void writeMessage(Message msg)
       {
          try
          {
-            TCPMessage a = new TCPMessage(value);
+            TCPMessage a = new TCPMessage(msg);
             byte[] data = ASCIIEncoding.ASCII.GetBytes(JsonConvert.SerializeObject(a));
             int length = data.Length;
             byte[] lengthOut = ASCIIEncoding.ASCII.GetBytes(length.ToString() + ":");
             networkStream.Write(lengthOut, 0, lengthOut.Length);
             networkStream.Write(data, 0, data.Length);
          }
-         catch(Exception e)
+         catch (Exception e)
          {
             Console.WriteLine(e.ToString());
          }
+      }
+
+      public void OnNext(Message value)
+      {
+         writeMessage(value);
       }
    }
 }

@@ -15,3 +15,14 @@ D:\SE2\Server\bin\Debug\Newtonsoft.Json.dll
 D:\SE2\Server\bin\Debug\Newtonsoft.Json.pdb
 D:\SE2\Server\bin\Debug\Newtonsoft.Json.xml
 D:\SE2\Server\obj\Debug\Server.csproj.CopyComplete
+D:\SE2\Clientnew\1-nullreferenceexception\Server\bin\Debug\Server.exe.config
+D:\SE2\Clientnew\1-nullreferenceexception\Server\bin\Debug\Server.exe
+D:\SE2\Clientnew\1-nullreferenceexception\Server\bin\Debug\Server.pdb
+D:\SE2\Clientnew\1-nullreferenceexception\Server\bin\Debug\Newtonsoft.Json.dll
+D:\SE2\Clientnew\1-nullreferenceexception\Server\bin\Debug\Newtonsoft.Json.pdb
+D:\SE2\Clientnew\1-nullreferenceexception\Server\bin\Debug\Newtonsoft.Json.xml
+D:\SE2\Clientnew\1-nullreferenceexception\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+D:\SE2\Clientnew\1-nullreferenceexception\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\SE2\Clientnew\1-nullreferenceexception\Server\obj\Debug\Server.csproj.CopyComplete
+D:\SE2\Clientnew\1-nullreferenceexception\Server\obj\Debug\Server.exe
+D:\SE2\Clientnew\1-nullreferenceexception\Server\obj\Debug\Server.pdb
