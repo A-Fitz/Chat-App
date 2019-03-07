@@ -1,5 +1,4 @@
-﻿
-namespace Mock_UI
+﻿namespace Mock_UI
 {
     partial class Form1
     {
@@ -166,7 +165,7 @@ namespace Mock_UI
             this.signOutToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.signOutToolStripMenuItem.Text = "Sign Out";
             // 
-            // listBox2
+            // displayField
             // 
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Items.AddRange(new object[] {

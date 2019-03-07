@@ -8,6 +8,10 @@ namespace Mock_UI
 {
     public class TCPMessage
     {
+        public TCPMessage()
+        {
+            this.command = "SEND";
+        }
         /// <summary>
         /// Raw message that the clinet should send to the server.
         /// </summary>
