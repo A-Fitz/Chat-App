@@ -10,7 +10,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Sockets;
 namespace Mock_UI
 {
     public partial class Form1 : Form
@@ -25,48 +24,13 @@ namespace Mock_UI
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-#if TEST1
-            //get message from textbox
-            String message = messageField.Text;
-            byte [] dataOut = UTF8Encoding.ASCII.GetBytes(message.ToCharArray());
-            
-            //send message through server
-            stream.Write(dataOut, 0, dataOut.Length);
-
-            //revert textbox to empty
-            messageField.Clear();
-            this.Update();
-#else
-            //Real code here
-
-#endif
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-#if TEST1
-
-            byte[] dataIn = new byte[6054];
-            if (stream.DataAvailable)
-            {
-                stream.Read(dataIn, 0, dataIn.Length);
-                String inputStr = new String(ASCIIEncoding.UTF8.GetChars(dataIn, 0, dataIn.Length));
-            }
-            this.Update();
-#else
-            //Real code here
-#endif
-        }
-
         // When the send buttton is clicked: make a new TCPMessage and add the inputed text into it, try to send it
         //  and get the status, set the status label, clear the message field if successful, and set the status label.
         private void sendButton_Click(object sender, EventArgs e)
         {
             TCPMessage tcpMessage = new TCPMessage();
             tcpMessage.message = messageField.Text;
-            tcpMessage.chatID = 0;
+            tcpMessage.chatID = 0; //hardcoded for now
 
             EnumMessageStatus status = messageService.SendMessage(tcpMessage);
 
