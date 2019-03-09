@@ -11,30 +11,6 @@ namespace Mock_UI.Tests
     [TestClass()]
     public class MessageServiceTests
     {
-        [TestMethod()]
-        public void MessageServiceTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void CheckForMessagesTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void GetMessagesTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void SendMessageTest()
-        {
-            Assert.Fail();
-        }
-
         /* Message Validation Testing */
         // valid: at least one character, AND only ascii characters, AND not only spaces
         // invalid: empty, OR contains non-ascii character, OR only spaces

@@ -15,6 +15,7 @@ namespace Mock_UI
         string status;
         TcpClient clientSocket;
         NetworkStream networkStream;
+
         public MessageService(NetworkStream networkStream)
         {
             this.networkStream = networkStream;
@@ -24,12 +25,20 @@ namespace Mock_UI
         {
 
         }
-
+        
+        /// <summary>
+        /// Checks if there is any data in the stream.
+        /// </summary>
+        /// <returns></returns>
         public bool CheckForMessages()
         {
             return networkStream.DataAvailable;
         }
 
+        /// <summary>
+        /// Calls ReadInMessage while there are still messages in the stream. Deserializes the message into a TCPMessage and returns the list.
+        /// </summary>
+        /// <returns></returns>
         public IList<TCPMessage> GetMessages()
         {
             List<TCPMessage> messageList = new List<TCPMessage>();
@@ -41,6 +50,11 @@ namespace Mock_UI
             return messageList;            
         }
 
+        /// <summary>
+        /// Makes sure message content is validated, then serializes message into a json object. It then sends the json object to the network socket.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public EnumMessageStatus SendMessage(TCPMessage message)
         {
             if (!ValidateMessage(message.message))
@@ -72,6 +86,10 @@ namespace Mock_UI
             }
         }
 
+        /// <summary>
+        /// Reads bytes until it hits a ":" to get the message length, then reads in the message using that length.
+        /// </summary>
+        /// <returns>byte array of the message</returns>
         private byte[] ReadInMessage()
         {
          List<Char> integerStringList = new List<char>();
