@@ -17,4 +17,12 @@ Search  and install the "Newtonsoft" json library.
 
 ## Starting the Application
 
-Start the server before starting any clients as the client will try to connect to the server after choosing a name.
+Open up the Server project and client project Visual Studio.
+
+Build the clients and run the executable from the bin folder to run multiple clients.
+
+Start the server (from the .exe or project, either works) before starting any clients as the client(s) will try to connect to the server after choosing a name.
+
+## Closing the Application
+
+The server does not handle closed connections well so closing a client will require the server to be shutdown and restarted.

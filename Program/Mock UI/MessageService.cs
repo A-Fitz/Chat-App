@@ -12,9 +12,8 @@ namespace Mock_UI
 {
     public class MessageService : IMessageService
     {
-        string status;
-        TcpClient clientSocket;
         NetworkStream networkStream;
+        IList<TCPMessage> messageList;
 
         public MessageService(NetworkStream networkStream)
         {
@@ -41,7 +40,7 @@ namespace Mock_UI
         /// <returns></returns>
         public IList<TCPMessage> GetMessages()
         {
-            List<TCPMessage> messageList = new List<TCPMessage>();
+            messageList = new List<TCPMessage>();
             while (CheckForMessages())
             {
                 var message = ReadInMessage();

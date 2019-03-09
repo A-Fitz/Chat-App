@@ -14,6 +14,7 @@ namespace Mock_UI
 {
     public partial class Form2 : Form
     {
+        Form1 form1;
         public Form2()
         {
             InitializeComponent();
@@ -26,7 +27,7 @@ namespace Mock_UI
                 {
                     var newConnection = setupNewConnection();
                     this.Hide();
-                    var form1 = new Form1(newConnection);
+                    form1 = new Form1(newConnection);
                     form1.FormClosed += (s, args) => this.Close();
                     form1.Show();
              }
