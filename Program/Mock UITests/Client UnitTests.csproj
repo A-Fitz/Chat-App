@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mock UI\Mock UI.csproj">
+    <ProjectReference Include="..\Mock UI\Client.csproj">
       <Project>{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}</Project>
-      <Name>Mock UI</Name>
+      <Name>Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock UI", "Mock UI\Mock UI.csproj", "{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Mock UI\Client.csproj", "{8508583B-D8BF-4C7E-9FE2-D5764C1EA43D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock UITests", "Mock UITests\Mock UITests.csproj", "{E843DCDF-EBDD-48BD-B289-E64103436F61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client UnitTests", "Mock UITests\Client UnitTests.csproj", "{E843DCDF-EBDD-48BD-B289-E64103436F61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
