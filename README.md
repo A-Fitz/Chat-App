@@ -10,10 +10,10 @@ The client and server both rely on Json serializing, the project should already 
 
 In Visual Studios, navigate to 
 ```
-project > manage nuget packages > browse
+project > Manage NuGet Packages > Browse
 ```
 
-Search  and instal the "Newtonsoft" json library.
+Search  and install the "Newtonsoft" json library.
 
 ## Starting the Application
 
