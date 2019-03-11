@@ -14,6 +14,7 @@ namespace Mock_UI
 {
     public partial class Form2 : Form
     {
+        IMessageService MessageService;
         Form1 form1;
         public Form2()
         {
@@ -41,14 +42,12 @@ namespace Mock_UI
         private NetworkStream setupNewConnection()
         {
             TcpClient socket = new TcpClient("127.0.0.1", 12345);
-            NetworkStream stream = socket.GetStream();
-
             var newUser = new TCPMessage { chatID = 0, message = userNameText.Text, command = "SETNAME" };
-            var msg = JsonConvert.SerializeObject(newUser);
-            msg = msg.Length + ":" + msg;
-            stream.Write(Encoding.ASCII.GetBytes(msg), 0, msg.Length);
+            
+            MessageService = new MessageService(socket.GetStream());
+            MessageService.SendMessage(newUser);
 
-            return stream;
+            return socket.GetStream();
         }
 
         private Boolean validUserName(String username)
