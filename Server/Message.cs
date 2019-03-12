@@ -8,23 +8,24 @@ namespace Server
 {
    class Message
    {
-      public ChatroomLogic toChatroom { get;}
-      public string text { get; set; }
-      public string command { get;}
-
-      public Message(TCPMessage tMsg)
+      public Message()
       {
-         toChatroom = ChatroomList.idToChatroom(tMsg.chatID);
-         text = tMsg.message;
-         this.command = tMsg.command;
+
       }
-
-      public Message(ChatroomLogic toChatroom, string text, string command)
+      
+      public Message(int chatID, string message, string command)
       {
-         this.toChatroom = toChatroom;
-         this.text = text;
+         this.chatID = chatID;
+         this.message = message;
          this.command = command;
       }
+
+      public int chatID { get; set; }
+      public string message { get; set; }
+      /// <summary>
+      /// 
+      /// </summary>
+      public string command { get; set; }
 
 
    }

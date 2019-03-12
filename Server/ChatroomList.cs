@@ -18,8 +18,9 @@ namespace Server
 
       public void update(Message msg)
       {
-         if(chatrooms.Contains(msg.toChatroom))
-            msg.toChatroom.update(msg);
+         ChatroomLogic chatroom = ChatroomList.idToChatroom(msg.chatID);
+         if (chatrooms.Contains(chatroom))
+            chatroom.update(msg);
       }
 
       public static ChatroomLogic idToChatroom(int id)

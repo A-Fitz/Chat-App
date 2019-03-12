@@ -165,7 +165,7 @@
             this.signOutToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.signOutToolStripMenuItem.Text = "Sign Out";
             // 
-            // listBox2
+            // displayField
             // 
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Items.AddRange(new object[] {
@@ -223,7 +223,7 @@
             // readMessagesTimer
             // 
             this.readMessagesTimer.Enabled = true;
-            this.readMessagesTimer.Interval = 500;
+            this.readMessagesTimer.Interval = 10000;
             this.readMessagesTimer.Tick += new System.EventHandler(this.readMessagesTimer_Tick);
             // 
             // Form1

@@ -16,7 +16,7 @@ namespace Server
       private int userID;
       private static int numClients = 0;
       private ChatroomList chatroomList;
-      private List<IDisposable> subsribedChatroomDisposibles = new List<IDisposable>();
+      
 
       public ClientConnection(NetworkStream ns, ChatroomList chatroomList)
       {
@@ -26,7 +26,7 @@ namespace Server
       }
       public void subsribeToChat(ChatroomLogic crl)
       {
-         subsribedChatroomDisposibles.Add(crl.Subscribe(this));
+         crl.Subscribe(this);
       }
 
       public void start()
@@ -40,20 +40,20 @@ namespace Server
          {
             while (true)
             {
-               TCPMessage a = parseStream();
-               Message b = new Message(a);
-               switch (b.command)
+               Message a = parseStream();
+               switch (a.command)
                {
                   case "SETNAME":
-                     username = b.text;
+                     username = a.message;
                      break;
                   case "SEND":
-                     b.text = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + b.text;
-                     chatroomList.update(b);
+                     a.message = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + a.message;
+                     chatroomList.update(a);
                      break;
                   default:
-                     b.text = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + b.text;
-                     chatroomList.update(b);
+                     Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
+                     a.message = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + a.message;
+                     chatroomList.update(a);
                      break;
                }
                
@@ -65,9 +65,9 @@ namespace Server
          }
       }
 
-      private TCPMessage parseStream()
+      private Message parseStream()
       {
-         TCPMessage output = null;
+         Message output = null;
          try
          {
             List<Char> integerStringList = new List<char>();
@@ -80,7 +80,7 @@ namespace Server
             int length = int.Parse(new string(integerStringList.ToArray()));
             byte[] data = new byte[length];
             networkStream.Read(data, 0, data.Length);
-            output = JsonConvert.DeserializeObject<TCPMessage>(ASCIIEncoding.ASCII.GetString(data));
+            output = JsonConvert.DeserializeObject<Message>(ASCIIEncoding.ASCII.GetString(data));
          }
          catch(Exception e)
          {
@@ -104,11 +104,8 @@ namespace Server
       {
          try
          {
-            TCPMessage a = new TCPMessage(msg);
-            byte[] data = ASCIIEncoding.ASCII.GetBytes(JsonConvert.SerializeObject(a));
-            int length = data.Length;
-            byte[] lengthOut = ASCIIEncoding.ASCII.GetBytes(length.ToString() + ":");
-            networkStream.Write(lengthOut, 0, lengthOut.Length);
+            string jsonData = JsonConvert.SerializeObject(msg);
+            byte [] data = ASCIIEncoding.ASCII.GetBytes(jsonData.Length + ":" + jsonData);
             networkStream.Write(data, 0, data.Length);
          }
          catch (Exception e)

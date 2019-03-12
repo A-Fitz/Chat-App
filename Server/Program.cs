@@ -20,11 +20,11 @@ namespace Server
       public static int PORT = 12345;
 
       private static String HELP =
-         "?          - Shows this documentation/n" +
-         "help       - Shows this documentation/n" +
-         "exit       - Shuts down the entire server./n" +
-         "shutdown   - Shuts down the entire server./n" +
-         "restart    - Saves, resets, and restarts the server./n";
+         "?          - Shows this documentation\n" +
+         "help       - Shows this documentation\n" +
+         "exit       - Shuts down the entire server.\n";//+
+         //"shutdown   - Shuts down the entire server./n" +
+         //"restart    - Saves, resets, and restarts the server./n";
 
 #if !TESTING
       static void Main(string[] args)
@@ -41,8 +41,21 @@ namespace Server
          connectorThread.Start();
          while (!exit)
          {
-            if (Console.In.ReadLine().Trim() == "exit")
-               exit = true;
+            string input = Console.In.ReadLine().Trim();
+            switch(input)
+            {
+               case "exit":
+                  exit = true;
+                  break;
+               case "help":
+               case "?":
+                  Console.Write(HELP);
+                  break;
+               default:
+                  Console.WriteLine(input + " is not recognized as a command. Use ? or help for options.");
+                  break;
+
+            }
             
          }
          connectorThread.Abort();
@@ -56,12 +69,11 @@ namespace Server
             while (true)
             {
                TcpClient socket = serverSocket.AcceptTcpClient();
-               Console.WriteLine("Address family: " + socket.Client.AddressFamily.ToString());
+               Console.WriteLine("A new client has connected");
                NetworkStream stream = socket.GetStream();
                ClientConnection client = new ClientConnection(stream, chatroomList);
                client.subsribeToChat(ChatroomList.idToChatroom(0));
                client.start();
-               
             }
          }
          catch(ThreadAbortException tae)
@@ -122,10 +134,8 @@ namespace Server
                 {
                     System.Console.Error.WriteLine("Test 2 FAILED");
                 }
-
-                socket.Close();
                 //Test 3
-                */
+                socket.Close();
          }
 
          catch (Exception e)
