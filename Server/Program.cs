@@ -67,6 +67,8 @@ namespace Server
          //Shutdown server
       }
 
+      
+
       /// <summary>
       /// One thread will be assigned to handling new connections and will create a new
       /// ClientConnection object for every new connection.
@@ -85,6 +87,8 @@ namespace Server
                ClientConnection client = new ClientConnection(stream, chatroomList);
                client.subsribeToChat(ChatroomList.idToChatroom(0));
                client.StartAsync();
+
+               
             }
          }
          catch(ThreadAbortException tae)

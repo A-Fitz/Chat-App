@@ -56,5 +56,10 @@ namespace Mock_UI
                 return true;
             return false;
         }
-    }
+
+      private void portText_Validating(object sender, CancelEventArgs e)
+      {
+
+      }
+   }
 }

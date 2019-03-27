@@ -12,8 +12,7 @@ namespace Server
    class ClientConnection : IObserver<Message>
    {
       private NetworkStream networkStream;
-      private string username;
-      private int userID;
+      public string username { get; set; }
       private static int numClients = 0;
       private ChatroomList chatroomList;
       public static List<ClientConnection> clients { get; set; } = new List<ClientConnection>();
@@ -22,11 +21,12 @@ namespace Server
       {
          this.networkStream = ns;
          this.chatroomList = chatroomList;
-         userID = numClients++;
       }
 
       public void disconnect()
       {
+         clients.Remove(this);
+         sendClientList(this, chatroomList);
          //TODO wait for the rest of a message or timeout
          networkStream.Dispose();
          networkStream.Close();
@@ -41,7 +41,7 @@ namespace Server
       public void StartAsync()
       {
          Thread clientThread = new Thread(getMessages);
-         clientThread.Name = "Client " + userID.ToString();
+
          clientThread.Start();
          clients.Add(this);
       }
@@ -60,14 +60,20 @@ namespace Server
                {
                   case "SETNAME":
                      username = a.message;
+                     Thread.CurrentThread.Name = a.message;
+                     // update all clients when new connected client
+                     sendClientList(this, chatroomList);
                      break;
                   case "SEND":
-                     a.message = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + a.message;
+                     a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      chatroomList.update(a);
                      break;
+                  case "CLOSE":
+                     disconnect();
+                     throw new Exception("Connection was closed");
                   default:
                      Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
-                     a.message = DateTime.Now.ToString() + " : " + (username == null ? ("Anonymous" + userID) : username) + " : " + a.message;
+                     a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      chatroomList.update(a);
                      break;
                }
@@ -129,7 +135,7 @@ namespace Server
          }
          catch (Exception e)
          {
-            Console.WriteLine(e.ToString());
+            //Console.WriteLine(e.ToString());
          }
       }
 
@@ -145,6 +151,21 @@ namespace Server
             client.disconnect();
          }
          clients.Clear();
+      }
+
+      /// <summary>
+      /// Updates all clients with the current client username list. Called when a client disconnects or connects;
+      /// </summary>
+      /// <param name="client"></param>
+      /// <param name="chatroomList"></param>
+      private void sendClientList(ClientConnection client, ChatroomList chatroomList)
+      {
+         String list = "";
+         foreach (ClientConnection c in ClientConnection.clients)
+         {
+            list += c.username + ",";
+         }
+         chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CLIENTLIST", message = list });
       }
    }
 }

@@ -10,3 +10,10 @@ D:\SE2\Spike1_C\obj\Debug\Spike1_C.csprojResolveAssemblyReference.cache
 D:\SE2\Spike1_C\obj\Debug\Spike1_C.csproj.CoreCompileInputs.cache
 D:\SE2\Spike1_C\obj\Debug\Spike1_C.exe
 D:\SE2\Spike1_C\obj\Debug\Spike1_C.pdb
+J:\3330\1-nullreferenceexception\Spike1_C\bin\Debug\Spike1_C.exe.config
+J:\3330\1-nullreferenceexception\Spike1_C\bin\Debug\Spike1_C.exe
+J:\3330\1-nullreferenceexception\Spike1_C\bin\Debug\Spike1_C.pdb
+J:\3330\1-nullreferenceexception\Spike1_C\obj\Debug\Spike1_C.csprojResolveAssemblyReference.cache
+J:\3330\1-nullreferenceexception\Spike1_C\obj\Debug\Spike1_C.csproj.CoreCompileInputs.cache
+J:\3330\1-nullreferenceexception\Spike1_C\obj\Debug\Spike1_C.exe
+J:\3330\1-nullreferenceexception\Spike1_C\obj\Debug\Spike1_C.pdb
