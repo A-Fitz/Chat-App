@@ -97,6 +97,7 @@ namespace Mock_UI
       /// <param name="e"></param>
       private void readMessagesTimer_Tick(object sender, EventArgs e)
       {
+
          if (messageService.CheckForMessages())
          {
             IList<TCPMessage> messageList = messageService.GetMessages();
@@ -113,7 +114,8 @@ namespace Mock_UI
                      userListBox.Items.Clear();
                      foreach (string str in t.message.Split(','))
                      {
-                        userListBox.Items.Add(str);
+                        if(str != "")
+                           userListBox.Items.Add(str);
                      }
                      break;
                   default:
