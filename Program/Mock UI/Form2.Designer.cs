@@ -35,9 +35,10 @@
          this.label3 = new System.Windows.Forms.Label();
          this.passwordText = new System.Windows.Forms.TextBox();
          this.ipAddressText = new System.Windows.Forms.TextBox();
-         this.portText = new System.Windows.Forms.TextBox();
          this.label4 = new System.Windows.Forms.Label();
          this.label5 = new System.Windows.Forms.Label();
+         this.portNumeric = new System.Windows.Forms.NumericUpDown();
+         ((System.ComponentModel.ISupportInitialize)(this.portNumeric)).BeginInit();
          this.SuspendLayout();
          // 
          // label1
@@ -100,14 +101,7 @@
          this.ipAddressText.Name = "ipAddressText";
          this.ipAddressText.Size = new System.Drawing.Size(146, 20);
          this.ipAddressText.TabIndex = 6;
-         // 
-         // portText
-         // 
-         this.portText.Location = new System.Drawing.Point(288, 234);
-         this.portText.Name = "portText";
-         this.portText.Size = new System.Drawing.Size(60, 20);
-         this.portText.TabIndex = 7;
-         this.portText.Validating += new System.ComponentModel.CancelEventHandler(this.portText_Validating);
+         this.ipAddressText.Text = "127.0.0.1";
          // 
          // label4
          // 
@@ -127,14 +121,31 @@
          this.label5.TabIndex = 9;
          this.label5.Text = "port";
          // 
+         // portNumeric
+         // 
+         this.portNumeric.Location = new System.Drawing.Point(289, 234);
+         this.portNumeric.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+         this.portNumeric.Name = "portNumeric";
+         this.portNumeric.Size = new System.Drawing.Size(59, 20);
+         this.portNumeric.TabIndex = 10;
+         this.portNumeric.Value = new decimal(new int[] {
+            12345,
+            0,
+            0,
+            0});
+         // 
          // Form2
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(488, 356);
+         this.Controls.Add(this.portNumeric);
          this.Controls.Add(this.label5);
          this.Controls.Add(this.label4);
-         this.Controls.Add(this.portText);
          this.Controls.Add(this.ipAddressText);
          this.Controls.Add(this.passwordText);
          this.Controls.Add(this.label3);
@@ -143,7 +154,8 @@
          this.Controls.Add(this.userNameText);
          this.Controls.Add(this.label1);
          this.Name = "Form2";
-         this.Text = "Connect Server";
+         this.Text = "Connect To Server";
+         ((System.ComponentModel.ISupportInitialize)(this.portNumeric)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -158,8 +170,8 @@
       private System.Windows.Forms.Label label3;
       private System.Windows.Forms.TextBox passwordText;
       private System.Windows.Forms.TextBox ipAddressText;
-      private System.Windows.Forms.TextBox portText;
       private System.Windows.Forms.Label label4;
       private System.Windows.Forms.Label label5;
+      private System.Windows.Forms.NumericUpDown portNumeric;
    }
 }
