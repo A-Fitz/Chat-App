@@ -9,6 +9,11 @@ namespace Server
    class ChatroomList
    {
       private static List<ChatroomLogic> chatrooms = new List<ChatroomLogic>();
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="crl"></param>
       public void addChat(ChatroomLogic crl)
       {
          if(!chatrooms.Contains(crl))

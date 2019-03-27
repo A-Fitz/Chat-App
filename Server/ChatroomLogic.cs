@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-   class ChatroomLogic : System.IObservable<Message>
+   class ChatroomLogic : System.IObservable<Message>, IDisposable
    {
       private static int numChatRoomsCreated = 0;
       public int chatroomID;
