@@ -9,7 +9,6 @@ namespace Server
    class ChatroomList
    {
       private static List<ChatroomLogic> chatrooms = new List<ChatroomLogic>();
-      
       public void addChat(ChatroomLogic crl)
       {
          if(!chatrooms.Contains(crl))
@@ -29,6 +28,18 @@ namespace Server
          if (a == -1)
             return null;
          return chatrooms.ElementAt(a);
+      }
+
+      public void SendGlobalMessage(Message message)
+      {
+         foreach (ClientConnection client in ClientConnection.clients)
+            client.OnNext(message);
+      }
+
+      public void Stop()
+      {
+         ClientConnection.StopAllClients();
+         //TODO cleanup any resources being held up
       }
 
    }

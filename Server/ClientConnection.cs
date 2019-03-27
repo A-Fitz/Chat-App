@@ -16,7 +16,7 @@ namespace Server
       private int userID;
       private static int numClients = 0;
       private ChatroomList chatroomList;
-      
+      public static List<ClientConnection> clients { get; set; } = new List<ClientConnection>();
 
       public ClientConnection(NetworkStream ns, ChatroomList chatroomList)
       {
@@ -24,14 +24,26 @@ namespace Server
          this.chatroomList = chatroomList;
          userID = numClients++;
       }
+
+      public void disconnect()
+      {
+         //TODO wait for the rest of a message or timeout
+         networkStream.Dispose();
+         networkStream.Close();
+         //TODO Kill the thread if its still alive
+      }
+
       public void subsribeToChat(ChatroomLogic crl)
       {
          crl.Subscribe(this);
       }
 
-      public void start()
+      public void StartAsync()
       {
-         new Thread(getMessages).Start();
+         Thread clientThread = new Thread(getMessages);
+         clientThread.Name = "Client " + userID.ToString();
+         clientThread.Start();
+         clients.Add(this);
       }
 
       private void getMessages()
@@ -41,6 +53,9 @@ namespace Server
             while (true)
             {
                Message a = parseStream();
+
+               if(a == null)
+                  throw new Exception("Connection was closed");
                switch (a.command)
                {
                   case "SETNAME":
@@ -58,6 +73,10 @@ namespace Server
                }
                
             }
+         }
+         catch(Exception e)
+         {
+            Console.Out.WriteLine("Client " + username + " disconnected.");
          }
          finally
          {
@@ -100,7 +119,7 @@ namespace Server
          throw new NotImplementedException();
       }
 
-      private void writeMessage(Message msg)
+      private void WriteMessage(Message msg)
       {
          try
          {
@@ -116,7 +135,16 @@ namespace Server
 
       public void OnNext(Message value)
       {
-         writeMessage(value);
+         WriteMessage(value);
+      }
+
+      public static void StopAllClients()
+      {
+         foreach (ClientConnection client in clients)
+         {
+            client.disconnect();
+         }
+         clients.Clear();
       }
    }
 }

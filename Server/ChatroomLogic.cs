@@ -61,6 +61,7 @@ namespace Server
                   _observers.Remove(_observer);
             }
          }
+
       }
    }
 }

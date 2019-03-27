@@ -22,11 +22,12 @@ namespace Server
       private static String HELP =
          "?          - Shows this documentation\n" +
          "help       - Shows this documentation\n" +
-         "exit       - Shuts down the entire server.\n";//+
-         //"shutdown   - Shuts down the entire server./n" +
-         //"restart    - Saves, resets, and restarts the server./n";
+         "exit       - Shuts down the entire server.\n" +
+         "shutdown   - Shuts down the entire server.\n" +
+         "restart    - Saves, resets, and restarts the server.\n";
 
 #if !TESTING
+
       static void Main(string[] args)
       {
          Console.Out.WriteLine("Server autostarting at port " + PORT);
@@ -38,6 +39,8 @@ namespace Server
          TcpListener serverSocket = new TcpListener(System.Net.IPAddress.Loopback, PORT);
          serverSocket.Start();
          Thread connectorThread = new Thread(() => handleIncomingConnections(serverSocket, chatroomList));
+         connectorThread.Name = "Connector Thread";
+         connectorThread.Priority = ThreadPriority.Lowest;
          connectorThread.Start();
          while (!exit)
          {
@@ -56,12 +59,20 @@ namespace Server
                   break;
 
             }
-            
          }
-         connectorThread.Abort();
+         serverSocket.Stop();
+         chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CLOSING", message = "0" });
+         chatroomList.Stop();
          //Get handles to all threads and abort all
          //Shutdown server
       }
+
+      /// <summary>
+      /// One thread will be assigned to handling new connections and will create a new
+      /// ClientConnection object for every new connection.
+      /// </summary>
+      /// <param name="serverSocket">The socket to listen for incoming connections</param>
+      /// <param name="chatroomList">The current chatroomList</param>
       public static void handleIncomingConnections(TcpListener serverSocket, ChatroomList chatroomList)
       {
          try
@@ -73,16 +84,20 @@ namespace Server
                NetworkStream stream = socket.GetStream();
                ClientConnection client = new ClientConnection(stream, chatroomList);
                client.subsribeToChat(ChatroomList.idToChatroom(0));
-               client.start();
+               client.StartAsync();
             }
          }
          catch(ThreadAbortException tae)
          {
-            Console.WriteLine("Connector thread left");
+            Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
+         }
+         catch(SocketException se)
+         {
+            Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
          }
          finally
          {
-            Console.WriteLine("Connector thread left");
+            Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left finally block");
          }
       }
 

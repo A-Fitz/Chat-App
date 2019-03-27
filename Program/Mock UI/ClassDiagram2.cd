@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Mock_UI.MessageService">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAKCAAAAAAQAAAEACAAACAAAAAAAA=</HashCode>
+      <FileName>MessageService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="messageList" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Left" Position="0.1" />
+  </Class>
+  <Class Name="Mock_UI.TCPMessage">
+    <Position X="8" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAACA=</HashCode>
+      <FileName>TCPMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mock_UI.Form1">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAAAEAACAEAFASgACCQAACAAAAAAYACERAAAAAAAA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="messageService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Mock_UI.Form2">
+    <Position X="5.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAgABCAAAACIAAIBAAABAAAAAAAAAA=</HashCode>
+      <FileName>Form2.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="form1" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Mock_UI.EnumExtensions">
+    <Position X="4.75" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>EnumExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Mock_UI.IMessageService" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACCAAAAAAAAAAEACAAAAAAAAAAAA=</HashCode>
+      <FileName>IMessageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Collections.Generic.IList&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="Mock_UI.EnumMessageStatus" Collapsed="true">
+    <Position X="4.75" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAABAAAAAAAAACAAIAAAAAAACAAAACAAA=</HashCode>
+      <FileName>EnumMessageStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
