@@ -13,12 +13,12 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 namespace Mock_UI
 {
-   public partial class Form1 : Form
+   public partial class MainForm : Form
    {
       // Message Services
       private NetworkStream stream;
       private IMessageService messageService;
-      public Form1(NetworkStream stream)
+      public MainForm(NetworkStream stream)
       {
          this.stream = stream;
          messageService = new MessageService(stream);

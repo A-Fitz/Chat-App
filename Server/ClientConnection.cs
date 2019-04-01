@@ -96,6 +96,7 @@ namespace Server
                      disconnect();
                      clients.Remove(this);
                      sendClientList(this, chatroomList);
+                     Console.Out.WriteLine("Client " + username + " disconnected.");
                      return;
                   default:
                      Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
@@ -108,7 +109,8 @@ namespace Server
          }
          catch(Exception e)
          {
-            Console.Out.WriteLine("Client " + username + " disconnected.");
+            // TODO do something else
+            // Console.Out.WriteLine("Client " + username + " disconnected.");
          }
          finally
          {

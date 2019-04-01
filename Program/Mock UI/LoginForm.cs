@@ -13,16 +13,17 @@ using Newtonsoft.Json;
 
 namespace Mock_UI
 {
-   public partial class Form2 : Form
+   public partial class LoginForm : Form
    {
-      public Form2()
+      private NetworkStream stream;
+      public LoginForm(NetworkStream stream)
       {
+         this.stream = stream;
          InitializeComponent();
-         portNumeric.Controls[0].Visible = false; // remove the arrows from the port numeric updown
       }
 
       /// <summary>
-      /// Check to make sure that the username is valid, then try to create a socket with the given ip address and port,
+      /// Check to make sure that the username is valid, then try to create a socket ip address and port,
       /// catch exceptions from both. Hash the password and send a login request, server will disconnect you if invalid login.
       /// </summary>
       /// <param name="sender"></param>
@@ -33,9 +34,9 @@ namespace Mock_UI
          {
             try
             {
-               TcpClient socket = new TcpClient(ipAddressText.Text, Decimal.ToInt32(portNumeric.Value));
-               var newConnection = setupNewConnection(socket); // will catch exceptions from this
+               login();
 
+               /* removed this because we moved connection stuff to startup
                // Detect if client disconnected
                if (socket.Client.Poll(0, SelectMode.SelectRead))
                {
@@ -46,54 +47,65 @@ namespace Mock_UI
                      return;
                   }
                }
+               */
+
+               // Open main form with connection
                this.Hide();
-               var form1 = new Form1(newConnection);
+               var form1 = new MainForm(stream);
                form1.FormClosed += (s, args) => this.Close();
                form1.Show();
             }
             catch (SocketException)
             {
-               System.Windows.Forms.MessageBox.Show("You provided an incorect IP address or port.");
+               System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.incorrectIP));
             }
             catch (ArgumentOutOfRangeException)
             {
-               System.Windows.Forms.MessageBox.Show("You provided an incorect IP address or port.");
+               System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.incorrectIP));
             }
             catch (ArgumentNullException)
             {
-               System.Windows.Forms.MessageBox.Show("You provided an incorect IP address or port.");
+               System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.incorrectIP));
             }
             catch (Exception)
             {
-               System.Windows.Forms.MessageBox.Show("Unknown exception occured.");
+               System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.unknown));
             }
 
 
          }
          else
          {
-            System.Windows.Forms.MessageBox.Show("Please Enter Valid Username.");
+            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername));
          }
 
       }
 
-      private NetworkStream setupNewConnection(TcpClient socket)
+      private void login()
       {
-         NetworkStream stream = socket.GetStream();
 
          // TODO
          //USE A LOGIN COMMAND, SEND USERNAME AND PASSWORD, SERVER WILL DISCONNECT YOU IF IT IS NOT CORRECT.
-         //attempt to login with usernameText.Text and sha1data (password)
-         var sha1 = new SHA1CryptoServiceProvider();
-         var data = Encoding.ASCII.GetBytes(passwordText.Text);
-         var sha1data = sha1.ComputeHash(data);
+         //attempt to login with usernameText.Text and hashed password
+         byte[] hashedPassword = hashPassword();
 
          var newUser = new TCPMessage { chatID = 0, message = userNameText.Text, command = "SETNAME" };
          var msg = JsonConvert.SerializeObject(newUser);
          msg = msg.Length + ":" + msg;
          stream.Write(Encoding.ASCII.GetBytes(msg), 0, msg.Length);
+      }
 
-         return stream;
+      /// <summary>
+      /// Hash the password from passwordText using SHA1.
+      /// </summary>
+      /// <returns>byte array containing hashed password</returns>
+      private byte[] hashPassword()
+      {
+         SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
+         byte[] data = Encoding.ASCII.GetBytes(passwordText.Text);
+         byte[] sha1data = sha1.ComputeHash(data);
+
+         return sha1data;
       }
 
       /// <summary>

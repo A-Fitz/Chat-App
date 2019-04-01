@@ -42,6 +42,12 @@ namespace Server
          return new Unsubscriber<Message>(observers, observer);
       }
 
+      //TODO had to add this because shit broke
+      public void Dispose()
+      {
+         throw new NotImplementedException();
+      }
+
       internal class Unsubscriber<Message> : IDisposable
       {
          private List<IObserver<Message>> _observers;
