@@ -75,7 +75,9 @@
          this.Controls.Add(this.loginButton);
          this.Controls.Add(this.label1);
          this.Name = "StartupForm";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Chat App";
+         this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StartupForm_FormClosed);
          this.ResumeLayout(false);
          this.PerformLayout();
 

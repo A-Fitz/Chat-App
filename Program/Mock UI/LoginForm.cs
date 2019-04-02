@@ -51,9 +51,9 @@ namespace Mock_UI
 
                // Open main form with connection
                this.Hide();
-               var form1 = new MainForm(stream);
-               form1.FormClosed += (s, args) => this.Close();
-               form1.Show();
+               var mainForm = new MainForm(stream);
+               mainForm.FormClosed += (s, args) => this.Close();
+               mainForm.Show();
             }
             catch (SocketException)
             {
@@ -127,5 +127,17 @@ namespace Mock_UI
          return false;
       }
 
+      /// <summary>
+      /// Take the user back to startup form.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void backButton_Click(object sender, EventArgs e)
+      {
+         this.Hide();
+         var startupForm = new StartupForm(stream);
+         startupForm.FormClosed += (s, args) => this.Close();
+         startupForm.Show();
+      }
    }
 }

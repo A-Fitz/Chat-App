@@ -32,6 +32,10 @@ namespace Mock_UI
          {
             System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername));
          }
+         else if (!isPasswordValid())
+         {
+            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidPassword));
+         }
          else
          {
             //register
@@ -101,6 +105,17 @@ namespace Mock_UI
          return sha1data;
       }
 
-     
+      /// <summary>
+      /// Take user back to startup form.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void backButton_Click(object sender, EventArgs e)
+      {
+         this.Hide();
+         var startupForm = new StartupForm(stream);
+         startupForm.FormClosed += (s, args) => this.Close();
+         startupForm.Show();
+      }
    }
 }

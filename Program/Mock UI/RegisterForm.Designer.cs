@@ -36,6 +36,7 @@
          this.label4 = new System.Windows.Forms.Label();
          this.label5 = new System.Windows.Forms.Label();
          this.registerButton = new System.Windows.Forms.Button();
+         this.backButton = new System.Windows.Forms.Button();
          this.SuspendLayout();
          // 
          // label1
@@ -114,11 +115,22 @@
          this.registerButton.UseVisualStyleBackColor = true;
          this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
          // 
+         // backButton
+         // 
+         this.backButton.Location = new System.Drawing.Point(3, 331);
+         this.backButton.Name = "backButton";
+         this.backButton.Size = new System.Drawing.Size(75, 23);
+         this.backButton.TabIndex = 14;
+         this.backButton.Text = "Back";
+         this.backButton.UseVisualStyleBackColor = true;
+         this.backButton.Click += new System.EventHandler(this.backButton_Click);
+         // 
          // RegisterForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(488, 356);
+         this.Controls.Add(this.backButton);
          this.Controls.Add(this.registerButton);
          this.Controls.Add(this.label5);
          this.Controls.Add(this.label4);
@@ -128,6 +140,7 @@
          this.Controls.Add(this.userNameText);
          this.Controls.Add(this.label1);
          this.Name = "RegisterForm";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Register";
          this.ResumeLayout(false);
          this.PerformLayout();
@@ -144,5 +157,6 @@
       private System.Windows.Forms.Label label4;
       private System.Windows.Forms.Label label5;
       private System.Windows.Forms.Button registerButton;
+      private System.Windows.Forms.Button backButton;
    }
 }

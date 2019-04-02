@@ -37,7 +37,6 @@
          this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
          this.visualPreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.signInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.userListBox = new System.Windows.Forms.ListBox();
          this.label2 = new System.Windows.Forms.Label();
@@ -148,23 +147,17 @@
          // accountToolStripMenuItem
          // 
          this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.signInToolStripMenuItem,
             this.signOutToolStripMenuItem});
          this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
          this.accountToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
          this.accountToolStripMenuItem.Text = "Account";
          // 
-         // signInToolStripMenuItem
-         // 
-         this.signInToolStripMenuItem.Name = "signInToolStripMenuItem";
-         this.signInToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-         this.signInToolStripMenuItem.Text = "Sign In";
-         // 
          // signOutToolStripMenuItem
          // 
          this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
-         this.signOutToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+         this.signOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
          this.signOutToolStripMenuItem.Text = "Sign Out";
+         this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
          // 
          // userListBox
          // 
@@ -204,7 +197,7 @@
          this.readMessagesTimer.Enabled = true;
          this.readMessagesTimer.Tick += new System.EventHandler(this.readMessagesTimer_Tick);
          // 
-         // Form1
+         // MainForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,8 +212,9 @@
          this.Controls.Add(this.messageField);
          this.Controls.Add(this.menuStrip1);
          this.MainMenuStrip = this.menuStrip1;
-         this.Name = "Form1";
-         this.Text = "Form1";
+         this.Name = "MainForm";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+         this.Text = "Chat App";
          this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
          this.menuStrip1.ResumeLayout(false);
          this.menuStrip1.PerformLayout();
@@ -239,7 +233,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem visualPreferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem signInToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.ListBox userListBox;
         private System.Windows.Forms.Label label2;

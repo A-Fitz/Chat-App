@@ -34,6 +34,7 @@
          this.label2 = new System.Windows.Forms.Label();
          this.label3 = new System.Windows.Forms.Label();
          this.passwordText = new System.Windows.Forms.TextBox();
+         this.backButton = new System.Windows.Forms.Button();
          this.SuspendLayout();
          // 
          // label1
@@ -90,11 +91,22 @@
          this.passwordText.TabIndex = 5;
          this.passwordText.UseSystemPasswordChar = true;
          // 
+         // backButton
+         // 
+         this.backButton.Location = new System.Drawing.Point(3, 331);
+         this.backButton.Name = "backButton";
+         this.backButton.Size = new System.Drawing.Size(75, 23);
+         this.backButton.TabIndex = 15;
+         this.backButton.Text = "Back";
+         this.backButton.UseVisualStyleBackColor = true;
+         this.backButton.Click += new System.EventHandler(this.backButton_Click);
+         // 
          // LoginForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(488, 356);
+         this.Controls.Add(this.backButton);
          this.Controls.Add(this.passwordText);
          this.Controls.Add(this.label3);
          this.Controls.Add(this.label2);
@@ -102,6 +114,7 @@
          this.Controls.Add(this.userNameText);
          this.Controls.Add(this.label1);
          this.Name = "LoginForm";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Login";
          this.ResumeLayout(false);
          this.PerformLayout();
@@ -116,5 +129,6 @@
       private System.Windows.Forms.Label label2;
       private System.Windows.Forms.Label label3;
       private System.Windows.Forms.TextBox passwordText;
+      private System.Windows.Forms.Button backButton;
    }
 }

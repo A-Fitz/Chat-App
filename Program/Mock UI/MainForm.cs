@@ -158,5 +158,19 @@ namespace Mock_UI
          tcpMessage.message = "0";
          messageService.SendMessage(tcpMessage);
       }
+
+      private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         TCPMessage tcpMessage = new TCPMessage();
+         tcpMessage.chatID = 0;
+         tcpMessage.command = "CLOSE";
+         tcpMessage.message = "0";
+         messageService.SendMessage(tcpMessage);
+
+         this.Hide();
+         var startupForm = new StartupForm();
+         startupForm.FormClosed += (s, args) => this.Close();
+         startupForm.Show();
+      }
    }
 }
