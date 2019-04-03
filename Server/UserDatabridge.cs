@@ -97,7 +97,8 @@ namespace Server
                     {
                         ParameterName = "HASHWORD",
                         OracleDbType = OracleDbType.Varchar2,
-                        Direction = ParameterDirection.Output
+                        Direction = ParameterDirection.Output,
+                        Size = 100
                     };
 
                     command.Parameters.Add(hashword);

@@ -22,7 +22,7 @@ namespace Server
 
         public string getUserPassword(string username)
         {
-            return UserDatabridge.getUserHash(username);
+            return UserDatabridge.GetUserHash(username);
         }
     }
 }
