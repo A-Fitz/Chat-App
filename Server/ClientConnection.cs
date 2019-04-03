@@ -92,12 +92,17 @@ namespace Server
                      a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      chatroomList.update(a);
                      break;
-                  case "CLOSE":
+                case "REGISTER":
+                     UserService userService = new UserService();
+                     //DO LOTS OF COOL STUFF HERE
+                     
+                     break;
+                case "CLOSE":
                      disconnect();
                      clients.Remove(this);
                      sendClientList(this, chatroomList);
                      Console.Out.WriteLine("Client " + username + " disconnected.");
-                     return;
+                     return;                     
                   default:
                      Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
                      a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
