@@ -64,7 +64,7 @@ namespace Server
          return new Unsubscriber<Message>(observers, observer);
       }
 
-      //TODO had to add this because shit broke
+      //TODO had to add this because it broke
       public void Dispose()
       {
          throw new NotImplementedException();

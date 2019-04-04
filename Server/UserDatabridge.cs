@@ -8,6 +8,9 @@ using System.Data;
 
 namespace Server
 {
+    /// <summary>
+    /// Handles getting the information from the database for use.
+    /// </summary>
     public class UserDatabridge
     {
         string connectionString = "Data Source=(DESCRIPTION ="
@@ -15,6 +18,15 @@ namespace Server
                 + "(CONNECT_DATA = (SID=EDDB) (SERVER = DEDICATED)));"
                 + "User Id= vancemi;Password=Cathy1965Vanc@;";
 
+
+        /// <summary>
+        /// This method registers a user to the chatroom service by sending
+        /// their information to the database to create a new entry in the 
+        /// login and user table.
+        /// </summary>
+        /// <param name="username">The desired username of the new user</param>
+        /// <param name="password">The password of the new user</param>
+        /// <returns></returns>
         public bool RegisterUser(string username, string password)
         {
             using (var connection = new OracleConnection(connectionString))
@@ -46,6 +58,12 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// This method checks the database to determine whether or not there
+        /// is already a user that has the username that is being passed to it.
+        /// </summary>
+        /// <param name="username">Username to check</param>
+        /// <returns></returns>
         public bool CheckUsername(string username)
         {
 
@@ -78,6 +96,12 @@ namespace Server
             return available == -1;
         }
 
+        /// <summary>
+        /// This method gets the hashed password of the user whose username
+        /// is passed. 
+        /// </summary>
+        /// <param name="username">Username whose password looking for</param>
+        /// <returns></returns>
         public string GetUserHash(string username)
         {
             string password = "";
