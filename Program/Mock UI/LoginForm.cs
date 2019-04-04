@@ -20,6 +20,10 @@ namespace ChatApp
       private NetworkStream stream;
       private IUserService userService;
 
+      /// <summary>
+      /// Start a UserService using the server connection stream.
+      /// </summary>
+      /// <param name="stream">Server connection stream</param>
       public LoginForm(NetworkStream stream)
       {
          this.stream = stream;
@@ -39,19 +43,6 @@ namespace ChatApp
          {
             try
             {
-                    /* removed this because we moved connection stuff to startup
-                    // Detect if client disconnected
-                    if (socket.Client.Poll(0, SelectMode.SelectRead))
-                    {
-                       byte[] buff = new byte[1];
-                       if (socket.Client.Receive(buff, SocketFlags.Peek) == 0)
-                       {
-                          System.Windows.Forms.MessageBox.Show("Login failed.");
-                          return;
-                       }
-                    }
-                    */
-
                     // Open main form with connection
                     if (login())
                     {
@@ -87,6 +78,10 @@ namespace ChatApp
 
       }
 
+      /// <summary>
+      /// Tries to login to the server, updates the status if unsuccessful. 
+      /// </summary>
+      /// <returns>true if valid login, false otherwise</returns>
       private bool login()
       { 
          var response = userService.Login(userNameText.Text, passwordText.Text);
