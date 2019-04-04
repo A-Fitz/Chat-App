@@ -13,7 +13,7 @@ namespace Server
    {
       private static int USERNAME_MAX = 20;
       private NetworkStream networkStream;
-      public string username { get; set; }
+      public string username { get; set; } = "";
       private static int numClients = 0;
       private ChatroomList chatroomList;
       public static List<ClientConnection> clients { get; set; } = new List<ClientConnection>();
@@ -75,7 +75,11 @@ namespace Server
       {
          try
          {
-            Login();
+            if (!Login())
+               throw new Exception("Login failed. User disconnected.");
+
+            Console.WriteLine(username + " has successfully logged in.");
+            LoadClientData();
             //TODO Make sure client is not recieving messages before login
             while (true)
             {
@@ -85,12 +89,6 @@ namespace Server
                   return;
                switch (a.command)
                {
-                  case "SETNAME":
-                     username = a.message;
-                     Thread.CurrentThread.Name = a.message;
-                     // update all clients when new connected client
-                     sendClientList(this, chatroomList);
-                     break;
                   case "SEND":
                      a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      chatroomList.update(a);
@@ -99,8 +97,8 @@ namespace Server
                 case "CLOSE":
                      disconnect();
                      clients.Remove(this);
-                     sendClientList(this, chatroomList);
-                     Console.Out.WriteLine("Client " + username + " disconnected.");
+                     sendClientList(chatroomList);
+                     Console.Out.WriteLine((username == "" ? "Someone disconected." : username + " disconnected."));
                      return;                     
                   default:
                      Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
@@ -113,8 +111,10 @@ namespace Server
          }
          catch(Exception e)
          {
-            // TODO do something else
-            // Console.Out.WriteLine("Client " + username + " disconnected.");
+            disconnect();
+            clients.Remove(this);
+            sendClientList(chatroomList);
+            Console.Out.WriteLine((username == "" ? "Someone disconected.": username + " disconnected."));
          }
          finally
          {
@@ -122,7 +122,24 @@ namespace Server
          }
       }
 
-      private void Login()
+      /// <summary>
+      /// This will be run imediately following a successful login to do
+      /// any startup processes required for the client to run.
+      /// </summary>
+      private void LoadClientData()
+      {
+         //TODO LATER: Request data from SQL server on this client and send messages to
+         //this client's OnNext() function.
+         subsribeToChat(ChatroomList.idToChatroom(0));
+         sendClientList(chatroomList);
+      }
+
+
+      /// <summary>
+      /// Handles the login logic, returns false if there was an error
+      /// </summary>
+      /// <returns>True if successful. False otherwise.</returns>
+      private bool Login()
       {
          try
          {
@@ -132,7 +149,7 @@ namespace Server
                Message a = parseStream();
 
                if (a == null)
-                  return;
+                  return false;
                string[] usernamePassword = ParseRegisterMessage(a.message);
                switch (a.command)
                {
@@ -143,18 +160,23 @@ namespace Server
                         if (!userService.RegisterUser(usernamePassword[0], usernamePassword[1]))
                            WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed" });
                      }
-                     else //TODO: not passing checkusername()
+                     else 
                      {
                         WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is taken." });
                      }
                      WriteMessage(new Message { chatID = -1, command = "SUCCESS", message = "Registration successful!" });
                      break;
                   case "LOGIN":
-                     if (userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))
+                     if(isLoggedIn(usernamePassword[0]))
+                     {
+                        WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is already logged in." });
+                     }
+                     else if (userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))
                      {
                         username = usernamePassword[0];
+                        Thread.CurrentThread.Name = username;
                         WriteMessage(new Message { chatID = -1, command = "SUCCESS", message = "Login successful!" });
-                        return;
+                        return true;
                      }
                      else
                         WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed. Username or password is incorrect." });
@@ -177,6 +199,18 @@ namespace Server
          {
             //TODO: Thread is being killed, clean up
          }
+         return false;
+      }
+
+
+      private static bool isLoggedIn(string username)
+      {
+         foreach (ClientConnection client in clients)
+         {
+            if (client.username == username)
+               return true;
+         }
+         return false;
       }
 
       private string[] ParseRegisterMessage(string message)
@@ -283,7 +317,7 @@ namespace Server
       /// </summary>
       /// <param name="client"></param>
       /// <param name="chatroomList"></param>
-      private void sendClientList(ClientConnection client, ChatroomList chatroomList)
+      private void sendClientList(ChatroomList chatroomList)
       {
          String list = "";
          foreach (ClientConnection c in ClientConnection.clients)

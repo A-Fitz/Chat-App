@@ -88,7 +88,6 @@ namespace Server
                Console.WriteLine("A new client has connected");
                NetworkStream stream = socket.GetStream();
                ClientConnection client = new ClientConnection(stream, chatroomList);
-               client.subsribeToChat(ChatroomList.idToChatroom(0));
                client.StartAsync();
 
                
