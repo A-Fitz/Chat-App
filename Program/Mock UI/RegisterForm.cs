@@ -21,6 +21,10 @@ namespace ChatApp
       private IUserService userService;
       private LoginForm loginForm;
 
+      /// <summary>
+      /// Start a new UserService using the server connection stream.
+      /// </summary>
+      /// <param name="stream">Server connection stream</param>
       public RegisterForm(NetworkStream stream)
       {
          this.stream = stream;
@@ -28,9 +32,13 @@ namespace ChatApp
          InitializeComponent();
       }
 
+      /// <summary>
+      /// Attempt to register to user while displaying correct status messages. If registration successful, open the login form.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void registerButton_Click(object sender, EventArgs e)
       {
-            registrationStatus.Text = "";
          registrationStatus.Text = "Registering user...";
          if (!isUsernameValid())
          {
@@ -42,9 +50,10 @@ namespace ChatApp
          }
          else
          {
-            var response = userService.RegisterUser(userNameText.Text, passwordText.Text);
+            var response = userService.RegisterUser(userNameText.Text, passwordText.Text); // try to register user, get response
             if (response.command != failedLogin)
             {
+               // if successful registration, go to login form
                registrationStatus.Text = response.message;
                Hide();
                loginForm = new LoginForm(stream);
@@ -56,6 +65,12 @@ namespace ChatApp
          }
       }
 
+      /// <summary>
+      /// When the user leaves the username text field, check if their input is valid. If it is not, 
+      /// change the registration status. If it is, unlock the register button.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void userNameText_Leave(object sender, EventArgs e)
       {
          if(!isUsernameValid())
@@ -68,17 +83,30 @@ namespace ChatApp
          }
       }
 
+      /// <summary>
+      /// Lock the register button everytime the username text field is changed so we don't try toi register an invalid username.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void userNameText_TextChanged(object sender, EventArgs e)
       {
          // lock button
          registerButton.Enabled = false;
       }
 
+      /// <summary>
+      /// Check if the password text field contains a password that is at least 4 characters long.
+      /// </summary>
+      /// <returns>true if valid password, false otherwise</returns>
       private Boolean isPasswordValid()
       {
          return passwordText.Text.Length >= 4;
       }
 
+      /// <summary>
+      /// Check if the username text field contains a username 
+      /// </summary>
+      /// <returns>true if valid username, false otherwise</returns>
       private Boolean isUsernameValid()
       {
          if (userNameText.Text.Length <= 0)
@@ -106,7 +134,7 @@ namespace ChatApp
       }
 
       /// <summary>
-      /// Take user back to startup form.
+      /// Take user back to startup form when the back button is clicked.
       /// </summary>
       /// <param name="sender"></param>
       /// <param name="e"></param>

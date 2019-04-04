@@ -2,15 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Sockets;
 using ChatApp.Services;
 
 namespace ChatApp
@@ -20,46 +13,16 @@ namespace ChatApp
       // Message Services
       private NetworkStream stream;
       private IMessageService messageService;
+
+      /// <summary>
+      /// The main application form. Handles chat logic.
+      /// </summary>
+      /// <param name="stream"></param>
       public MainForm(NetworkStream stream)
       {
          this.stream = stream;
          messageService = new MessageService(stream);
          InitializeComponent();
-      }
-
-      private void button1_Click(object sender, EventArgs e)
-      {
-#if TEST1
-         //get message from textbox
-         String message = messageField.Text;
-         byte[] dataOut = UTF8Encoding.ASCII.GetBytes(message.ToCharArray());
-
-         //send message through server
-         stream.Write(dataOut, 0, dataOut.Length);
-
-         //revert textbox to empty
-         messageField.Clear();
-         this.Update();
-#else
-            //Real code here
-
-#endif
-      }
-
-      private void timer1_Tick(object sender, EventArgs e)
-      {
-#if TEST1
-
-         byte[] dataIn = new byte[6054];
-         if (stream.DataAvailable)
-         {
-            stream.Read(dataIn, 0, dataIn.Length);
-            String inputStr = new String(ASCIIEncoding.UTF8.GetChars(dataIn, 0, dataIn.Length));
-         }
-         this.Update();
-#else
-            //Real code here
-#endif
       }
 
       /// <summary>
@@ -160,6 +123,11 @@ namespace ChatApp
          messageService.SendMessage(tcpMessage);
       }
 
+      /// <summary>
+      /// Sign out of the user account and return to the startup form when the signout button is clicked.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
       {
          TCPMessage tcpMessage = new TCPMessage();

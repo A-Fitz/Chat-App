@@ -14,21 +14,30 @@ namespace ChatApp.Services
    {
       
       NetworkStream networkStream;
+
+
+      /// <summary>
+      /// Creates a new MessageService with a network stream.
+      /// </summary>
+      /// <param name="networkStream"></param>
       public MessageService(NetworkStream networkStream)
       {
          this.networkStream = networkStream;
       }
 
-      public MessageService()
-      {
-
-      }
-
+      /// <summary>
+      /// Lets us know if there are any unread messages in the stream.
+      /// </summary>
+      /// <returns>True if there are new messages, false otherwise</returns>
       public bool CheckForMessages()
       {
          return networkStream.DataAvailable;
       }
 
+      /// <summary>
+      /// Gets new messages from the stream. As long as CheckForMessage() returns true, we read in a message into a list of TCPMessages.
+      /// </summary>
+      /// <returns>List of TCPMessages</returns>
       public IList<TCPMessage> GetMessages()
       {
          List<TCPMessage> messageList = new List<TCPMessage>();
@@ -40,6 +49,12 @@ namespace ChatApp.Services
          return messageList;
       }
 
+      /// <summary>
+      /// Attempts to send a message. Handles errors and exceptions for invalid messages and connection issues.
+      /// Serializes the TCPMessage and writes it to the network stream.
+      /// </summary>
+      /// <param name="message"></param>
+      /// <returns>An EnumMessageStatus of the appropriate success or failure type.</returns>
       public EnumMessageStatus SendMessage(TCPMessage message)
       {
          if (!ValidateMessage(message.message))
@@ -53,24 +68,28 @@ namespace ChatApp.Services
             networkStream.Write(data, 0, data.Length);
             return EnumMessageStatus.successful;
          }
-         catch (ArgumentNullException ex)
+         catch (ArgumentNullException)
          {
             return EnumMessageStatus.empty;
          }
-         catch (SocketException ex)
+         catch (SocketException)
          {
             return EnumMessageStatus.notSent;
          }
-         catch (ObjectDisposedException ex)
+         catch (ObjectDisposedException)
          {
             return EnumMessageStatus.connectionClosed;
          }
-         catch (Exception ex)
+         catch (Exception)
          {
             return EnumMessageStatus.unknown;
          }
       }
 
+      /// <summary>
+      /// Reads in a message from the stream and parses it.
+      /// </summary>
+      /// <returns>a byte array containing a message</returns>
       private byte[] ReadInMessage()
       {
          List<Char> integerStringList = new List<char>();

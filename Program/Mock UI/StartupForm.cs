@@ -1,13 +1,6 @@
 ﻿using ChatApp.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChatApp
@@ -16,6 +9,10 @@ namespace ChatApp
    {
       private NetworkStream stream;
       private IMessageService messageService;
+
+      /// <summary>
+      /// Sets up connection with the server and handles exceptions.
+      /// </summary>
       public StartupForm()
       {
          InitializeComponent();
@@ -25,19 +22,8 @@ namespace ChatApp
             TcpClient socket = new TcpClient("127.0.0.1", 12345);
             stream = socket.GetStream(); // will catch exceptions from this
             messageService = new MessageService(stream);
-            /* TODO not sure what to do with this
-            // Detect if client disconnected
-            if (socket.Client.Poll(0, SelectMode.SelectRead))
-            {
-               byte[] buff = new byte[1];
-               if (socket.Client.Receive(buff, SocketFlags.Peek) == 0)
-               {
-                  System.Windows.Forms.MessageBox.Show("Login failed.");
-                  return;
-               }
-            }
-            */
 
+            // Unlock the login/register buttons only if successfully connected to the server.
             loginButton.Enabled = true;
             registerButton.Enabled = true;
          }
@@ -59,6 +45,10 @@ namespace ChatApp
          }
       }
 
+      /// <summary>
+      /// Constructor called when a connection to the server has already been made. Uses that connection.
+      /// </summary>
+      /// <param name="stream">Previous server connection stream</param>
       public StartupForm(NetworkStream stream)
       {
          InitializeComponent();
@@ -69,6 +59,11 @@ namespace ChatApp
          registerButton.Enabled = true;
       }
 
+      /// <summary>
+      /// Closes this form and opens the login form.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void loginButton_Click(object sender, EventArgs e)
       {
          this.Hide();
@@ -77,6 +72,11 @@ namespace ChatApp
          loginForm.Show();
       }
 
+      /// <summary>
+      /// Closes this form and opens the register form.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void registerButton_Click(object sender, EventArgs e)
       {
          this.Hide();
@@ -85,6 +85,11 @@ namespace ChatApp
          registerForm.Show();
       }
 
+      /// <summary>
+      /// If this form is manually closed then disconnect from the server safely.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void StartupForm_FormClosed(object sender, FormClosedEventArgs e)
       {
          // TODO do stuff so this doesn't break if the server is disconnected
