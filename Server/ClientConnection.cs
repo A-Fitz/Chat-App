@@ -29,6 +29,12 @@ namespace Server
          this.chatroomList = chatroomList;
       }
 
+      public static void ResetStaticData()
+      {
+         numClients = 0;
+         clients = new List<ClientConnection>();
+      }
+
       /// <summary>
       /// Cleans up the stream
       /// </summary>

@@ -25,6 +25,12 @@ namespace Server
             chatrooms.Add(crl);
       }
 
+
+      public static void ResetStaticData()
+      {
+         chatrooms = new List<ChatroomLogic>();
+      }
+
       /// <summary>
       /// All messages with the command "SEND" will come through this function.
       /// This function acts as a main pipe for all messages and sends

@@ -29,6 +29,11 @@ namespace Server
          numChatRoomsCreated++;
       }
 
+      public static void ResetStaticData()
+      {
+         numChatRoomsCreated = 0;
+      }
+
       /// <summary>
       /// Every message that is specific to this chatroom with 
       /// command equal to "SEND" will pass through this function.

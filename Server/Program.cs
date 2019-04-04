@@ -45,7 +45,7 @@ namespace Server
          while (!exit)
          {
             string input = Console.In.ReadLine().Trim();
-            switch(input)
+            switch(input.ToLower())
             {
                case "exit":
                   exit = true;
@@ -53,6 +53,9 @@ namespace Server
                case "help":
                case "?":
                   Console.Write(HELP);
+                  break;
+               case "restart":
+
                   break;
                default:
                   Console.WriteLine(input + " is not recognized as a command. Use ? or help for options.");
