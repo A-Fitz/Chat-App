@@ -34,7 +34,6 @@ namespace Server
             //Start server
 
          UserDatabridge databridge = new UserDatabridge();
-            var password = databridge.GetUserHash("Ryan");
 
          ChatroomList chatroomList = new ChatroomList();
          ChatroomLogic mainRoom = new ChatroomLogic();

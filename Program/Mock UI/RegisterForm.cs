@@ -30,7 +30,8 @@ namespace ChatApp
 
       private void registerButton_Click(object sender, EventArgs e)
       {
-         registrationStatus.Text = ". . .";
+            registrationStatus.Text = "";
+         registrationStatus.Text = "Registering user...";
          if (!isUsernameValid())
          {
             registrationStatus.Text = EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername);

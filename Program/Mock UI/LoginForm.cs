@@ -39,26 +39,27 @@ namespace ChatApp
          {
             try
             {
-               login();
+                    /* removed this because we moved connection stuff to startup
+                    // Detect if client disconnected
+                    if (socket.Client.Poll(0, SelectMode.SelectRead))
+                    {
+                       byte[] buff = new byte[1];
+                       if (socket.Client.Receive(buff, SocketFlags.Peek) == 0)
+                       {
+                          System.Windows.Forms.MessageBox.Show("Login failed.");
+                          return;
+                       }
+                    }
+                    */
 
-               /* removed this because we moved connection stuff to startup
-               // Detect if client disconnected
-               if (socket.Client.Poll(0, SelectMode.SelectRead))
-               {
-                  byte[] buff = new byte[1];
-                  if (socket.Client.Receive(buff, SocketFlags.Peek) == 0)
-                  {
-                     System.Windows.Forms.MessageBox.Show("Login failed.");
-                     return;
-                  }
-               }
-               */
-
-               // Open main form with connection
-               this.Hide();
-               var mainForm = new MainForm(stream);
-               mainForm.FormClosed += (s, args) => this.Close();
-               mainForm.Show();
+                    // Open main form with connection
+                    if (login())
+                    {
+                        Hide();
+                        var mainForm = new MainForm(stream);
+                        mainForm.FormClosed += (s, args) => this.Close();
+                        mainForm.Show();
+                    }
             }
             catch (SocketException)
             {
@@ -86,10 +87,11 @@ namespace ChatApp
 
       }
 
-      private void login()
+      private bool login()
       { 
          var response = userService.Login(userNameText.Text, passwordText.Text);
          LoginStatus.Text = response.message;
+         return response.command == "SUCCESS";
       }
 
      
