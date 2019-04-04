@@ -1,4 +1,4 @@
-﻿namespace Mock_UI
+﻿namespace ChatApp
 {
     partial class LoginForm
     {
@@ -35,6 +35,7 @@
          this.label3 = new System.Windows.Forms.Label();
          this.passwordText = new System.Windows.Forms.TextBox();
          this.backButton = new System.Windows.Forms.Button();
+         this.LoginStatus = new System.Windows.Forms.Label();
          this.SuspendLayout();
          // 
          // label1
@@ -101,11 +102,22 @@
          this.backButton.UseVisualStyleBackColor = true;
          this.backButton.Click += new System.EventHandler(this.backButton_Click);
          // 
+         // LoginStatus
+         // 
+         this.LoginStatus.AutoSize = true;
+         this.LoginStatus.Location = new System.Drawing.Point(138, 202);
+         this.LoginStatus.Name = "LoginStatus";
+         this.LoginStatus.Size = new System.Drawing.Size(109, 13);
+         this.LoginStatus.TabIndex = 16;
+         this.LoginStatus.Text = "12345678909834128";
+         this.LoginStatus.Click += new System.EventHandler(this.LoginStatus_Click);
+         // 
          // LoginForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(488, 356);
+         this.Controls.Add(this.LoginStatus);
          this.Controls.Add(this.backButton);
          this.Controls.Add(this.passwordText);
          this.Controls.Add(this.label3);
@@ -116,6 +128,7 @@
          this.Name = "LoginForm";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Login";
+         this.Load += new System.EventHandler(this.LoginForm_Load);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -130,5 +143,6 @@
       private System.Windows.Forms.Label label3;
       private System.Windows.Forms.TextBox passwordText;
       private System.Windows.Forms.Button backButton;
+      private System.Windows.Forms.Label LoginStatus;
    }
 }

@@ -1,4 +1,4 @@
-﻿namespace Mock_UI
+﻿namespace ChatApp
 {
     partial class MainForm
     {

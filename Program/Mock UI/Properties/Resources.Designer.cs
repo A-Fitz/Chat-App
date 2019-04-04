@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Mock_UI.Properties
+namespace ChatApp.Properties
 {
 
 

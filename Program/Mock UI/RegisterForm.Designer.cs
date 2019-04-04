@@ -1,4 +1,4 @@
-﻿namespace Mock_UI
+﻿namespace ChatApp
 {
    partial class RegisterForm
    {
@@ -37,6 +37,7 @@
          this.label5 = new System.Windows.Forms.Label();
          this.registerButton = new System.Windows.Forms.Button();
          this.backButton = new System.Windows.Forms.Button();
+         this.registrationStatus = new System.Windows.Forms.Label();
          this.SuspendLayout();
          // 
          // label1
@@ -125,11 +126,21 @@
          this.backButton.UseVisualStyleBackColor = true;
          this.backButton.Click += new System.EventHandler(this.backButton_Click);
          // 
+         // registrationStatus
+         // 
+         this.registrationStatus.AutoSize = true;
+         this.registrationStatus.Location = new System.Drawing.Point(231, 206);
+         this.registrationStatus.Name = "registrationStatus";
+         this.registrationStatus.Size = new System.Drawing.Size(35, 13);
+         this.registrationStatus.TabIndex = 15;
+         this.registrationStatus.Text = "label6";
+         // 
          // RegisterForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(488, 356);
+         this.Controls.Add(this.registrationStatus);
          this.Controls.Add(this.backButton);
          this.Controls.Add(this.registerButton);
          this.Controls.Add(this.label5);
@@ -158,5 +169,6 @@
       private System.Windows.Forms.Label label5;
       private System.Windows.Forms.Button registerButton;
       private System.Windows.Forms.Button backButton;
+      private System.Windows.Forms.Label registrationStatus;
    }
 }

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System.Net.Sockets;
 using System.Resources;
 
-namespace Mock_UI
+namespace ChatApp.Services
 {
    public class MessageService : IMessageService
    {

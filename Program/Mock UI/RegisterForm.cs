@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ChatApp.Interfaces;
+using ChatApp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,47 +12,54 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Mock_UI
+namespace ChatApp
 {
    public partial class RegisterForm : Form
    {
+      private string failedLogin = "EXCEPTION";
       private NetworkStream stream;
+      private IUserService userService;
+      private LoginForm loginForm;
 
       public RegisterForm(NetworkStream stream)
       {
          this.stream = stream;
+         userService = new UserService(stream);
          InitializeComponent();
       }
 
       private void registerButton_Click(object sender, EventArgs e)
       {
-         if (!isUsernameAvailable())
+         registrationStatus.Text = ". . .";
+         if (!isUsernameValid())
          {
-            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.takenUsername));
-         }
-         else if (!isUsernameValid())
-         {
-            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername));
+            registrationStatus.Text = EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername);
          }
          else if (!isPasswordValid())
          {
-            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidPassword));
+            registrationStatus.Text = EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidPassword);
          }
          else
          {
-            //register
+            var response = userService.RegisterUser(userNameText.Text, passwordText.Text);
+            if (response.command != failedLogin)
+            {
+               registrationStatus.Text = response.message;
+               Hide();
+               loginForm = new LoginForm(stream);
+               loginForm.FormClosed += (s, args) => this.Close();
+               loginForm.Show();
+            }
+            else
+               registrationStatus.Text = response.message;
          }
       }
 
       private void userNameText_Leave(object sender, EventArgs e)
       {
-         if(!isUsernameAvailable())
+         if(!isUsernameValid())
          {
-            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.takenUsername));
-         }
-         else if(!isUsernameValid())
-         {
-            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername));
+            registrationStatus.Text = EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername);
          }
          else
          {
@@ -80,16 +89,6 @@ namespace Mock_UI
          }
 
          return false;
-      }
-
-      /// <summary>
-      /// Checks if the username is available. Connects 
-      /// </summary>
-      /// <returns></returns>
-      private Boolean isUsernameAvailable()
-      {
-         // TODO do database stuff
-         return true;
       }
 
       /// <summary>

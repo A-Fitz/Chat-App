@@ -9,16 +9,21 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ChatApp.Interfaces;
+using ChatApp.Services;
 using Newtonsoft.Json;
 
-namespace Mock_UI
+namespace ChatApp
 {
    public partial class LoginForm : Form
    {
       private NetworkStream stream;
+      private IUserService userService;
+
       public LoginForm(NetworkStream stream)
       {
          this.stream = stream;
+         userService = new UserService(stream);
          InitializeComponent();
       }
 
@@ -82,32 +87,12 @@ namespace Mock_UI
       }
 
       private void login()
-      {
-
-         // TODO
-         //USE A LOGIN COMMAND, SEND USERNAME AND PASSWORD, SERVER WILL DISCONNECT YOU IF IT IS NOT CORRECT.
-         //attempt to login with usernameText.Text and hashed password
-         byte[] hashedPassword = hashPassword();
-
-         var newUser = new TCPMessage { chatID = 0, message = userNameText.Text, command = "SETNAME" };
-         var msg = JsonConvert.SerializeObject(newUser);
-         msg = msg.Length + ":" + msg;
-         stream.Write(Encoding.ASCII.GetBytes(msg), 0, msg.Length);
+      { 
+         var response = userService.Login(userNameText.Text, passwordText.Text);
+         LoginStatus.Text = response.message;
       }
 
-      /// <summary>
-      /// Hash the password from passwordText using SHA1.
-      /// </summary>
-      /// <returns>byte array containing hashed password</returns>
-      private byte[] hashPassword()
-      {
-         SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
-         byte[] data = Encoding.ASCII.GetBytes(passwordText.Text);
-         byte[] sha1data = sha1.ComputeHash(data);
-
-         return sha1data;
-      }
-
+     
       /// <summary>
       /// A username is valid if it only contains letters, digits, hyphens, or underscores. 
       /// If it contains any other character it is invalid. Can't be empty.
@@ -138,6 +123,16 @@ namespace Mock_UI
          var startupForm = new StartupForm(stream);
          startupForm.FormClosed += (s, args) => this.Close();
          startupForm.Show();
+      }
+
+      private void LoginForm_Load(object sender, EventArgs e)
+      {
+
+      }
+
+      private void LoginStatus_Click(object sender, EventArgs e)
+      {
+
       }
    }
 }

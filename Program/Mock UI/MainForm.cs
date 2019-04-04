@@ -11,7 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
-namespace Mock_UI
+using ChatApp.Services;
+
+namespace ChatApp
 {
    public partial class MainForm : Form
    {
@@ -109,7 +111,6 @@ namespace Mock_UI
                   case "CLOSING":
                      MessageBox.Show("SERVER IS CLOSING. YOUR MESSAGES WILL NOT SEND. GOODBYE.");
                      return;
-                     break;
                   case "CLIENTLIST":
                      userListBox.Items.Clear();
                      foreach (string str in t.message.Split(','))

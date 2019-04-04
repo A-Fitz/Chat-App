@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mock_UI
+namespace ChatApp
 {
     public enum EnumUserConnectionExceptions
     {
       [Description("Please enter a valid username.")]
       invalidUsername,
-      [Description("That username is already taken.")]
-      takenUsername,
       [Description("Please enter a valid password.")]
       invalidPassword,
       [Description("Incorect IP address or port. Programmers messed up.")]

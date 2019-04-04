@@ -11,6 +11,7 @@ namespace Server
 {
    class ClientConnection : IObserver<Message>
    {
+      private static int USERNAME_MAX = 20;
       private NetworkStream networkStream;
       public string username { get; set; }
       private static int numClients = 0;
@@ -74,6 +75,8 @@ namespace Server
       {
          try
          {
+            Login();
+            //TODO Make sure client is not recieving messages before login
             while (true)
             {
                Message a = parseStream();
@@ -92,11 +95,7 @@ namespace Server
                      a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      chatroomList.update(a);
                      break;
-                case "REGISTER":
-                     UserService userService = new UserService();
-                     //DO LOTS OF COOL STUFF HERE
                      
-                     break;
                 case "CLOSE":
                      disconnect();
                      clients.Remove(this);
@@ -122,6 +121,72 @@ namespace Server
             //TODO: Thread is being killed, clean up
          }
       }
+
+      private void Login()
+      {
+         try
+         {
+            UserService userService = new UserService();
+            while (true)
+            {
+               Message a = parseStream();
+
+               if (a == null)
+                  return;
+               string[] usernamePassword = ParseRegisterMessage(a.message);
+               switch (a.command)
+               {
+
+                  case "REGISTER":
+                     if(userService.CheckUsername(usernamePassword[0]))
+                     {
+                        if (!userService.RegisterUser(usernamePassword[0], usernamePassword[1]))
+                           WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed" });
+                     }
+                     else //TODO: not passing checkusername()
+                     {
+                        WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is taken." });
+                     }
+                     WriteMessage(new Message { chatID = -1, command = "SUCCESS", message = "Registration successful!" });
+                     break;
+                  case "LOGIN":
+                     if (userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))
+                     {
+                        username = usernamePassword[0];
+                        WriteMessage(new Message { chatID = -1, command = "SUCCESS", message = "Login successful!" });
+                        return;
+                     }
+                     else
+                        WriteMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed. Username or password is incorrect." });
+                     break;
+                  default:
+                     //Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
+                     //a.message = DateTime.Now.ToString() + " : " + username + " : " + a.message;
+                     //chatroomList.update(a);
+                     break;
+               }
+
+            }
+         }
+         catch (Exception e)
+         {
+            // TODO do something else
+            // Console.Out.WriteLine("Client " + username + " disconnected.");
+         }
+         finally
+         {
+            //TODO: Thread is being killed, clean up
+         }
+      }
+
+      private string[] ParseRegisterMessage(string message)
+      {
+         string[] usernamePassword = new string[2];
+         usernamePassword[0] = message.Substring(0, USERNAME_MAX).Trim();
+         usernamePassword[1] = message.Substring(USERNAME_MAX);
+         return usernamePassword;
+      }
+
 
       /// <summary>
       /// Parses incoming data into Message objects that the 

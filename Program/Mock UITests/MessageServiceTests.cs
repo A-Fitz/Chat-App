@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mock_UI;
+using ChatApp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChatApp.Services;
 
-namespace Mock_UI.Tests
+namespace ChatApp.Tests
 {
     [TestClass()]
     public class MessageServiceTests

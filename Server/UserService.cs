@@ -20,9 +20,9 @@ namespace Server
             return UserDatabridge.RegisterUser(username, password);
         }
 
-        public string getUserPassword(string username)
+        public bool VerifyLogin(string username, string password)
         {
-            return UserDatabridge.GetUserHash(username);
+            return UserDatabridge.GetUserHash(username) == password;
         }
     }
 }
