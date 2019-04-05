@@ -1,44 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using Newtonsoft.Json;
 using System.Net.Sockets;
-using System.Resources;
+using ChatApp.Interfaces;
 
 namespace ChatApp.Services
 {
    public class MessageService : IMessageService
    {
       
-      NetworkStream networkStream;
+      private readonly IServerConnection serverConnection;
 
 
       /// <summary>
       /// Creates a new MessageService with a network stream.
       /// </summary>
       /// <param name="networkStream"></param>
-      public MessageService(NetworkStream networkStream)
+      public MessageService(IServerConnection serverConnection)
       {
-         this.networkStream = networkStream;
+         this.serverConnection = serverConnection;
       }
 
       /// <summary>
       /// Lets us know if there are any unread messages in the stream.
       /// </summary>
       /// <returns>True if there are new messages, false otherwise</returns>
-      public bool CheckForMessages()
+      public virtual bool CheckForMessages()
       {
-         return networkStream.DataAvailable;
+         return serverConnection.DataAvailable;
       }
 
       /// <summary>
       /// Gets new messages from the stream. As long as CheckForMessage() returns true, we read in a message into a list of TCPMessages.
       /// </summary>
       /// <returns>List of TCPMessages</returns>
-      public IList<TCPMessage> GetMessages()
+      public virtual IList<TCPMessage> GetMessages()
       {
          List<TCPMessage> messageList = new List<TCPMessage>();
          while (CheckForMessages())
@@ -55,7 +52,7 @@ namespace ChatApp.Services
       /// </summary>
       /// <param name="message"></param>
       /// <returns>An EnumMessageStatus of the appropriate success or failure type.</returns>
-      public EnumMessageStatus SendMessage(TCPMessage message)
+      public virtual EnumMessageStatus SendMessage(TCPMessage message)
       {
          if (!ValidateMessage(message.message))
             return EnumMessageStatus.invalid;
@@ -65,7 +62,7 @@ namespace ChatApp.Services
             serializedMessage = serializedMessage.Length + ":" + serializedMessage;
             byte[] data = Encoding.ASCII.GetBytes(serializedMessage);
 
-            networkStream.Write(data, 0, data.Length);
+                serverConnection.Write(data, 0, data.Length);
             return EnumMessageStatus.successful;
          }
          catch (ArgumentNullException)
@@ -93,15 +90,15 @@ namespace ChatApp.Services
       private byte[] ReadInMessage()
       {
          List<Char> integerStringList = new List<char>();
-         char character = (char)networkStream.ReadByte();
+         char character = (char)serverConnection.ReadByte();
          while (character != ':')
          {
             integerStringList.Add(character);
-            character = (char)networkStream.ReadByte();
+            character = (char)serverConnection.ReadByte();
          }
          int length = int.Parse(new string(integerStringList.ToArray()));
          byte[] data = new byte[length];
-         networkStream.Read(data, 0, data.Length);
+            serverConnection.Read(data, 0, data.Length);
          return data;
 
       }

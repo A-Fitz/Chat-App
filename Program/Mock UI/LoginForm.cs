@@ -1,33 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChatApp.Interfaces;
 using ChatApp.Services;
-using Newtonsoft.Json;
 
 namespace ChatApp
 {
    public partial class LoginForm : Form
    {
-      private NetworkStream stream;
-      private IUserService userService;
-
+      private readonly IServerConnection serverConnection;
+      private readonly IUserService userService;
+      private readonly IMessageService messageService;
       /// <summary>
       /// Start a UserService using the server connection stream.
       /// </summary>
       /// <param name="stream">Server connection stream</param>
-      public LoginForm(NetworkStream stream)
+      public LoginForm(IServerConnection serverConnection, IMessageService messageService)
       {
-         this.stream = stream;
-         userService = new UserService(stream);
+         this.serverConnection = serverConnection;
+            this.messageService = messageService;
+         userService = new UserService(serverConnection, messageService);
          InitializeComponent();
       }
 
@@ -47,7 +40,7 @@ namespace ChatApp
                     if (login())
                     {
                         Hide();
-                        var mainForm = new MainForm(stream);
+                        var mainForm = new MainForm(serverConnection, messageService);
                         mainForm.FormClosed += (s, args) => this.Close();
                         mainForm.Show();
                     }
@@ -117,7 +110,7 @@ namespace ChatApp
       private void backButton_Click(object sender, EventArgs e)
       {
          this.Hide();
-         var startupForm = new StartupForm(stream);
+         var startupForm = new StartupForm(serverConnection);
          startupForm.FormClosed += (s, args) => this.Close();
          startupForm.Show();
       }

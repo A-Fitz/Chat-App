@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
+﻿using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using ChatApp.Interfaces;
 using System.Security.Cryptography;
@@ -12,15 +8,15 @@ namespace ChatApp.Services
 {
    public class UserService : IUserService
    {
-      IMessageService messageService;
+      private readonly IMessageService messageService;
 
       /// <summary>
       /// Sets up a new UserService and MessageService with a network stream.
       /// </summary>
       /// <param name="stream"></param>
-      public UserService(NetworkStream stream)
+      public UserService(IServerConnection serverConnection, IMessageService messageService)
       {
-         messageService = new MessageService(stream);
+         this.messageService = messageService;
       }
       
       /// <summary>

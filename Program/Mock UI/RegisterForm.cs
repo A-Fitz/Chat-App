@@ -1,15 +1,7 @@
 ﻿using ChatApp.Interfaces;
 using ChatApp.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChatApp
@@ -17,18 +9,20 @@ namespace ChatApp
    public partial class RegisterForm : Form
    {
       private string failedLogin = "EXCEPTION";
-      private NetworkStream stream;
-      private IUserService userService;
+      private readonly IServerConnection serverConnection;
+      private readonly IUserService userService;
+      private readonly IMessageService messageService;
       private LoginForm loginForm;
 
       /// <summary>
       /// Start a new UserService using the server connection stream.
       /// </summary>
       /// <param name="stream">Server connection stream</param>
-      public RegisterForm(NetworkStream stream)
+      public RegisterForm(IServerConnection serverConnection, IMessageService messageService)
       {
-         this.stream = stream;
-         userService = new UserService(stream);
+         this.messageService = messageService;
+         this.serverConnection = serverConnection;
+         userService = new UserService(serverConnection, messageService);
          InitializeComponent();
       }
 
@@ -56,7 +50,7 @@ namespace ChatApp
                // if successful registration, go to login form
                registrationStatus.Text = response.message;
                Hide();
-               loginForm = new LoginForm(stream);
+               loginForm = new LoginForm(serverConnection, messageService);
                loginForm.FormClosed += (s, args) => this.Close();
                loginForm.Show();
             }
@@ -121,19 +115,6 @@ namespace ChatApp
       }
 
       /// <summary>
-      /// Hash the password from passwordText using SHA1.
-      /// </summary>
-      /// <returns>byte array containing hashed password</returns>
-      private byte[] hashPassword()
-      {
-         SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
-         byte[] data = Encoding.ASCII.GetBytes(passwordText.Text);
-         byte[] sha1data = sha1.ComputeHash(data);
-
-         return sha1data;
-      }
-
-      /// <summary>
       /// Take user back to startup form when the back button is clicked.
       /// </summary>
       /// <param name="sender"></param>
@@ -141,7 +122,7 @@ namespace ChatApp
       private void backButton_Click(object sender, EventArgs e)
       {
          this.Hide();
-         var startupForm = new StartupForm(stream);
+         var startupForm = new StartupForm(serverConnection);
          startupForm.FormClosed += (s, args) => this.Close();
          startupForm.Show();
       }
