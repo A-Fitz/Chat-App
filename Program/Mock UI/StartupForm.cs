@@ -52,11 +52,11 @@ namespace ChatApp
       /// Constructor called when a connection to the server has already been made. Uses that connection.
       /// </summary>
       /// <param name="stream">Previous server connection stream</param>
-      public StartupForm(IServerConnection serverConnection)
+      public StartupForm(IServerConnection serverConnection, IMessageService messageService)
       {
          InitializeComponent();
          this.serverConnection = serverConnection;
-
+         this.messageService = messageService;
          loginButton.Enabled = true;
          registerButton.Enabled = true;
       }

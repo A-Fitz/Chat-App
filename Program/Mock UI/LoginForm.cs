@@ -110,7 +110,7 @@ namespace ChatApp
       private void backButton_Click(object sender, EventArgs e)
       {
          this.Hide();
-         var startupForm = new StartupForm(serverConnection);
+         var startupForm = new StartupForm(serverConnection, messageService);
          startupForm.FormClosed += (s, args) => this.Close();
          startupForm.Show();
       }
