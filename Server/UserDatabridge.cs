@@ -59,6 +59,41 @@ namespace Server
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public int GetUserId(string username)
+        {
+            int userid = -1;
+            using (var connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "GET_USERID";
+                    command.Parameters.Add("USERNAMEIN", OracleDbType.Varchar2).Value = username;
+                    command.Parameters.Add("USERIDIN", OracleDbType.Int32).Direction = ParameterDirection.Output;
+
+                    command.ExecuteNonQuery();
+
+                    userid = (int)((Oracle.ManagedDataAccess.Types.OracleDecimal)command.Parameters["USERIDIN"].Value).Value;
+                    connection.Close();
+                }
+                catch (Exception e)
+                {
+                    //exception message
+                }
+
+            }
+
+            return userid;
+        }
+
+        /// <summary>
         /// This method checks the database to determine whether or not there
         /// is already a user that has the username that is being passed to it.
         /// </summary>
