@@ -4,10 +4,13 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using ChatApp.Interfaces;
 using ChatApp.Services;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using Mock_UI.Enums;
 
 namespace ChatApp
 {
-   public partial class LoginForm : Form
+   public partial class LoginForm : MaterialForm
    {
       private readonly IServerConnection serverConnection;
       private readonly IUserService userService;
@@ -22,6 +25,24 @@ namespace ChatApp
             this.messageService = messageService;
          userService = new UserService(serverConnection, messageService);
          InitializeComponent();
+         setupTheme();
+      }
+
+      private void setupTheme()
+      {
+         this.MaximizeBox = false;
+
+         MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+         materialSkinManager.AddFormToManage(this);
+
+         if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
+         {
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+         }
+         else if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
+         {
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+         }
       }
 
       /// <summary>
@@ -78,11 +99,23 @@ namespace ChatApp
       private bool login()
       { 
          var response = userService.Login(userNameText.Text, passwordText.Text);
-         LoginStatus.Text = response.message;
+         setLoginStatus(response.message);
          return response.command == "SUCCESS";
       }
 
-     
+      private void setLoginStatus(String message)
+      {
+         loginStatus.Text = message;
+         loginStatusTimer.Start();
+      }
+
+      private void loginStatusTimer_Tick(object sender, EventArgs e)
+      {
+         loginStatus.Text = "";
+         loginStatusTimer.Stop();
+      }
+
+
       /// <summary>
       /// A username is valid if it only contains letters, digits, hyphens, or underscores. 
       /// If it contains any other character it is invalid. Can't be empty.
@@ -115,14 +148,12 @@ namespace ChatApp
          startupForm.Show();
       }
 
-      private void LoginForm_Load(object sender, EventArgs e)
+      private void passwordText_KeyDown(object sender, KeyEventArgs e)
       {
-
-      }
-
-      private void LoginStatus_Click(object sender, EventArgs e)
-      {
-
+         if(e.KeyCode == Keys.Enter)
+         {
+            connectButton_Click(this, new EventArgs());
+         }
       }
    }
 }

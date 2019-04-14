@@ -28,120 +28,115 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.userNameText = new System.Windows.Forms.TextBox();
-            this.connectButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.passwordText = new System.Windows.Forms.TextBox();
-            this.backButton = new System.Windows.Forms.Button();
-            this.LoginStatus = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(206, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "LOGIN";
-            // 
-            // userNameText
-            // 
-            this.userNameText.Location = new System.Drawing.Point(139, 125);
-            this.userNameText.Name = "userNameText";
-            this.userNameText.Size = new System.Drawing.Size(212, 20);
-            this.userNameText.TabIndex = 1;
-            // 
-            // connectButton
-            // 
-            this.connectButton.Location = new System.Drawing.Point(207, 235);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(75, 23);
-            this.connectButton.TabIndex = 2;
-            this.connectButton.Text = "Login";
-            this.connectButton.UseVisualStyleBackColor = true;
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(138, 109);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "username";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(138, 163);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "password";
-            // 
-            // passwordText
-            // 
-            this.passwordText.Location = new System.Drawing.Point(139, 179);
-            this.passwordText.Name = "passwordText";
-            this.passwordText.Size = new System.Drawing.Size(212, 20);
-            this.passwordText.TabIndex = 5;
-            this.passwordText.UseSystemPasswordChar = true;
-            // 
-            // backButton
-            // 
-            this.backButton.Location = new System.Drawing.Point(3, 331);
-            this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(75, 23);
-            this.backButton.TabIndex = 15;
-            this.backButton.Text = "Back";
-            this.backButton.UseVisualStyleBackColor = true;
-            this.backButton.Click += new System.EventHandler(this.backButton_Click);
-            // 
-            // LoginStatus
-            // 
-            this.LoginStatus.AutoSize = true;
-            this.LoginStatus.Location = new System.Drawing.Point(148, 202);
-            this.LoginStatus.Name = "LoginStatus";
-            this.LoginStatus.Size = new System.Drawing.Size(0, 13);
-            this.LoginStatus.TabIndex = 16;
-            this.LoginStatus.Click += new System.EventHandler(this.LoginStatus_Click);
-            // 
-            // LoginForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 356);
-            this.Controls.Add(this.LoginStatus);
-            this.Controls.Add(this.backButton);
-            this.Controls.Add(this.passwordText);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.connectButton);
-            this.Controls.Add(this.userNameText);
-            this.Controls.Add(this.label1);
-            this.Name = "LoginForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+         this.components = new System.ComponentModel.Container();
+         this.userNameText = new MaterialSkin.Controls.MaterialSingleLineTextField();
+         this.passwordText = new MaterialSkin.Controls.MaterialSingleLineTextField();
+         this.connectButton = new MaterialSkin.Controls.MaterialRaisedButton();
+         this.backButton = new MaterialSkin.Controls.MaterialRaisedButton();
+         this.loginStatusTimer = new System.Windows.Forms.Timer(this.components);
+         this.loginStatus = new MaterialSkin.Controls.MaterialLabel();
+         this.SuspendLayout();
+         // 
+         // userNameText
+         // 
+         this.userNameText.Depth = 0;
+         this.userNameText.Hint = "username";
+         this.userNameText.Location = new System.Drawing.Point(132, 148);
+         this.userNameText.MouseState = MaterialSkin.MouseState.HOVER;
+         this.userNameText.Name = "userNameText";
+         this.userNameText.PasswordChar = '\0';
+         this.userNameText.SelectedText = "";
+         this.userNameText.SelectionLength = 0;
+         this.userNameText.SelectionStart = 0;
+         this.userNameText.Size = new System.Drawing.Size(225, 23);
+         this.userNameText.TabIndex = 1;
+         this.userNameText.UseSystemPasswordChar = false;
+         // 
+         // passwordText
+         // 
+         this.passwordText.Depth = 0;
+         this.passwordText.Hint = "password";
+         this.passwordText.Location = new System.Drawing.Point(132, 190);
+         this.passwordText.MouseState = MaterialSkin.MouseState.HOVER;
+         this.passwordText.Name = "passwordText";
+         this.passwordText.PasswordChar = '*';
+         this.passwordText.SelectedText = "";
+         this.passwordText.SelectionLength = 0;
+         this.passwordText.SelectionStart = 0;
+         this.passwordText.Size = new System.Drawing.Size(225, 23);
+         this.passwordText.TabIndex = 2;
+         this.passwordText.UseSystemPasswordChar = false;
+         this.passwordText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordText_KeyDown);
+         // 
+         // connectButton
+         // 
+         this.connectButton.Depth = 0;
+         this.connectButton.Location = new System.Drawing.Point(207, 236);
+         this.connectButton.MouseState = MaterialSkin.MouseState.HOVER;
+         this.connectButton.Name = "connectButton";
+         this.connectButton.Primary = true;
+         this.connectButton.Size = new System.Drawing.Size(75, 31);
+         this.connectButton.TabIndex = 3;
+         this.connectButton.Text = "Login";
+         this.connectButton.UseVisualStyleBackColor = true;
+         this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
+         // 
+         // backButton
+         // 
+         this.backButton.Depth = 0;
+         this.backButton.Location = new System.Drawing.Point(12, 313);
+         this.backButton.MouseState = MaterialSkin.MouseState.HOVER;
+         this.backButton.Name = "backButton";
+         this.backButton.Primary = true;
+         this.backButton.Size = new System.Drawing.Size(75, 31);
+         this.backButton.TabIndex = 4;
+         this.backButton.Text = "Back";
+         this.backButton.UseVisualStyleBackColor = true;
+         this.backButton.Click += new System.EventHandler(this.backButton_Click);
+         // 
+         // loginStatusTimer
+         // 
+         this.loginStatusTimer.Interval = 5000;
+         this.loginStatusTimer.Tick += new System.EventHandler(this.loginStatusTimer_Tick);
+         // 
+         // loginStatus
+         // 
+         this.loginStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
+         this.loginStatus.BackColor = System.Drawing.Color.Transparent;
+         this.loginStatus.Depth = 0;
+         this.loginStatus.Font = new System.Drawing.Font("Roboto", 11F);
+         this.loginStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+         this.loginStatus.Location = new System.Drawing.Point(68, 77);
+         this.loginStatus.MouseState = MaterialSkin.MouseState.HOVER;
+         this.loginStatus.Name = "loginStatus";
+         this.loginStatus.Size = new System.Drawing.Size(353, 19);
+         this.loginStatus.TabIndex = 21;
+         this.loginStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+         // 
+         // LoginForm
+         // 
+         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.ClientSize = new System.Drawing.Size(488, 356);
+         this.Controls.Add(this.loginStatus);
+         this.Controls.Add(this.backButton);
+         this.Controls.Add(this.connectButton);
+         this.Controls.Add(this.passwordText);
+         this.Controls.Add(this.userNameText);
+         this.Name = "LoginForm";
+         this.Sizable = false;
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+         this.Text = "Login";
+         this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox userNameText;
-        private System.Windows.Forms.Button connectButton;
-      private System.Windows.Forms.Label label2;
-      private System.Windows.Forms.Label label3;
-      private System.Windows.Forms.TextBox passwordText;
-      private System.Windows.Forms.Button backButton;
-      private System.Windows.Forms.Label LoginStatus;
+      private MaterialSkin.Controls.MaterialSingleLineTextField userNameText;
+      private MaterialSkin.Controls.MaterialSingleLineTextField passwordText;
+      private MaterialSkin.Controls.MaterialRaisedButton connectButton;
+      private MaterialSkin.Controls.MaterialRaisedButton backButton;
+      private System.Windows.Forms.Timer loginStatusTimer;
+      private MaterialSkin.Controls.MaterialLabel loginStatus;
    }
 }

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using ChatApp.Interfaces;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using Mock_UI.Enums;
 
 namespace ChatApp
 {
-   public partial class MainForm : Form
+   public partial class MainForm : MaterialForm
    {
       // Message Services
       private readonly IServerConnection serverConnection;
@@ -20,6 +24,24 @@ namespace ChatApp
          this.serverConnection = serverConnection;
          this.messageService = messageService;
          InitializeComponent();
+         setupTheme();
+      }
+
+      private void setupTheme()
+      {
+         this.MaximizeBox = false;
+
+         MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+         materialSkinManager.AddFormToManage(this);
+
+         if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
+         {
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+         }
+         else if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
+         {
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+         }
       }
 
       /// <summary>
@@ -39,7 +61,9 @@ namespace ChatApp
          if (status == EnumMessageStatus.successful)
             messageField.Clear();
 
-         messageStatusLabel.Text = EnumExtensions.GetEnumDescription(status);
+         //messageStatusLabel.Text = EnumExtensions.GetEnumDescription(status);
+
+         setToolTip(EnumExtensions.GetEnumDescription(status));
       }
 
       /// <summary>
@@ -49,7 +73,7 @@ namespace ChatApp
       /// <param name="e"></param>
       private void messageField_TextChanged(object sender, EventArgs e)
       {
-         messageStatusLabel.Text = "";
+         toolTip.Text = "";
       }
 
       /// <summary>
@@ -81,6 +105,9 @@ namespace ChatApp
                      break;
                   default:
                      chatList.Items.Add(t.message);
+                     chatList.SelectedIndex = chatList.Items.Count - 1;
+                     chatList.SelectedIndex = -1;
+
                      break;
                }
                
@@ -125,7 +152,7 @@ namespace ChatApp
       /// </summary>
       /// <param name="sender"></param>
       /// <param name="e"></param>
-      private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+      private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
       {
          TCPMessage tcpMessage = new TCPMessage();
          tcpMessage.chatID = 0;
@@ -137,6 +164,60 @@ namespace ChatApp
          var startupForm = new StartupForm();
          startupForm.FormClosed += (s, args) => this.Close();
          startupForm.Show();
+      }
+
+      private void lightThemeToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.light);
+         Mock_UI.Properties.Settings.Default.Save();
+      }
+
+      private void darkThemeToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.dark);
+         Mock_UI.Properties.Settings.Default.Save();
+      }
+
+      
+      private void chatList_MeasureItem(object sender, MeasureItemEventArgs e)
+      {
+         e.ItemHeight = (int)e.Graphics.MeasureString(chatList.Items[e.Index].ToString(), chatList.Font, chatList.Width).Height;
+      }
+
+      private void chatList_DrawItem(object sender, DrawItemEventArgs e)
+      {
+         e.DrawBackground();
+         e.DrawFocusRectangle();
+         e.Graphics.DrawString(chatList.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+      }
+
+      /// <summary>
+      /// Allow copying a chat message using crtl-c.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void chatList_KeyDown(object sender, KeyEventArgs e)
+      {
+         if (e.Control && e.KeyCode == Keys.C)
+         {
+            System.Text.StringBuilder copy_buffer = new System.Text.StringBuilder();
+            foreach (object item in chatList.SelectedItems)
+               copy_buffer.AppendLine(item.ToString());
+            if (copy_buffer.Length > 0)
+               Clipboard.SetText(copy_buffer.ToString());
+         }
+      }
+
+      private void setToolTip(String message)
+      {
+         toolTip.Text = message;
+         toolTipTimer.Start();
+      }
+
+      private void toolTipTimer_Tick(object sender, EventArgs e)
+      {
+         toolTip.Text = "";
+         toolTipTimer.Stop();
       }
    }
 }
