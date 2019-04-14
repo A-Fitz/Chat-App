@@ -1,27 +1,24 @@
-﻿#define TEST1
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Windows.Forms;
-using ChatApp.Services;
+using ChatApp.Interfaces;
 
 namespace ChatApp
 {
    public partial class MainForm : Form
    {
       // Message Services
-      private NetworkStream stream;
-      private IMessageService messageService;
+      private readonly IServerConnection serverConnection;
+      private readonly IMessageService messageService;
 
       /// <summary>
       /// The main application form. Handles chat logic.
       /// </summary>
       /// <param name="stream"></param>
-      public MainForm(NetworkStream stream)
+      public MainForm(IServerConnection serverConnection, IMessageService messageService)
       {
-         this.stream = stream;
-         messageService = new MessageService(stream);
+         this.serverConnection = serverConnection;
+         this.messageService = messageService;
          InitializeComponent();
       }
 

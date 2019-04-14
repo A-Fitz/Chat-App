@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp
+namespace ChatApp.Interfaces
 {
-    interface IMessageService
+    public interface IMessageService
     {
         EnumMessageStatus SendMessage(TCPMessage message);
         IList<TCPMessage> GetMessages();

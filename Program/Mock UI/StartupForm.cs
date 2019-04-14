@@ -1,4 +1,5 @@
-﻿using ChatApp.Services;
+﻿using ChatApp.Interfaces;
+using ChatApp.Services;
 using System;
 using System.Net.Sockets;
 using System.Windows.Forms;
@@ -8,7 +9,8 @@ namespace ChatApp
    public partial class StartupForm : Form
    {
       private NetworkStream stream;
-      private IMessageService messageService;
+      private readonly IServerConnection serverConnection;
+      private readonly IMessageService messageService;
 
       /// <summary>
       /// Sets up connection with the server and handles exceptions.
@@ -21,7 +23,8 @@ namespace ChatApp
          {
             TcpClient socket = new TcpClient("127.0.0.1", 12345);
             stream = socket.GetStream(); // will catch exceptions from this
-            messageService = new MessageService(stream);
+            serverConnection = new ServerConnection(stream);
+            messageService = new MessageService(serverConnection);
 
             // Unlock the login/register buttons only if successfully connected to the server.
             loginButton.Enabled = true;
@@ -49,16 +52,15 @@ namespace ChatApp
       /// Constructor called when a connection to the server has already been made. Uses that connection.
       /// </summary>
       /// <param name="stream">Previous server connection stream</param>
-      public StartupForm(NetworkStream stream)
+      public StartupForm(IServerConnection serverConnection, IMessageService messageService)
       {
          InitializeComponent();
-         this.stream = stream;
-         messageService = new MessageService(stream);
-
+         this.serverConnection = serverConnection;
+         this.messageService = messageService;
          loginButton.Enabled = true;
          registerButton.Enabled = true;
       }
-
+      
       /// <summary>
       /// Closes this form and opens the login form.
       /// </summary>
@@ -67,7 +69,7 @@ namespace ChatApp
       private void loginButton_Click(object sender, EventArgs e)
       {
          this.Hide();
-         var loginForm = new LoginForm(stream);
+         var loginForm = new LoginForm(serverConnection, messageService);
          loginForm.FormClosed += (s, args) => this.Close();
          loginForm.Show();
       }
@@ -79,9 +81,9 @@ namespace ChatApp
       /// <param name="e"></param>
       private void registerButton_Click(object sender, EventArgs e)
       {
-         this.Hide();
-         var registerForm = new RegisterForm(stream);
-         registerForm.FormClosed += (s, args) => this.Close();
+         Hide();
+         var registerForm = new RegisterForm(serverConnection, messageService);
+         registerForm.FormClosed += (s, args) => Close();
          registerForm.Show();
       }
 

@@ -33,8 +33,6 @@ namespace Server
          Console.Out.WriteLine("Server autostarting at port " + PORT);
             //Start server
 
-         UserDatabridge databridge = new UserDatabridge();
-
          ChatroomList chatroomList = new ChatroomList();
          ChatroomLogic mainRoom = new ChatroomLogic();
          chatroomList.addChat(mainRoom);
