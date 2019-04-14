@@ -32,53 +32,63 @@ namespace Server
 
       static void Main(string[] args)
       {
-         Console.Out.WriteLine("Server autostarting at port " + PORT);
-            //Start server
-         
-         ChatroomList chatroomList = new ChatroomList();
-         ChatroomLogic mainRoom = new ChatroomLogic();
-         chatroomList.addChat(mainRoom);
-         bool exit = false, restart = false;
-         TcpListener serverSocket = new TcpListener(System.Net.IPAddress.Loopback, PORT);
-         serverSocket.Start();
-         Thread connectorThread = new Thread(() => handleIncomingConnections(serverSocket, chatroomList));
-         connectorThread.Name = "Connector Thread";
-         connectorThread.Priority = ThreadPriority.Lowest;
-         connectorThread.Start();
-         while (!exit)
+         bool exit = false, restart = true;
+         while (restart)
          {
-            string input = Console.In.ReadLine().Trim();
-            switch(input)
-            {
-               case "help":
-                  Console.Write(HELP);
-                  break;
-               case "help exit":
-               case "help shutdown":
-                  Console.WriteLine(HELP_EXIT);
-                  break;
-               case "help restart":
-                  Console.WriteLine(HELP_RESTART);
-                  break;
-               case "exit":
-               case "shutdown":
-                  exit = true;
-                  break;
-               case "restart":
-                  exit = true;
-                  restart = true;
-                  break;
-               default:
-                  Console.WriteLine(input + " is not recognized as a command. Use ? or help for options.");
-                  break;
+            exit = false;
+            restart = true;
+            Console.Out.WriteLine("Server autostarting at port " + PORT);
+            //Start server
 
+            ChatroomList chatroomList = new ChatroomList();
+            ChatroomLogic mainRoom = new ChatroomLogic();
+            chatroomList.addChat(mainRoom);
+
+            TcpListener serverSocket = new TcpListener(System.Net.IPAddress.Loopback, PORT);
+            serverSocket.Start();
+            Thread connectorThread = new Thread(() => handleIncomingConnections(serverSocket, chatroomList));
+            connectorThread.Name = "Connector Thread";
+            connectorThread.Priority = ThreadPriority.Lowest;
+            connectorThread.Start();
+            while (!exit)
+            {
+               string input = Console.In.ReadLine().Trim();
+               switch (input.ToLower())
+               {
+                  case "help":
+                     Console.Write(HELP);
+                     break;
+                  case "help exit":
+                  case "help shutdown":
+                     Console.WriteLine(HELP_EXIT);
+                     break;
+                  case "help restart":
+                     Console.WriteLine(HELP_RESTART);
+                     break;
+                  case "exit":
+                  case "shutdown":
+                     exit = true;
+                     restart = false;
+                     break;
+                  case "restart":
+                     exit = true;
+                     restart = true;
+                     break;
+                  default:
+                     Console.WriteLine(input + " is not recognized as a command. Use ? or help for options.");
+                     break;
+
+               }
+            }
+            Console.WriteLine("Saving...");
+            serverSocket.Stop();
+            chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CLOSING", message = "0" });
+            chatroomList.Stop();
+            if (restart == true)
+            {
+               Console.WriteLine("Restarting...");
             }
          }
-         serverSocket.Stop();
-         chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CLOSING", message = "0" });
-         chatroomList.Stop();
-         if(restart == true)
-            Main(new string[0]);
       }
 
       
@@ -106,15 +116,15 @@ namespace Server
          }
          catch(ThreadAbortException tae)
          {
-            Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
+            //Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
          }
          catch(SocketException se)
          {
-            Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
+            //Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
          }
          finally
          {
-            Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left finally block");
+            //Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left finally block");
          }
       }
 

@@ -19,6 +19,7 @@ namespace ChatApp
       {
          this.serverConnection = serverConnection;
          this.messageService = messageService;
+         messageService.SendMessage(new TCPMessage { chatID = -1, command = "ACK", message = "0" });
          InitializeComponent();
       }
 

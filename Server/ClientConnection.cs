@@ -129,6 +129,9 @@ namespace Server
       /// </summary>
       private void LoadClientData()
       {
+         bool ack = false;
+         while (!ack)
+            ack = (MessageService.GetMessage(networkStream).command == "ACK");
          //TODO LATER: Request data from SQL server on this client and send messages to
          //this client's OnNext() function.
          subsribeToChat(ChatroomList.idToChatroom(0));
