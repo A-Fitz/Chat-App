@@ -42,7 +42,7 @@ namespace ChatApp.Services
       /// </summary>
       /// <param name="username">unpadded username</param>
       /// <param name="password">hashed password</param>
-      /// <returns>A success or fail TCPMessage</returns>
+      /// <returns>A success or fasil TCPMessage</returns>
       public TCPMessage RegisterUser(string username, string password)
       {
          var paddedUsername = username.PadRight(20);
