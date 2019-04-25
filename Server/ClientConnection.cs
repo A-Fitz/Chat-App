@@ -102,9 +102,9 @@ namespace Server
                      Console.Out.WriteLine((username == "" ? "Someone disconected." : username + " disconnected."));
                      return;                     
                   default:
-                     Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
-                     a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
-                     chatroomList.update(a);
+                     Console.WriteLine("Incorrect Command: Message = " + a.chatID + " : " + a.command + " : " + a.message );
+                     //a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
+                     //chatroomList.update(a);
                      break;
                }
                
@@ -190,6 +190,7 @@ namespace Server
                      }
                      break;
                   default:
+                     Console.WriteLine("Incorrect Command: Message = " + a.chatID + " : " + a.command + " : " + a.message);
                      //Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
                      //a.message = DateTime.Now.ToString() + " : " + username + " : " + a.message;
                      //chatroomList.update(a);
