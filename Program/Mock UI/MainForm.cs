@@ -14,6 +14,7 @@ namespace ChatApp
       // Message Services
       private readonly IServerConnection serverConnection;
       private readonly IMessageService messageService;
+      private MaterialSkinManager materialSkinManager;
 
       /// <summary>
       /// The main application form. Handles chat logic.
@@ -32,17 +33,55 @@ namespace ChatApp
       {
          this.MaximizeBox = false;
 
-         MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+         materialSkinManager = MaterialSkinManager.Instance;
          materialSkinManager.AddFormToManage(this);
 
          if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
          {
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            setLightTheme();
          }
          else if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
          {
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            setDarkTheme();
          }
+      }
+
+      private void setDarkTheme()
+      {
+         materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+         lightToolStripMenuItem.Checked = false;
+         darkToolStripMenuItem.Checked = true;
+         chatList.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         chatList.ForeColor = Color.White;
+         chatList.BorderStyle = BorderStyle.None;
+         messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         messageField.ForeColor = Color.White;
+         messageField.BorderStyle = BorderStyle.None;
+         userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         userListBox.ForeColor = Color.White;
+         userListBox.BorderStyle = BorderStyle.None;
+         listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         listBox1.ForeColor = Color.White;
+         listBox1.BorderStyle = BorderStyle.None;
+      }
+
+      private void setLightTheme()
+      {
+         materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+         lightToolStripMenuItem.Checked = true;
+         darkToolStripMenuItem.Checked = false;
+         chatList.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         chatList.ForeColor = SystemColors.WindowText;
+         chatList.BorderStyle = BorderStyle.None;
+         messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         messageField.ForeColor = SystemColors.WindowText;
+         messageField.BorderStyle = BorderStyle.None;
+         userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         userListBox.ForeColor = SystemColors.WindowText;
+         userListBox.BorderStyle = BorderStyle.None;
+         listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         listBox1.ForeColor = SystemColors.WindowText;
+         listBox1.BorderStyle = BorderStyle.None;
       }
 
       /// <summary>
@@ -167,18 +206,6 @@ namespace ChatApp
          startupForm.Show();
       }
 
-      private void lightThemeToolStripMenuItem_Click(object sender, EventArgs e)
-      {
-         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.light);
-         Mock_UI.Properties.Settings.Default.Save();
-      }
-
-      private void darkThemeToolStripMenuItem_Click(object sender, EventArgs e)
-      {
-         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.dark);
-         Mock_UI.Properties.Settings.Default.Save();
-      }
-
       
       private void chatList_MeasureItem(object sender, MeasureItemEventArgs e)
       {
@@ -189,7 +216,8 @@ namespace ChatApp
       {
          e.DrawBackground();
          e.DrawFocusRectangle();
-         e.Graphics.DrawString(chatList.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+         if(e.Index >= 0)
+            e.Graphics.DrawString(chatList.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
       }
 
       /// <summary>
@@ -219,6 +247,22 @@ namespace ChatApp
       {
          toolTip.Text = "";
          toolTipTimer.Stop();
+      }
+
+      private void lightToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.light);
+         Mock_UI.Properties.Settings.Default.Save();
+
+         setLightTheme();
+      }
+
+      private void darkToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.dark);
+         Mock_UI.Properties.Settings.Default.Save();
+
+         setDarkTheme();
       }
    }
 }
