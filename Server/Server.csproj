@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatroomDatabridge.cs" />
     <Compile Include="ChatroomList.cs" />
     <Compile Include="ChatroomLogic.cs" />
     <Compile Include="ClientConnection.cs" />
