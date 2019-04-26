@@ -172,9 +172,9 @@ namespace ChatApp
       {
          //TODO: Might want to reset the chatroomlist before or in this function
          string[] idNames = message.message.Split(',');
-         if(idNames.Length % 2 == 0)
+         if(idNames.Length % 2 == 1)
          {
-            for (int i = 0; i < idNames.Length; i += 2)
+            for (int i = 0; i < idNames.Length - 1; i += 2)
             {
                Chatroom temp = new Chatroom(int.Parse(idNames[i]), idNames[i + 1]);
                chatroomListBox.Items.Add(temp.name);
