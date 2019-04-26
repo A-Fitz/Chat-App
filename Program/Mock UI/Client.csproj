@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chatroom.cs" />
     <Compile Include="Enums\EnumExtensions.cs" />
     <Compile Include="Enums\EnumTheming.cs" />
     <Compile Include="Enums\EnumUserConnectionExceptions.cs" />

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ChatApp.Interfaces;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Mock_UI;
 using Mock_UI.Enums;
 
 namespace ChatApp
@@ -15,6 +16,7 @@ namespace ChatApp
       private readonly IServerConnection serverConnection;
       private readonly IMessageService messageService;
       private MaterialSkinManager materialSkinManager;
+      private List<Chatroom> chatroomList;
 
       /// <summary>
       /// The main application form. Handles chat logic.
@@ -24,6 +26,7 @@ namespace ChatApp
       {
          this.serverConnection = serverConnection;
          this.messageService = messageService;
+         chatroomList = new List<Chatroom>();
          messageService.SendMessage(new TCPMessage { chatID = -1, command = "ACK", message = "0" });
          InitializeComponent();
          setupTheme();
@@ -63,6 +66,7 @@ namespace ChatApp
          listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
          listBox1.ForeColor = Color.White;
          listBox1.BorderStyle = BorderStyle.None;
+         toolTip.ForeColor = Color.White;
       }
 
       private void setLightTheme()
@@ -82,6 +86,7 @@ namespace ChatApp
          listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
          listBox1.ForeColor = SystemColors.WindowText;
          listBox1.BorderStyle = BorderStyle.None;
+         toolTip.ForeColor = SystemColors.WindowText;
       }
 
       /// <summary>
@@ -171,9 +176,8 @@ namespace ChatApp
          {
             for (int i = 0; i < idNames.Length; i += 2)
             {
-               //TODO: Assign idNames[i] to an id variable for a chatroom
-               //TODO: Assign idNames[i + 1] to a name variable for that same chatroom
-               //TODO: Append the chatroom to the list of chatrooms
+               Chatroom temp = new Chatroom(int.Parse(idNames[i]), idNames[i + 1]);
+               chatList.Items.Add(temp.name);
             }
          }
          else{}//Bad formating

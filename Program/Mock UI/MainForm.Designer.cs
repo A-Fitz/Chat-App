@@ -61,42 +61,6 @@
          // listBox1
          // 
          this.listBox1.FormattingEnabled = true;
-         this.listBox1.Items.AddRange(new object[] {
-            "Chatroom 1",
-            "Chatroom 2",
-            "Chatroom 3",
-            "Chatroom 4",
-            "Chatroom 5",
-            "Chatroom 6",
-            "Chatroom 7",
-            "Chatroom 8",
-            "Chatroom 9",
-            "Chatroom 10",
-            "Chatroom 11",
-            "Chatroom 12",
-            "Chatroom 13",
-            "Chatroom 14",
-            "Chatroom 15",
-            "Chatroom 16",
-            "Chatroom 17",
-            "Chatroom 18",
-            "Chatroom 19",
-            "Chatroom 20",
-            "Chatroom 21",
-            "Chatroom 22",
-            "Chatroom 23",
-            "Chatroom 24",
-            "Chatroom 25",
-            "Chatroom 26",
-            "Chatroom 27",
-            "Chatroom 28",
-            "Chatroom 29",
-            "Chatroom 30",
-            "Chatroom 31",
-            "Chatroom 32",
-            "Chatroom 33",
-            "Chatroom 34",
-            "Chatroom 35"});
          this.listBox1.Location = new System.Drawing.Point(10, 109);
          this.listBox1.Name = "listBox1";
          this.listBox1.Size = new System.Drawing.Size(117, 238);
@@ -169,7 +133,7 @@
          this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.visualPreferencesToolStripMenuItem});
          this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-         this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
          this.settingsToolStripMenuItem.Text = "Settings";
          // 
          // visualPreferencesToolStripMenuItem
@@ -178,27 +142,27 @@
             this.lightToolStripMenuItem,
             this.darkToolStripMenuItem});
          this.visualPreferencesToolStripMenuItem.Name = "visualPreferencesToolStripMenuItem";
-         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
          this.visualPreferencesToolStripMenuItem.Text = "Theme";
          // 
          // lightToolStripMenuItem
          // 
          this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
-         this.lightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.lightToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
          this.lightToolStripMenuItem.Text = "Light";
          this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
          // 
          // darkToolStripMenuItem
          // 
          this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-         this.darkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.darkToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
          this.darkToolStripMenuItem.Text = "Dark";
          this.darkToolStripMenuItem.Click += new System.EventHandler(this.darkToolStripMenuItem_Click);
          // 
          // logOutToolStripMenuItem
          // 
          this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-         this.logOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.logOutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
          this.logOutToolStripMenuItem.Text = "Log out";
          this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
          // 
