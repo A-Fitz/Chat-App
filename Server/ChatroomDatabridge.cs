@@ -19,7 +19,7 @@ namespace Server
         /// 
         /// </summary>
         /// <param name="chatroomID"></param>
-        public void PopulateMessages(int chatroomID)
+        public DataTable ChatHistory(int chatroomID)
         {
             DataTable datatable = new DataTable();
 
@@ -31,8 +31,8 @@ namespace Server
 
                     var command = connection.CreateCommand();
                     command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "GET_MESSAGES";
-                    command.Parameters.Add("CURRENTCHATROOM", OracleDbType.Varchar2).Value = chatroomID;
+                    command.CommandText = "GET_CHAT_HISTORY";
+                    command.Parameters.Add("CHATID", OracleDbType.Int32).Value = chatroomID;
 
                     OracleDataAdapter da = new OracleDataAdapter(command);
                     da.Fill(datatable);
@@ -42,6 +42,7 @@ namespace Server
                 catch (Exception e)
                 { }
             }
+            return datatable;
         }
 
         /// <summary>
@@ -60,11 +61,128 @@ namespace Server
                     var command = connection.CreateCommand();
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "ADD_MESSAGE";
-                    command.Parameters.Add("CURRENTCHATROOM", OracleDbType.Varchar2).Value = chatroomID;
-                    command.Parameters.Add("MESSAGE", OracleDbType.Int32).Value = msg;
+                    command.Parameters.Add("CURRENTCHATROOM", OracleDbType.Int32).Value = chatroomID;
+                    command.Parameters.Add("MESSAGE", OracleDbType.Varchar2).Value = msg;
 
                     command.ExecuteNonQuery();
                     connection.Close();
+                }
+                catch (Exception e)
+                { }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chatid"></param>
+        /// <param name="userid"></param>
+        /// <param name="hashword"></param>
+        /// <param name="directmsg"></param>
+        public void CreateChatroom(int chatid, int userid, String hashword, int directmsg)
+        {
+            using (var connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "CREATE_CHATROOM";
+                    command.Parameters.Add("CHAT_ID", OracleDbType.Int32).Value = chatid;
+                    command.Parameters.Add("USER_ID", OracleDbType.Int32).Value = userid;
+                    command.Parameters.Add("HASHWORD", OracleDbType.Varchar2).Value = hashword;
+                    command.Parameters.Add("DIRECTMESSAGE", OracleDbType.Int32).Value = directmsg;
+
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception e)
+                { }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chatid"></param>
+        /// <returns></returns>
+        public DataTable GetChatUsers(int chatid)
+        {
+            DataTable datatable = new DataTable();
+
+            using (var connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "GET_CHATROOM_USERS";
+                    command.Parameters.Add("CHATROOM_ID", OracleDbType.Int32).Value = chatid;
+
+                    OracleDataAdapter da = new OracleDataAdapter(command);
+                    da.Fill(datatable);
+                    connection.Close();
+                    da.Dispose();
+                }
+                catch (Exception e)
+                { }
+            }
+            return datatable;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAllChatrooms()
+        {
+            DataTable datatable = new DataTable();
+
+            using (var connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "GET_ALL_CHATROOMS";
+
+                    OracleDataAdapter da = new OracleDataAdapter(command);
+                    da.Fill(datatable);
+                    connection.Close();
+                    da.Dispose();
+                }
+                catch (Exception e)
+                { }
+            }
+            return datatable;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="chatid"></param>
+        /// <param name="userid"></param>
+        /// <param name="chatpw"></param>
+        public void AddUser(int chatid, int userid, String chatpw)
+        {
+            using (var connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ADD_USER_TO_CHATROOM";
+                    command.Parameters.Add("CHAT_ID", OracleDbType.Int32).Value = chatid;
+                    command.Parameters.Add("USER_ID", OracleDbType.Int32).Value = userid;
+                    command.Parameters.Add("CHATROOMPASSWORD", OracleDbType.Varchar2).Value = chatpw;
                 }
                 catch (Exception e)
                 { }
