@@ -19,6 +19,7 @@ namespace Server
       public int chatroomID { get; set; }
 
       private List<IObserver<Message>> observers;
+      public List<string> RegisteredUsers { get; set; } = new List<string>();
 
       /// <summary>
       /// Constructor for a chatroom. Assigns a chatroomID

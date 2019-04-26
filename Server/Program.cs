@@ -10,8 +10,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Linq;
-
-
+using System.Data;
 
 namespace Server
 {
@@ -41,8 +40,23 @@ namespace Server
             //Start server
 
             ChatroomList chatroomList = new ChatroomList();
-            ChatroomLogic mainRoom = new ChatroomLogic();
-            chatroomList.addChat(mainRoom);
+
+            Console.WriteLine("Loading...");
+            if (LoadSaveData(chatroomList))
+            {
+               Console.WriteLine("Loading successful");
+            }
+            else
+            {
+               Console.WriteLine("No data found. Starting with defaults.");
+               ChatroomLogic mainRoom = new ChatroomLogic();
+               ChatroomLogic mainRoom2 = new ChatroomLogic();
+               mainRoom.name = "Global 1";
+               mainRoom2.name = "Global 2";
+               chatroomList.addChat(mainRoom);
+               chatroomList.addChat(mainRoom2);
+               //TODO: Add default chatrooms to SQL server
+            }
 
             TcpListener serverSocket = new TcpListener(System.Net.IPAddress.Loopback, PORT);
             serverSocket.Start();
@@ -91,6 +105,37 @@ namespace Server
          }
       }
 
+
+
+      private static bool LoadSaveData(ChatroomList chatroomList)
+      {
+         int hightestChatroomID = 0;
+         ChatroomServices chatroomServices = new ChatroomServices();
+         UserService userService = new UserService();
+         DataTable dataTable = chatroomServices.GetAllChatrooms();
+         if (dataTable.Rows.Count != 0)
+         {
+            foreach (DataRow row in dataTable.Rows)
+            {
+               string name = row["chatroomname"].ToString();
+               int id = int.Parse(row["chatroomid"].ToString());
+               ChatroomLogic temp = new ChatroomLogic();
+               temp.name = name;
+               temp.chatroomID = id;
+               hightestChatroomID = hightestChatroomID < id ? hightestChatroomID : id;
+               chatroomList.addChat(temp);
+               DataTable userTable = chatroomServices.GetChatUsers(temp.chatroomID);
+               foreach (DataRow userRow in userTable.Rows)
+               {
+                  int userId = int.Parse(row["user_id"].ToString());
+                  //temp.RegisteredUsers.Add();//TODO: Convert Userid to userName
+               }
+            }
+            //TODO: Call "GetUsersInChatroom" for each chatroom and append registered users to that chatroom
+            return true;
+         }
+         return false; 
+      }
       
 
       /// <summary>

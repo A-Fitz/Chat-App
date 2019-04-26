@@ -29,6 +29,7 @@ namespace Server
       {
          this.networkStream = ns;
          this.chatroomList = chatroomList;
+         
       }
 
       /// <summary>
@@ -84,32 +85,51 @@ namespace Server
             //TODO Make sure client is not recieving messages before login
             while (true)
             {
-               Message a = MessageService.GetMessage(networkStream);
+               Message incomingMsg = MessageService.GetMessage(networkStream);
 
-               if (a == null)
+               if (incomingMsg == null)
                   return;
-               switch (a.command)
+               switch (incomingMsg.command)
                {
                   case "SEND":
-                     a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
-                     chatroomList.update(a);
+                     incomingMsg.message = DateTime.Now.ToString() + " : " +  username + " : " + incomingMsg.message;
+                     chatroomList.update(incomingMsg);
                      break;
                   case "NEW_CHAT":
+                     //message = password for chatroom
+                     //chatID = wether it is a private room. 1 = direct message room, 0 = normal password protected room
                      ChatroomLogic tempChatroom = new ChatroomLogic();
-                     chatroomList.addChat(tempChatroom);
-                     tempChatroom.Subscribe(this);
-                     //TODO: Create chatroom stuff in database
-                     //Send an updated chatroom list to client
-                     SendChatroomList();
+                     if (ChatroomList.chatroomServices.CreateChatroom(tempChatroom.chatroomID, this.userID, incomingMsg.message, incomingMsg.chatID))
+                     {
+                        chatroomList.addChat(tempChatroom);
+                        tempChatroom.Subscribe(this);
+                        SendChatroomList();
+                     }
+                     else
+                     {
+                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom name already taken" }, networkStream);
+                     }
+                     
                      break;
                   case "SUSCRIBE"://and like the video down below
 
-                     ChatroomLogic tempChatroom2 = chatroomList.idToChatroom(a.chatID);
+                     ChatroomLogic tempChatroom2 = chatroomList.idToChatroom(incomingMsg.chatID);
                      if (tempChatroom2 != null)
                      {
+                        
                         //TODO: Check that the password matches the chatrooms password and break out if it is incorrect
-                        tempChatroom2.Subscribe(this);
-                        //TODO: Get previous messages for this chatroom and send them to the update() function
+                        if (ChatroomList.chatroomServices.AddUser(tempChatroom2.chatroomID, this.userID, incomingMsg.message))
+                        {
+                           tempChatroom2.Subscribe(this);
+                        }
+                        else
+                        {
+                           MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom login failed" }, networkStream);
+                           break;
+                        }
+                         
+                         //TODO: Get previous messages for this chatroom and send them to this specific user
+
                      }
 
                      break;
@@ -120,7 +140,7 @@ namespace Server
                      Console.Out.WriteLine((username == "" ? "Someone disconected." : username + " disconnected."));
                      return;                     
                   default:
-                     Console.WriteLine("Incorrect Command: Message = " + a.chatID + " : " + a.command + " : " + a.message );
+                     Console.WriteLine("Incorrect Command: Message = " + incomingMsg.chatID + " : " + incomingMsg.command + " : " + incomingMsg.message );
                      //a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      //chatroomList.update(a);
                      break;
@@ -153,7 +173,11 @@ namespace Server
          //TODO LATER: Request data from SQL server on this client and send messages to
          //this client's OnNext() function.
          subsribeToChat(chatroomList.idToChatroom(0));
+         subsribeToChat(chatroomList.idToChatroom(1));
+         chatroomList.idToChatroom(0).RegisteredUsers.Add(this.username);
+         chatroomList.idToChatroom(1).RegisteredUsers.Add(this.username);
          sendClientList();
+         SendChatroomList();
       }
 
 
@@ -296,9 +320,15 @@ namespace Server
       private void SendChatroomList()
       {
          String list = "";
-         foreach (ChatroomLogic c in chatroomList.chatrooms)
+         List<ChatroomLogic> myChatrooms = new List<ChatroomLogic>();
+         foreach (ChatroomLogic chatroom in chatroomList.chatrooms)
+            if(chatroom.RegisteredUsers.Contains(this.username))
+               myChatrooms.Add(chatroom);
+
+
+         foreach (ChatroomLogic c in myChatrooms)
          {
-            list += c.chatroomID + "," + c.name;
+            list += c.chatroomID + "," + c.name + ",";
          }
          chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CHATROOMLIST", message = list });
       }

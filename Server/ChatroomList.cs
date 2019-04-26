@@ -13,7 +13,7 @@ namespace Server
    class ChatroomList
    {
       public List<ChatroomLogic> chatrooms { get; set;} = new List<ChatroomLogic>();
-
+      public static ChatroomServices chatroomServices { get; set; } = new ChatroomServices();
       /// <summary>
       /// Adds a ChatroomLogic object to the list managed by this
       /// class.
@@ -34,9 +34,13 @@ namespace Server
       /// <param name="msg"></param>
       public void update(Message msg)
       {
+
          ChatroomLogic chatroom = idToChatroom(msg.chatID);
          if (chatrooms.Contains(chatroom))
+         {
+            chatroomServices.AddMessage(msg.chatID, msg.message);
             chatroom.update(msg);
+         }
       }
 
       /// <summary>
