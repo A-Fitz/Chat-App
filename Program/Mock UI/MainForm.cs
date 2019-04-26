@@ -54,18 +54,18 @@ namespace ChatApp
          materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
          lightToolStripMenuItem.Checked = false;
          darkToolStripMenuItem.Checked = true;
-         chatList.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
-         chatList.ForeColor = Color.White;
-         chatList.BorderStyle = BorderStyle.None;
+         chatListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         chatListBox.ForeColor = Color.White;
+         chatListBox.BorderStyle = BorderStyle.None;
          messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
          messageField.ForeColor = Color.White;
          messageField.BorderStyle = BorderStyle.None;
          userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
          userListBox.ForeColor = Color.White;
          userListBox.BorderStyle = BorderStyle.None;
-         listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
-         listBox1.ForeColor = Color.White;
-         listBox1.BorderStyle = BorderStyle.None;
+         chatroomListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         chatroomListBox.ForeColor = Color.White;
+         chatroomListBox.BorderStyle = BorderStyle.None;
          toolTip.ForeColor = Color.White;
       }
 
@@ -74,18 +74,18 @@ namespace ChatApp
          materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
          lightToolStripMenuItem.Checked = true;
          darkToolStripMenuItem.Checked = false;
-         chatList.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
-         chatList.ForeColor = SystemColors.WindowText;
-         chatList.BorderStyle = BorderStyle.None;
+         chatListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         chatListBox.ForeColor = SystemColors.WindowText;
+         chatListBox.BorderStyle = BorderStyle.None;
          messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
          messageField.ForeColor = SystemColors.WindowText;
          messageField.BorderStyle = BorderStyle.None;
          userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
          userListBox.ForeColor = SystemColors.WindowText;
          userListBox.BorderStyle = BorderStyle.None;
-         listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
-         listBox1.ForeColor = SystemColors.WindowText;
-         listBox1.BorderStyle = BorderStyle.None;
+         chatroomListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         chatroomListBox.ForeColor = SystemColors.WindowText;
+         chatroomListBox.BorderStyle = BorderStyle.None;
          toolTip.ForeColor = SystemColors.WindowText;
       }
 
@@ -153,9 +153,9 @@ namespace ChatApp
                      ParseChatroomList(t);//TODO: Finish this function
                      break;
                   default:
-                     chatList.Items.Add(t.message);
-                     chatList.SelectedIndex = chatList.Items.Count - 1;
-                     chatList.SelectedIndex = -1;
+                     chatListBox.Items.Add(t.message);
+                     chatListBox.SelectedIndex = chatListBox.Items.Count - 1;
+                     chatListBox.SelectedIndex = -1;
 
                      break;
                }
@@ -177,7 +177,7 @@ namespace ChatApp
             for (int i = 0; i < idNames.Length; i += 2)
             {
                Chatroom temp = new Chatroom(int.Parse(idNames[i]), idNames[i + 1]);
-               chatList.Items.Add(temp.name);
+               chatroomListBox.Items.Add(temp.name);
             }
          }
          else{}//Bad formating
@@ -237,7 +237,7 @@ namespace ChatApp
       
       private void chatList_MeasureItem(object sender, MeasureItemEventArgs e)
       {
-         e.ItemHeight = (int)e.Graphics.MeasureString(chatList.Items[e.Index].ToString(), chatList.Font, chatList.Width).Height;
+         e.ItemHeight = (int)e.Graphics.MeasureString(chatListBox.Items[e.Index].ToString(), chatListBox.Font, chatListBox.Width).Height;
       }
 
       private void chatList_DrawItem(object sender, DrawItemEventArgs e)
@@ -245,7 +245,7 @@ namespace ChatApp
          e.DrawBackground();
          e.DrawFocusRectangle();
          if(e.Index >= 0)
-            e.Graphics.DrawString(chatList.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+            e.Graphics.DrawString(chatListBox.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
       }
 
       /// <summary>
@@ -258,7 +258,7 @@ namespace ChatApp
          if (e.Control && e.KeyCode == Keys.C)
          {
             System.Text.StringBuilder copy_buffer = new System.Text.StringBuilder();
-            foreach (object item in chatList.SelectedItems)
+            foreach (object item in chatListBox.SelectedItems)
                copy_buffer.AppendLine(item.ToString());
             if (copy_buffer.Length > 0)
                Clipboard.SetText(copy_buffer.ToString());
