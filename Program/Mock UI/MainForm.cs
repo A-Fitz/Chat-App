@@ -74,16 +74,16 @@ namespace ChatApp
          materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
          lightToolStripMenuItem.Checked = true;
          darkToolStripMenuItem.Checked = false;
-         chatListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         chatListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFEBEBEB");
          chatListBox.ForeColor = SystemColors.WindowText;
          chatListBox.BorderStyle = BorderStyle.None;
-         messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFEBEBEB");
          messageField.ForeColor = SystemColors.WindowText;
          messageField.BorderStyle = BorderStyle.None;
-         userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFEBEBEB");
          userListBox.ForeColor = SystemColors.WindowText;
          userListBox.BorderStyle = BorderStyle.None;
-         chatroomListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         chatroomListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFEBEBEB");
          chatroomListBox.ForeColor = SystemColors.WindowText;
          chatroomListBox.BorderStyle = BorderStyle.None;
          toolTip.ForeColor = SystemColors.WindowText;
@@ -99,7 +99,7 @@ namespace ChatApp
       {
          TCPMessage tcpMessage = new TCPMessage();
          tcpMessage.message = messageField.Text;
-         tcpMessage.chatID = 0;
+         tcpMessage.chatID = ((Chatroom)(chatroomListBox.SelectedItem)).id;
 
          EnumMessageStatus status = messageService.SendMessage(tcpMessage);
 
@@ -153,14 +153,27 @@ namespace ChatApp
                      ParseChatroomList(t);//TODO: Finish this function
                      break;
                   default:
-                     chatListBox.Items.Add(t.message);
-                     chatListBox.SelectedIndex = chatListBox.Items.Count - 1;
-                     chatListBox.SelectedIndex = -1;
-
+                     Chatroom room = chatroomList.Find(x => x.id == t.chatID);
+                     room.messages.Add(t);
+                     if(((Chatroom)chatroomListBox.SelectedItem).id == t.chatID)
+                     {
+                        chatListBox.Items.Add(t.message);
+                        chatListBox.SelectedIndex = chatListBox.Items.Count - 1;
+                        chatListBox.SelectedIndex = -1;
+                     }
                      break;
                }
-               
             }
+         }
+      }
+
+      private void populateChatListBox(Chatroom room)
+      {
+         foreach(TCPMessage t in room.messages)
+         {
+            chatListBox.Items.Add(t.message);
+            chatListBox.SelectedIndex = chatListBox.Items.Count - 1;
+            chatListBox.SelectedIndex = -1;
          }
       }
 
@@ -177,10 +190,13 @@ namespace ChatApp
             for (int i = 0; i < idNames.Length - 1; i += 2)
             {
                Chatroom temp = new Chatroom(int.Parse(idNames[i]), idNames[i + 1]);
-               chatroomListBox.Items.Add(temp.name);
+               chatroomListBox.Items.Add(temp);
+               chatroomList.Add(temp);
             }
          }
          else{}//Bad formating
+
+         chatroomListBox.SetSelected(0, true);
       }
 
       /// <summary>
@@ -192,7 +208,7 @@ namespace ChatApp
       {
          if (e.KeyCode == Keys.Enter && e.Shift)
          {
-            // do nothing
+            // do nothing on purpose
          }
          else if (e.KeyCode == Keys.Enter)
          {
@@ -291,6 +307,12 @@ namespace ChatApp
          Mock_UI.Properties.Settings.Default.Save();
 
          setDarkTheme();
+      }
+
+      private void chatroomListBox_SelectedIndexChanged(object sender, EventArgs e)
+      {
+         chatListBox.Items.Clear();
+         populateChatListBox((Chatroom)(chatroomListBox.SelectedItem));
       }
    }
 }

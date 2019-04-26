@@ -19,5 +19,10 @@ namespace Mock_UI
          this.name = name;
          messages = new List<TCPMessage>();
       }
+
+      public override string ToString()
+      {
+         return name;
+      }
    }
 }

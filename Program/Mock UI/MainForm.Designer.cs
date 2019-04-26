@@ -65,6 +65,7 @@
          this.chatroomListBox.Name = "chatroomListBox";
          this.chatroomListBox.Size = new System.Drawing.Size(117, 238);
          this.chatroomListBox.TabIndex = 2;
+         this.chatroomListBox.SelectedIndexChanged += new System.EventHandler(this.chatroomListBox_SelectedIndexChanged);
          // 
          // userListBox
          // 
