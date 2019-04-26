@@ -30,9 +30,9 @@
         {
          this.components = new System.ComponentModel.Container();
          this.messageField = new System.Windows.Forms.TextBox();
-         this.listBox1 = new System.Windows.Forms.ListBox();
+         this.chatroomListBox = new System.Windows.Forms.ListBox();
          this.userListBox = new System.Windows.Forms.ListBox();
-         this.chatList = new System.Windows.Forms.ListBox();
+         this.chatListBox = new System.Windows.Forms.ListBox();
          this.readMessagesTimer = new System.Windows.Forms.Timer(this.components);
          this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
          this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
@@ -58,13 +58,13 @@
          this.messageField.TextChanged += new System.EventHandler(this.messageField_TextChanged);
          this.messageField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.messageField_KeyDown);
          // 
-         // listBox1
+         // chatroomListBox
          // 
-         this.listBox1.FormattingEnabled = true;
-         this.listBox1.Location = new System.Drawing.Point(10, 109);
-         this.listBox1.Name = "listBox1";
-         this.listBox1.Size = new System.Drawing.Size(117, 238);
-         this.listBox1.TabIndex = 2;
+         this.chatroomListBox.FormattingEnabled = true;
+         this.chatroomListBox.Location = new System.Drawing.Point(10, 109);
+         this.chatroomListBox.Name = "chatroomListBox";
+         this.chatroomListBox.Size = new System.Drawing.Size(117, 238);
+         this.chatroomListBox.TabIndex = 2;
          // 
          // userListBox
          // 
@@ -74,17 +74,17 @@
          this.userListBox.Size = new System.Drawing.Size(120, 238);
          this.userListBox.TabIndex = 6;
          // 
-         // chatList
+         // chatListBox
          // 
-         this.chatList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-         this.chatList.FormattingEnabled = true;
-         this.chatList.Location = new System.Drawing.Point(208, 93);
-         this.chatList.Name = "chatList";
-         this.chatList.Size = new System.Drawing.Size(564, 368);
-         this.chatList.TabIndex = 9;
-         this.chatList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.chatList_DrawItem);
-         this.chatList.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.chatList_MeasureItem);
-         this.chatList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatList_KeyDown);
+         this.chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+         this.chatListBox.FormattingEnabled = true;
+         this.chatListBox.Location = new System.Drawing.Point(208, 93);
+         this.chatListBox.Name = "chatListBox";
+         this.chatListBox.Size = new System.Drawing.Size(564, 368);
+         this.chatListBox.TabIndex = 9;
+         this.chatListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.chatList_DrawItem);
+         this.chatListBox.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.chatList_MeasureItem);
+         this.chatListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatList_KeyDown);
          // 
          // readMessagesTimer
          // 
@@ -208,9 +208,9 @@
          this.Controls.Add(this.toolTip);
          this.Controls.Add(this.materialLabel2);
          this.Controls.Add(this.materialLabel1);
-         this.Controls.Add(this.chatList);
+         this.Controls.Add(this.chatListBox);
          this.Controls.Add(this.userListBox);
-         this.Controls.Add(this.listBox1);
+         this.Controls.Add(this.chatroomListBox);
          this.Controls.Add(this.messageField);
          this.Name = "MainForm";
          this.Sizable = false;
@@ -226,9 +226,9 @@
         #endregion
 
         private System.Windows.Forms.TextBox messageField;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox chatroomListBox;
         private System.Windows.Forms.ListBox userListBox;
-        private System.Windows.Forms.ListBox chatList;
+        private System.Windows.Forms.ListBox chatListBox;
         private System.Windows.Forms.Timer readMessagesTimer;
       private MaterialSkin.Controls.MaterialLabel materialLabel1;
       private MaterialSkin.Controls.MaterialLabel materialLabel2;
