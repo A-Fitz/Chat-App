@@ -79,7 +79,7 @@ namespace Server
         /// <param name="userid"></param>
         /// <param name="hashword"></param>
         /// <param name="directmsg"></param>
-        public void CreateChatroom(int chatid, int userid, String hashword, int directmsg)
+        public bool CreateChatroom(int chatid, int userid, String hashword, int directmsg)
         {
             using (var connection = new OracleConnection(connectionString))
             {
@@ -97,9 +97,10 @@ namespace Server
 
                     command.ExecuteNonQuery();
                     connection.Close();
+                    return true;
                 }
                 catch (Exception e)
-                { }
+                { return false; }
             }
         }
 
@@ -169,7 +170,7 @@ namespace Server
         /// <param name="chatid"></param>
         /// <param name="userid"></param>
         /// <param name="chatpw"></param>
-        public void AddUser(int chatid, int userid, String chatpw)
+        public bool AddUser(int chatid, int userid, String chatpw)
         {
             using (var connection = new OracleConnection(connectionString))
             {
@@ -183,9 +184,13 @@ namespace Server
                     command.Parameters.Add("CHAT_ID", OracleDbType.Int32).Value = chatid;
                     command.Parameters.Add("USER_ID", OracleDbType.Int32).Value = userid;
                     command.Parameters.Add("CHATROOMPASSWORD", OracleDbType.Varchar2).Value = chatpw;
+
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    return true;
                 }
                 catch (Exception e)
-                { }
+                { return false; }
             }
         }
     }

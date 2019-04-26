@@ -39,9 +39,9 @@ namespace Server
         /// <param name="userid"></param>
         /// <param name="hashword"></param>
         /// <param name="directmsg"></param>
-        public void CreateChatroom(int chatid, int userid, String hashword, int directmsg)
+        public bool CreateChatroom(int chatid, int userid, String hashword, int directmsg)
         {
-            ChatroomDatabridge.CreateChatroom(chatid, userid, hashword, directmsg);
+            return ChatroomDatabridge.CreateChatroom(chatid, userid, hashword, directmsg);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Server
         /// <param name="chatid"></param>
         /// <param name="userid"></param>
         /// <param name="chatpw"></param>
-        public void AddUser(int chatid, int userid, String chatpw)
+        public bool AddUser(int chatid, int userid, String chatpw)
         {
-            ChatroomDatabridge.AddUser(chatid, userid, chatpw);
+            return ChatroomDatabridge.AddUser(chatid, userid, chatpw);
         }
     }
 }
