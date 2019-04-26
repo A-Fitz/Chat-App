@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using ChatApp.Interfaces;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using Mock_UI.Enums;
 
 namespace ChatApp
 {
-   public partial class MainForm : Form
+   public partial class MainForm : MaterialForm
    {
       // Message Services
       private readonly IServerConnection serverConnection;
       private readonly IMessageService messageService;
+      private MaterialSkinManager materialSkinManager;
 
       /// <summary>
       /// The main application form. Handles chat logic.
@@ -19,7 +24,64 @@ namespace ChatApp
       {
          this.serverConnection = serverConnection;
          this.messageService = messageService;
+         messageService.SendMessage(new TCPMessage { chatID = -1, command = "ACK", message = "0" });
          InitializeComponent();
+         setupTheme();
+      }
+
+      private void setupTheme()
+      {
+         this.MaximizeBox = false;
+
+         materialSkinManager = MaterialSkinManager.Instance;
+         materialSkinManager.AddFormToManage(this);
+
+         if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
+         {
+            setLightTheme();
+         }
+         else if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
+         {
+            setDarkTheme();
+         }
+      }
+
+      private void setDarkTheme()
+      {
+         materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+         lightToolStripMenuItem.Checked = false;
+         darkToolStripMenuItem.Checked = true;
+         chatList.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         chatList.ForeColor = Color.White;
+         chatList.BorderStyle = BorderStyle.None;
+         messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         messageField.ForeColor = Color.White;
+         messageField.BorderStyle = BorderStyle.None;
+         userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         userListBox.ForeColor = Color.White;
+         userListBox.BorderStyle = BorderStyle.None;
+         listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FF484848");
+         listBox1.ForeColor = Color.White;
+         listBox1.BorderStyle = BorderStyle.None;
+      }
+
+      private void setLightTheme()
+      {
+         materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+         lightToolStripMenuItem.Checked = true;
+         darkToolStripMenuItem.Checked = false;
+         chatList.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         chatList.ForeColor = SystemColors.WindowText;
+         chatList.BorderStyle = BorderStyle.None;
+         messageField.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         messageField.ForeColor = SystemColors.WindowText;
+         messageField.BorderStyle = BorderStyle.None;
+         userListBox.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         userListBox.ForeColor = SystemColors.WindowText;
+         userListBox.BorderStyle = BorderStyle.None;
+         listBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFAFAFA");
+         listBox1.ForeColor = SystemColors.WindowText;
+         listBox1.BorderStyle = BorderStyle.None;
       }
 
       /// <summary>
@@ -39,7 +101,9 @@ namespace ChatApp
          if (status == EnumMessageStatus.successful)
             messageField.Clear();
 
-         messageStatusLabel.Text = EnumExtensions.GetEnumDescription(status);
+         //messageStatusLabel.Text = EnumExtensions.GetEnumDescription(status);
+
+         setToolTip(EnumExtensions.GetEnumDescription(status));
       }
 
       /// <summary>
@@ -49,7 +113,7 @@ namespace ChatApp
       /// <param name="e"></param>
       private void messageField_TextChanged(object sender, EventArgs e)
       {
-         messageStatusLabel.Text = "";
+         toolTip.Text = "";
       }
 
       /// <summary>
@@ -79,13 +143,40 @@ namespace ChatApp
                            userListBox.Items.Add(str);
                      }
                      break;
+                  case "CHATROOMLIST":
+                     //TODO: Parse list and update local list of chatrooms with id and name
+                     ParseChatroomList(t);//TODO: Finish this function
+                     break;
                   default:
                      chatList.Items.Add(t.message);
+                     chatList.SelectedIndex = chatList.Items.Count - 1;
+                     chatList.SelectedIndex = -1;
+
                      break;
                }
                
             }
          }
+      }
+
+      /// <summary>
+      /// Parses through a list of all the current chatrooms
+      /// </summary>
+      /// <param name="message">Message with the chatroom list.</param>
+      private void ParseChatroomList(TCPMessage message)
+      {
+         //TODO: Might want to reset the chatroomlist before or in this function
+         string[] idNames = message.message.Split(',');
+         if(idNames.Length % 2 == 0)
+         {
+            for (int i = 0; i < idNames.Length; i += 2)
+            {
+               //TODO: Assign idNames[i] to an id variable for a chatroom
+               //TODO: Assign idNames[i + 1] to a name variable for that same chatroom
+               //TODO: Append the chatroom to the list of chatrooms
+            }
+         }
+         else{}//Bad formating
       }
 
       /// <summary>
@@ -125,7 +216,7 @@ namespace ChatApp
       /// </summary>
       /// <param name="sender"></param>
       /// <param name="e"></param>
-      private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+      private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
       {
          TCPMessage tcpMessage = new TCPMessage();
          tcpMessage.chatID = 0;
@@ -137,6 +228,65 @@ namespace ChatApp
          var startupForm = new StartupForm();
          startupForm.FormClosed += (s, args) => this.Close();
          startupForm.Show();
+      }
+
+      
+      private void chatList_MeasureItem(object sender, MeasureItemEventArgs e)
+      {
+         e.ItemHeight = (int)e.Graphics.MeasureString(chatList.Items[e.Index].ToString(), chatList.Font, chatList.Width).Height;
+      }
+
+      private void chatList_DrawItem(object sender, DrawItemEventArgs e)
+      {
+         e.DrawBackground();
+         e.DrawFocusRectangle();
+         if(e.Index >= 0)
+            e.Graphics.DrawString(chatList.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+      }
+
+      /// <summary>
+      /// Allow copying a chat message using crtl-c.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void chatList_KeyDown(object sender, KeyEventArgs e)
+      {
+         if (e.Control && e.KeyCode == Keys.C)
+         {
+            System.Text.StringBuilder copy_buffer = new System.Text.StringBuilder();
+            foreach (object item in chatList.SelectedItems)
+               copy_buffer.AppendLine(item.ToString());
+            if (copy_buffer.Length > 0)
+               Clipboard.SetText(copy_buffer.ToString());
+         }
+      }
+
+      private void setToolTip(String message)
+      {
+         toolTip.Text = message;
+         toolTipTimer.Start();
+      }
+
+      private void toolTipTimer_Tick(object sender, EventArgs e)
+      {
+         toolTip.Text = "";
+         toolTipTimer.Stop();
+      }
+
+      private void lightToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.light);
+         Mock_UI.Properties.Settings.Default.Save();
+
+         setLightTheme();
+      }
+
+      private void darkToolStripMenuItem_Click(object sender, EventArgs e)
+      {
+         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.dark);
+         Mock_UI.Properties.Settings.Default.Save();
+
+         setDarkTheme();
       }
    }
 }

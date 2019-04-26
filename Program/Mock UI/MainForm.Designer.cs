@@ -30,20 +30,22 @@
         {
          this.components = new System.ComponentModel.Container();
          this.messageField = new System.Windows.Forms.TextBox();
-         this.sendButton = new System.Windows.Forms.Button();
          this.listBox1 = new System.Windows.Forms.ListBox();
-         this.label1 = new System.Windows.Forms.Label();
-         this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-         this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-         this.visualPreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.userListBox = new System.Windows.Forms.ListBox();
-         this.label2 = new System.Windows.Forms.Label();
-         this.messageStatusLabel = new System.Windows.Forms.Label();
          this.chatList = new System.Windows.Forms.ListBox();
          this.readMessagesTimer = new System.Windows.Forms.Timer(this.components);
-         this.menuStrip1.SuspendLayout();
+         this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+         this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+         this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
+         this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.visualPreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.toolTip = new MaterialSkin.Controls.MaterialLabel();
+         this.toolTipTimer = new System.Windows.Forms.Timer(this.components);
+         this.sendButton = new MaterialSkin.Controls.MaterialRaisedButton();
+         this.materialContextMenuStrip1.SuspendLayout();
          this.SuspendLayout();
          // 
          // messageField
@@ -55,16 +57,6 @@
          this.messageField.TabIndex = 0;
          this.messageField.TextChanged += new System.EventHandler(this.messageField_TextChanged);
          this.messageField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.messageField_KeyDown);
-         // 
-         // sendButton
-         // 
-         this.sendButton.Location = new System.Drawing.Point(697, 597);
-         this.sendButton.Name = "sendButton";
-         this.sendButton.Size = new System.Drawing.Size(75, 23);
-         this.sendButton.TabIndex = 1;
-         this.sendButton.Text = "Send";
-         this.sendButton.UseVisualStyleBackColor = true;
-         this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
          // 
          // listBox1
          // 
@@ -105,140 +97,186 @@
             "Chatroom 33",
             "Chatroom 34",
             "Chatroom 35"});
-         this.listBox1.Location = new System.Drawing.Point(13, 67);
+         this.listBox1.Location = new System.Drawing.Point(10, 109);
          this.listBox1.Name = "listBox1";
          this.listBox1.Size = new System.Drawing.Size(117, 238);
          this.listBox1.TabIndex = 2;
          // 
-         // label1
-         // 
-         this.label1.AutoSize = true;
-         this.label1.Location = new System.Drawing.Point(12, 51);
-         this.label1.Name = "label1";
-         this.label1.Size = new System.Drawing.Size(57, 13);
-         this.label1.TabIndex = 3;
-         this.label1.Text = "Chatrooms";
-         // 
-         // menuStrip1
-         // 
-         this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.accountToolStripMenuItem});
-         this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-         this.menuStrip1.Name = "menuStrip1";
-         this.menuStrip1.Size = new System.Drawing.Size(784, 24);
-         this.menuStrip1.TabIndex = 4;
-         this.menuStrip1.Text = "menuStrip1";
-         // 
-         // toolStripMenuItem1
-         // 
-         this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.visualPreferencesToolStripMenuItem});
-         this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-         this.toolStripMenuItem1.Size = new System.Drawing.Size(39, 20);
-         this.toolStripMenuItem1.Text = "Edit";
-         // 
-         // visualPreferencesToolStripMenuItem
-         // 
-         this.visualPreferencesToolStripMenuItem.Name = "visualPreferencesToolStripMenuItem";
-         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-         this.visualPreferencesToolStripMenuItem.Text = "Visual Preferences";
-         // 
-         // accountToolStripMenuItem
-         // 
-         this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.signOutToolStripMenuItem});
-         this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-         this.accountToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
-         this.accountToolStripMenuItem.Text = "Account";
-         // 
-         // signOutToolStripMenuItem
-         // 
-         this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
-         this.signOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-         this.signOutToolStripMenuItem.Text = "Sign Out";
-         this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
-         // 
          // userListBox
          // 
          this.userListBox.FormattingEnabled = true;
-         this.userListBox.Location = new System.Drawing.Point(13, 354);
+         this.userListBox.Location = new System.Drawing.Point(10, 394);
          this.userListBox.Name = "userListBox";
          this.userListBox.Size = new System.Drawing.Size(120, 238);
          this.userListBox.TabIndex = 6;
          // 
-         // label2
-         // 
-         this.label2.AutoSize = true;
-         this.label2.Location = new System.Drawing.Point(15, 335);
-         this.label2.Name = "label2";
-         this.label2.Size = new System.Drawing.Size(59, 13);
-         this.label2.TabIndex = 7;
-         this.label2.Text = "Chat Users";
-         // 
-         // messageStatusLabel
-         // 
-         this.messageStatusLabel.AutoSize = true;
-         this.messageStatusLabel.Location = new System.Drawing.Point(208, 465);
-         this.messageStatusLabel.Name = "messageStatusLabel";
-         this.messageStatusLabel.Size = new System.Drawing.Size(0, 13);
-         this.messageStatusLabel.TabIndex = 8;
-         // 
          // chatList
          // 
+         this.chatList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
          this.chatList.FormattingEnabled = true;
-         this.chatList.Location = new System.Drawing.Point(208, 67);
+         this.chatList.Location = new System.Drawing.Point(208, 93);
          this.chatList.Name = "chatList";
-         this.chatList.Size = new System.Drawing.Size(564, 394);
+         this.chatList.Size = new System.Drawing.Size(564, 368);
          this.chatList.TabIndex = 9;
+         this.chatList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.chatList_DrawItem);
+         this.chatList.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.chatList_MeasureItem);
+         this.chatList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatList_KeyDown);
          // 
          // readMessagesTimer
          // 
          this.readMessagesTimer.Enabled = true;
          this.readMessagesTimer.Tick += new System.EventHandler(this.readMessagesTimer_Tick);
          // 
+         // materialLabel1
+         // 
+         this.materialLabel1.AutoSize = true;
+         this.materialLabel1.Depth = 0;
+         this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+         this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+         this.materialLabel1.Location = new System.Drawing.Point(6, 87);
+         this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+         this.materialLabel1.Name = "materialLabel1";
+         this.materialLabel1.Size = new System.Drawing.Size(84, 19);
+         this.materialLabel1.TabIndex = 11;
+         this.materialLabel1.Text = "Chatrooms";
+         // 
+         // materialLabel2
+         // 
+         this.materialLabel2.AutoSize = true;
+         this.materialLabel2.Depth = 0;
+         this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+         this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+         this.materialLabel2.Location = new System.Drawing.Point(6, 372);
+         this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+         this.materialLabel2.Name = "materialLabel2";
+         this.materialLabel2.Size = new System.Drawing.Size(83, 19);
+         this.materialLabel2.TabIndex = 12;
+         this.materialLabel2.Text = "Chat Users";
+         // 
+         // materialContextMenuStrip1
+         // 
+         this.materialContextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+         this.materialContextMenuStrip1.Depth = 0;
+         this.materialContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem,
+            this.logOutToolStripMenuItem});
+         this.materialContextMenuStrip1.MouseState = MaterialSkin.MouseState.HOVER;
+         this.materialContextMenuStrip1.Name = "materialContextMenuStrip1";
+         this.materialContextMenuStrip1.Size = new System.Drawing.Size(117, 48);
+         // 
+         // settingsToolStripMenuItem
+         // 
+         this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.visualPreferencesToolStripMenuItem});
+         this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+         this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.settingsToolStripMenuItem.Text = "Settings";
+         // 
+         // visualPreferencesToolStripMenuItem
+         // 
+         this.visualPreferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lightToolStripMenuItem,
+            this.darkToolStripMenuItem});
+         this.visualPreferencesToolStripMenuItem.Name = "visualPreferencesToolStripMenuItem";
+         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.visualPreferencesToolStripMenuItem.Text = "Theme";
+         // 
+         // lightToolStripMenuItem
+         // 
+         this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
+         this.lightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.lightToolStripMenuItem.Text = "Light";
+         this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
+         // 
+         // darkToolStripMenuItem
+         // 
+         this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
+         this.darkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.darkToolStripMenuItem.Text = "Dark";
+         this.darkToolStripMenuItem.Click += new System.EventHandler(this.darkToolStripMenuItem_Click);
+         // 
+         // logOutToolStripMenuItem
+         // 
+         this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
+         this.logOutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.logOutToolStripMenuItem.Text = "Log out";
+         this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
+         // 
+         // toolTip
+         // 
+         this.toolTip.AutoSize = true;
+         this.toolTip.BackColor = System.Drawing.Color.Transparent;
+         this.toolTip.Depth = 0;
+         this.toolTip.Font = new System.Drawing.Font("Roboto", 11F);
+         this.toolTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+         this.toolTip.Location = new System.Drawing.Point(204, 462);
+         this.toolTip.MouseState = MaterialSkin.MouseState.HOVER;
+         this.toolTip.Name = "toolTip";
+         this.toolTip.Size = new System.Drawing.Size(0, 19);
+         this.toolTip.TabIndex = 13;
+         // 
+         // toolTipTimer
+         // 
+         this.toolTipTimer.Enabled = true;
+         this.toolTipTimer.Interval = 5000;
+         this.toolTipTimer.Tick += new System.EventHandler(this.toolTipTimer_Tick);
+         // 
+         // sendButton
+         // 
+         this.sendButton.Depth = 0;
+         this.sendButton.Location = new System.Drawing.Point(725, 597);
+         this.sendButton.MouseState = MaterialSkin.MouseState.HOVER;
+         this.sendButton.Name = "sendButton";
+         this.sendButton.Primary = true;
+         this.sendButton.Size = new System.Drawing.Size(47, 36);
+         this.sendButton.TabIndex = 14;
+         this.sendButton.Text = "Send";
+         this.sendButton.UseVisualStyleBackColor = true;
+         this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
+         // 
          // MainForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(784, 644);
-         this.Controls.Add(this.chatList);
-         this.Controls.Add(this.messageStatusLabel);
-         this.Controls.Add(this.label2);
-         this.Controls.Add(this.userListBox);
-         this.Controls.Add(this.label1);
-         this.Controls.Add(this.listBox1);
+         this.ContextMenuStrip = this.materialContextMenuStrip1;
          this.Controls.Add(this.sendButton);
+         this.Controls.Add(this.toolTip);
+         this.Controls.Add(this.materialLabel2);
+         this.Controls.Add(this.materialLabel1);
+         this.Controls.Add(this.chatList);
+         this.Controls.Add(this.userListBox);
+         this.Controls.Add(this.listBox1);
          this.Controls.Add(this.messageField);
-         this.Controls.Add(this.menuStrip1);
-         this.MainMenuStrip = this.menuStrip1;
          this.Name = "MainForm";
+         this.Sizable = false;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Chat App";
          this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-         this.menuStrip1.ResumeLayout(false);
-         this.menuStrip1.PerformLayout();
+         this.materialContextMenuStrip1.ResumeLayout(false);
          this.ResumeLayout(false);
          this.PerformLayout();
 
-        }
+      }
 
         #endregion
 
         private System.Windows.Forms.TextBox messageField;
-        private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem visualPreferencesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.ListBox userListBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label messageStatusLabel;
         private System.Windows.Forms.ListBox chatList;
         private System.Windows.Forms.Timer readMessagesTimer;
-    }
+      private MaterialSkin.Controls.MaterialLabel materialLabel1;
+      private MaterialSkin.Controls.MaterialLabel materialLabel2;
+      private MaterialSkin.Controls.MaterialContextMenuStrip materialContextMenuStrip1;
+      private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem visualPreferencesToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem logOutToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem lightToolStripMenuItem;
+      private System.Windows.Forms.ToolStripMenuItem darkToolStripMenuItem;
+      private MaterialSkin.Controls.MaterialLabel toolTip;
+      private System.Windows.Forms.Timer toolTipTimer;
+      private MaterialSkin.Controls.MaterialRaisedButton sendButton;
+   }
 }
 

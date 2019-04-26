@@ -1,12 +1,15 @@
 ﻿using ChatApp.Interfaces;
 using ChatApp.Services;
+using MaterialSkin;
+using MaterialSkin.Controls;
+using Mock_UI.Enums;
 using System;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
 namespace ChatApp
 {
-   public partial class StartupForm : Form
+   public partial class StartupForm : MaterialForm
    {
       private NetworkStream stream;
       private readonly IServerConnection serverConnection;
@@ -18,6 +21,7 @@ namespace ChatApp
       public StartupForm()
       {
          InitializeComponent();
+         setupTheme();
 
          try
          {
@@ -60,7 +64,23 @@ namespace ChatApp
          loginButton.Enabled = true;
          registerButton.Enabled = true;
       }
-      
+
+      private void setupTheme()
+      {
+         this.MaximizeBox = false;
+
+         MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+         materialSkinManager.AddFormToManage(this);
+         if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
+         {
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+         }
+         else if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
+         {
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+         }
+      }
+
       /// <summary>
       /// Closes this form and opens the login form.
       /// </summary>
@@ -94,12 +114,7 @@ namespace ChatApp
       /// <param name="e"></param>
       private void StartupForm_FormClosed(object sender, FormClosedEventArgs e)
       {
-         // TODO do stuff so this doesn't break if the server is disconnected
-         TCPMessage tcpMessage = new TCPMessage();
-         tcpMessage.chatID = 0;
-         tcpMessage.command = "CLOSE";
-         tcpMessage.message = "0";
-         messageService.SendMessage(tcpMessage);
+         // nevermind fuck this
       }
    }
 }

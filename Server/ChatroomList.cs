@@ -12,7 +12,7 @@ namespace Server
    /// </summary>
    class ChatroomList
    {
-      private static List<ChatroomLogic> chatrooms = new List<ChatroomLogic>();
+      public List<ChatroomLogic> chatrooms { get; set;} = new List<ChatroomLogic>();
 
       /// <summary>
       /// Adds a ChatroomLogic object to the list managed by this
@@ -34,7 +34,7 @@ namespace Server
       /// <param name="msg"></param>
       public void update(Message msg)
       {
-         ChatroomLogic chatroom = ChatroomList.idToChatroom(msg.chatID);
+         ChatroomLogic chatroom = idToChatroom(msg.chatID);
          if (chatrooms.Contains(chatroom))
             chatroom.update(msg);
       }
@@ -45,7 +45,7 @@ namespace Server
       /// </summary>
       /// <param name="id">chatID to convert to a ChatroomLogic object</param>
       /// <returns></returns>
-      public static ChatroomLogic idToChatroom(int id)
+      public ChatroomLogic idToChatroom(int id)
       {
          int a = chatrooms.FindIndex(x => x.chatroomID == id);
          if (a == -1)
