@@ -143,6 +143,10 @@ namespace ChatApp
                            userListBox.Items.Add(str);
                      }
                      break;
+                  case "CHATROOMLIST":
+                     //TODO: Parse list and update local list of chatrooms with id and name
+                     ParseChatroomList(t);//TODO: Finish this function
+                     break;
                   default:
                      chatList.Items.Add(t.message);
                      chatList.SelectedIndex = chatList.Items.Count - 1;
@@ -153,6 +157,26 @@ namespace ChatApp
                
             }
          }
+      }
+
+      /// <summary>
+      /// Parses through a list of all the current chatrooms
+      /// </summary>
+      /// <param name="message">Message with the chatroom list.</param>
+      private void ParseChatroomList(TCPMessage message)
+      {
+         //TODO: Might want to reset the chatroomlist before or in this function
+         string[] idNames = message.message.Split(',');
+         if(idNames.Length % 2 == 0)
+         {
+            for (int i = 0; i < idNames.Length; i += 2)
+            {
+               //TODO: Assign idNames[i] to an id variable for a chatroom
+               //TODO: Assign idNames[i + 1] to a name variable for that same chatroom
+               //TODO: Append the chatroom to the list of chatrooms
+            }
+         }
+         else{}//Bad formating
       }
 
       /// <summary>

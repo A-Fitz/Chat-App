@@ -94,11 +94,29 @@ namespace Server
                      a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
                      chatroomList.update(a);
                      break;
-                     
+                  case "NEW_CHAT":
+                     ChatroomLogic tempChatroom = new ChatroomLogic();
+                     chatroomList.addChat(tempChatroom);
+                     tempChatroom.Subscribe(this);
+                     //TODO: Create chatroom stuff in database
+                     //Send an updated chatroom list to client
+                     SendChatroomList();
+                     break;
+                  case "SUSCRIBE"://and like the video down below
+
+                     ChatroomLogic tempChatroom2 = chatroomList.idToChatroom(a.chatID);
+                     if (tempChatroom2 != null)
+                     {
+                        //TODO: Check that the password matches the chatrooms password and break out if it is incorrect
+                        tempChatroom2.Subscribe(this);
+                        //TODO: Get previous messages for this chatroom and send them to the update() function
+                     }
+
+                     break;
                 case "CLOSE":
                      disconnect();
                      clients.Remove(this);
-                     sendClientList(chatroomList);
+                     sendClientList();
                      Console.Out.WriteLine((username == "" ? "Someone disconected." : username + " disconnected."));
                      return;                     
                   default:
@@ -114,7 +132,7 @@ namespace Server
          {
             disconnect();
             clients.Remove(this);
-            sendClientList(chatroomList);
+            sendClientList();
             Console.Out.WriteLine((username == "" ? "Someone disconected.": username + " disconnected."));
          }
          finally
@@ -134,8 +152,8 @@ namespace Server
             ack = (MessageService.GetMessage(networkStream).command == "ACK");
          //TODO LATER: Request data from SQL server on this client and send messages to
          //this client's OnNext() function.
-         subsribeToChat(ChatroomList.idToChatroom(0));
-         sendClientList(chatroomList);
+         subsribeToChat(chatroomList.idToChatroom(0));
+         sendClientList();
       }
 
 
@@ -275,13 +293,24 @@ namespace Server
             clients.Clear();
          }
       }
+      private void SendChatroomList()
+      {
+         String list = "";
+         foreach (ChatroomLogic c in chatroomList.chatrooms)
+         {
+            list += c.chatroomID + "," + c.name;
+         }
+         chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CHATROOMLIST", message = list });
+      }
+
+
 
       /// <summary>
       /// Updates all clients with the current client username list. Called when a client disconnects or connects;
       /// </summary>
       /// <param name="client"></param>
       /// <param name="chatroomList"></param>
-      private void sendClientList(ChatroomList chatroomList)
+      private void sendClientList()
       {
          String list = "";
          foreach (ClientConnection c in ClientConnection.clients)
