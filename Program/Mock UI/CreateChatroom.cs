@@ -1,5 +1,4 @@
-﻿using MaterialSkin;
-using MaterialSkin.Controls;
+﻿using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,9 +11,9 @@ using System.Windows.Forms;
 
 namespace Mock_UI
 {
-   public partial class AddChatroom : MaterialForm
+   public partial class CreateChatroom : MaterialForm
    {
-      public AddChatroom()
+      public CreateChatroom()
       {
          InitializeComponent();
       }

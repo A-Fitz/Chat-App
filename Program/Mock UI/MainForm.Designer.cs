@@ -45,7 +45,8 @@
          this.toolTip = new MaterialSkin.Controls.MaterialLabel();
          this.toolTipTimer = new System.Windows.Forms.Timer(this.components);
          this.sendButton = new MaterialSkin.Controls.MaterialRaisedButton();
-         this.addChatroomBtn = new System.Windows.Forms.Button();
+         this.subscribeChatroomBtn = new System.Windows.Forms.Button();
+         this.newChatroomBtn = new System.Windows.Forms.Button();
          this.undoBtn = new System.Windows.Forms.Button();
          this.materialContextMenuStrip1.SuspendLayout();
          this.SuspendLayout();
@@ -72,9 +73,9 @@
          // userListBox
          // 
          this.userListBox.FormattingEnabled = true;
-         this.userListBox.Location = new System.Drawing.Point(10, 394);
+         this.userListBox.Location = new System.Drawing.Point(10, 407);
          this.userListBox.Name = "userListBox";
-         this.userListBox.Size = new System.Drawing.Size(120, 238);
+         this.userListBox.Size = new System.Drawing.Size(117, 225);
          this.userListBox.TabIndex = 6;
          // 
          // chatListBox
@@ -113,7 +114,7 @@
          this.materialLabel2.Depth = 0;
          this.materialLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
          this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-         this.materialLabel2.Location = new System.Drawing.Point(6, 372);
+         this.materialLabel2.Location = new System.Drawing.Point(6, 385);
          this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
          this.materialLabel2.Name = "materialLabel2";
          this.materialLabel2.Size = new System.Drawing.Size(83, 18);
@@ -201,16 +202,27 @@
          this.sendButton.UseVisualStyleBackColor = true;
          this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
          // 
-         // addChatroomBtn
+         // subscribeChatroomBtn
          // 
-         this.addChatroomBtn.BackColor = System.Drawing.Color.Transparent;
-         this.addChatroomBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-         this.addChatroomBtn.Image = global::Mock_UI.Properties.Resources.AddComment_16x;
-         this.addChatroomBtn.Location = new System.Drawing.Point(96, 86);
-         this.addChatroomBtn.Name = "addChatroomBtn";
-         this.addChatroomBtn.Size = new System.Drawing.Size(23, 23);
-         this.addChatroomBtn.TabIndex = 16;
-         this.addChatroomBtn.UseVisualStyleBackColor = false;
+         this.subscribeChatroomBtn.BackColor = System.Drawing.Color.Transparent;
+         this.subscribeChatroomBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.subscribeChatroomBtn.Image = global::Mock_UI.Properties.Resources.AddScreen_16x;
+         this.subscribeChatroomBtn.Location = new System.Drawing.Point(104, 348);
+         this.subscribeChatroomBtn.Name = "subscribeChatroomBtn";
+         this.subscribeChatroomBtn.Size = new System.Drawing.Size(23, 23);
+         this.subscribeChatroomBtn.TabIndex = 17;
+         this.subscribeChatroomBtn.UseVisualStyleBackColor = false;
+         // 
+         // newChatroomBtn
+         // 
+         this.newChatroomBtn.BackColor = System.Drawing.Color.Transparent;
+         this.newChatroomBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.newChatroomBtn.Image = global::Mock_UI.Properties.Resources.NewWindow_16x;
+         this.newChatroomBtn.Location = new System.Drawing.Point(80, 348);
+         this.newChatroomBtn.Name = "newChatroomBtn";
+         this.newChatroomBtn.Size = new System.Drawing.Size(23, 23);
+         this.newChatroomBtn.TabIndex = 16;
+         this.newChatroomBtn.UseVisualStyleBackColor = false;
          // 
          // undoBtn
          // 
@@ -219,7 +231,7 @@
          this.undoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
          this.undoBtn.ForeColor = System.Drawing.SystemColors.ControlText;
          this.undoBtn.Image = global::Mock_UI.Properties.Resources.Undo_16x;
-         this.undoBtn.Location = new System.Drawing.Point(10, 347);
+         this.undoBtn.Location = new System.Drawing.Point(10, 348);
          this.undoBtn.Name = "undoBtn";
          this.undoBtn.Size = new System.Drawing.Size(23, 23);
          this.undoBtn.TabIndex = 15;
@@ -232,7 +244,8 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(784, 644);
          this.ContextMenuStrip = this.materialContextMenuStrip1;
-         this.Controls.Add(this.addChatroomBtn);
+         this.Controls.Add(this.subscribeChatroomBtn);
+         this.Controls.Add(this.newChatroomBtn);
          this.Controls.Add(this.undoBtn);
          this.Controls.Add(this.sendButton);
          this.Controls.Add(this.toolTip);
@@ -272,7 +285,8 @@
       private System.Windows.Forms.Timer toolTipTimer;
       private MaterialSkin.Controls.MaterialRaisedButton sendButton;
       private System.Windows.Forms.Button undoBtn;
-      private System.Windows.Forms.Button addChatroomBtn;
+      private System.Windows.Forms.Button newChatroomBtn;
+      private System.Windows.Forms.Button subscribeChatroomBtn;
    }
 }
 
