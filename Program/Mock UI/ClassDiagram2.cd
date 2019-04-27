@@ -1,66 +1,231 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Mock_UI.MessageService">
-    <Position X="8" Y="0.5" Width="1.5" />
+  <Class Name="ChatApp.StartupForm">
+    <Position X="8.75" Y="4" Width="1.75" />
+    <Members>
+      <Field Name="components" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="loginButton" Hidden="true" />
+      <Field Name="registerButton" Hidden="true" />
+      <Method Name="StartupForm" Hidden="true" />
+      <Method Name="StartupForm_FormClosed" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAKCAAAAAAQAAAEACAAACAAAAAAAA=</HashCode>
-      <FileName>MessageService.cs</FileName>
+      <HashCode>AAAAAAAgASAAAhAAAACAACADAAAAAAAACAAgAAAAgAA=</HashCode>
+      <FileName>StartupForm.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="messageList" />
+      <Field Name="stream" />
+      <Field Name="serverConnection" />
+      <Field Name="messageService" />
     </ShowAsAssociation>
-    <Lollipop Orientation="Left" Position="0.1" />
   </Class>
-  <Class Name="Mock_UI.TCPMessage">
-    <Position X="8" Y="5.25" Width="1.5" />
+  <Class Name="ChatApp.LoginForm">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <Members>
+      <Field Name="backButton" Hidden="true" />
+      <Method Name="backButton_Click" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="connectButton" Hidden="true" />
+      <Method Name="connectButton_Click" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Method Name="LoginForm" Hidden="true" />
+      <Method Name="loginStatusTimer_Tick" Hidden="true" />
+      <Field Name="passwordText" Hidden="true" />
+      <Method Name="passwordText_KeyDown" Hidden="true" />
+      <Method Name="setLoginStatus" Hidden="true" />
+      <Field Name="userNameText" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAACA=</HashCode>
-      <FileName>TCPMessage.cs</FileName>
+      <HashCode>AAAAAAAAACAABBCgQBCCAAACAQAYBAAAAgAgAACAkAg=</HashCode>
+      <FileName>LoginForm.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serverConnection" />
+      <Field Name="userService" />
+      <Field Name="messageService" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="Mock_UI.Form1">
-    <Position X="2" Y="0.5" Width="1.5" />
+  <Class Name="ChatApp.RegisterForm">
+    <Position X="4" Y="1.5" Width="1.75" />
+    <Members>
+      <Field Name="backButton" Hidden="true" />
+      <Method Name="backButton_Click" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="passwordText" Hidden="true" />
+      <Method Name="passwordText_KeyDown" Hidden="true" />
+      <Field Name="registerButton" Hidden="true" />
+      <Method Name="registerButton_Click" Hidden="true" />
+      <Field Name="userNameText" Hidden="true" />
+      <Method Name="userNameText_Leave" Hidden="true" />
+      <Method Name="userNameText_TextChanged" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AwAAAAEAACAEAFASgACCQAACAAAAAAYACERAAAAAAAA=</HashCode>
-      <FileName>Form1.cs</FileName>
+      <HashCode>AEAAIAAgAiAAABCgQACAAIADAQAQAAAAAABgAAAAgAo=</HashCode>
+      <FileName>RegisterForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serverConnection" />
+      <Field Name="userService" />
+      <Field Name="messageService" />
+      <Field Name="loginForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="System.Net.Sockets.NetworkStream" Collapsed="true">
+    <Position X="8.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="ChatApp.MainForm">
+    <Position X="8.25" Y="8.5" Width="1.75" />
+    <Members>
+      <Method Name="chatList_DrawItem" Hidden="true" />
+      <Method Name="chatList_KeyDown" Hidden="true" />
+      <Method Name="chatList_MeasureItem" Hidden="true" />
+      <Field Name="chatListBox" Hidden="true" />
+      <Field Name="chatroomListBox" Hidden="true" />
+      <Method Name="chatroomListBox_SelectedIndexChanged" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="darkToolStripMenuItem" Hidden="true" />
+      <Method Name="darkToolStripMenuItem_Click" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="Form1_FormClosed" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="lightToolStripMenuItem" Hidden="true" />
+      <Method Name="lightToolStripMenuItem_Click" Hidden="true" />
+      <Field Name="logOutToolStripMenuItem" Hidden="true" />
+      <Method Name="logOutToolStripMenuItem_Click" Hidden="true" />
+      <Method Name="MainForm" Hidden="true" />
+      <Field Name="materialContextMenuStrip1" Hidden="true" />
+      <Field Name="materialLabel1" Hidden="true" />
+      <Field Name="materialLabel2" Hidden="true" />
+      <Field Name="messageField" Hidden="true" />
+      <Method Name="messageField_KeyDown" Hidden="true" />
+      <Method Name="messageField_TextChanged" Hidden="true" />
+      <Method Name="populateChatListBox" Hidden="true" />
+      <Field Name="readMessagesTimer" Hidden="true" />
+      <Method Name="readMessagesTimer_Tick" Hidden="true" />
+      <Field Name="sendButton" Hidden="true" />
+      <Field Name="settingsToolStripMenuItem" Hidden="true" />
+      <Method Name="setupTheme" Hidden="true" />
+      <Field Name="toolTip" Hidden="true" />
+      <Field Name="toolTipTimer" Hidden="true" />
+      <Method Name="toolTipTimer_Tick" Hidden="true" />
+      <Field Name="userListBox" Hidden="true" />
+      <Field Name="visualPreferencesToolStripMenuItem" Hidden="true" />
+    </Members>
+    <AssociationLine Name="messageService" Type="ChatApp.Interfaces.IMessageService" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.506" Y="8.5" />
+        <Point X="8.506" Y="6.875" />
+        <Point X="7" Y="6.875" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EEAAAwAAEDAEkFAQCAKqQSAyAAAMIAQAIEwgBEQCgBA=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serverConnection" />
+      <Field Name="messageService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ChatApp.Services.MessageService">
+    <Position X="3.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACCAAAAAAAAAAEACAAACgAAAAAAA=</HashCode>
+      <FileName>Services\MessageService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serverConnection" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Left" Position="0.599" />
+  </Class>
+  <Class Name="ChatApp.Services.UserService">
+    <Position X="2.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAABAABAAAAAAAAAEAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="messageService" />
     </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Mock_UI.Form2">
-    <Position X="5.5" Y="1.5" Width="1.5" />
+  <Class Name="ChatApp.TCPMessage">
+    <Position X="5.5" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAgABCAAAACIAAIBAAABAAAAAAAAAA=</HashCode>
-      <FileName>Form2.cs</FileName>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAACA=</HashCode>
+      <FileName>Models\TCPMessage.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="form1" />
+      <Property Name="Chatroom" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Mock_UI.EnumExtensions">
-    <Position X="4.75" Y="5" Width="2.25" />
+  <Class Name="ChatApp.EnumExtensions" Collapsed="true">
+    <Position X="10.5" Y="9" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
-      <FileName>EnumExtensions.cs</FileName>
+      <FileName>Enums\EnumExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="Mock_UI.IMessageService" Collapsed="true">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+  <Class Name="Mock_UI.Chatroom">
+    <Position X="7.75" Y="12" Width="1.5" />
+    <Members>
+      <Method Name="Chatroom" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAEAAAAAAAAAAAEAAABAAAAAAAAAgA=</HashCode>
+      <FileName>Chatroom.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainForm" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Mock_UI.Properties.Settings" Collapsed="true">
+    <Position X="10.5" Y="11.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAUAAAAIAAAAAABAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ChatApp.Interfaces.IMessageService">
+    <Position X="5.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAACCAAAAAAAAAAEACAAAAAAAAAAAA=</HashCode>
-      <FileName>IMessageService.cs</FileName>
+      <FileName>Interfaces\IMessageService.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="System.Collections.Generic.IList&lt;T&gt;" Collapsed="true">
-    <Position X="8" Y="4.25" Width="1.5" />
-    <TypeIdentifier />
+  <Interface Name="ChatApp.Interfaces.IUserService" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Interfaces\IUserService.cs</FileName>
+    </TypeIdentifier>
   </Interface>
-  <Enum Name="Mock_UI.EnumMessageStatus" Collapsed="true">
-    <Position X="4.75" Y="6.25" Width="2.25" />
+  <Interface Name="ChatApp.Interfaces.IServerConnection">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAGAAAAAAAAEAAAA=</HashCode>
+      <FileName>Interfaces\IServerConnection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ChatApp.EnumMessageStatus" Collapsed="true">
+    <Position X="10.5" Y="9.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAABAAAAAAAAACAAIAAAAAAACAAAACAAA=</HashCode>
-      <FileName>EnumMessageStatus.cs</FileName>
+      <FileName>Enums\EnumMessageStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ChatApp.EnumUserConnectionExceptions" Collapsed="true">
+    <Position X="10.5" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAIAACA=</HashCode>
+      <FileName>Enums\EnumUserConnectionExceptions.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
