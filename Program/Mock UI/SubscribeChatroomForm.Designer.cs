@@ -1,6 +1,6 @@
 ﻿namespace Mock_UI
 {
-   partial class CreateChatroom
+   partial class SubscribeChatroomForm
    {
       /// <summary>
       /// Required designer variable.
@@ -28,25 +28,22 @@
       /// </summary>
       private void InitializeComponent()
       {
-         this.chatroomNameTextField = new MaterialSkin.Controls.MaterialSingleLineTextField();
+         this.joinBtn = new MaterialSkin.Controls.MaterialRaisedButton();
          this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialSingleLineTextField();
-         this.createBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+         this.chatroomNameTextField = new MaterialSkin.Controls.MaterialSingleLineTextField();
          this.SuspendLayout();
          // 
-         // chatroomNameTextField
+         // joinBtn
          // 
-         this.chatroomNameTextField.Depth = 0;
-         this.chatroomNameTextField.Hint = "chatroom name";
-         this.chatroomNameTextField.Location = new System.Drawing.Point(12, 92);
-         this.chatroomNameTextField.MouseState = MaterialSkin.MouseState.HOVER;
-         this.chatroomNameTextField.Name = "chatroomNameTextField";
-         this.chatroomNameTextField.PasswordChar = '\0';
-         this.chatroomNameTextField.SelectedText = "";
-         this.chatroomNameTextField.SelectionLength = 0;
-         this.chatroomNameTextField.SelectionStart = 0;
-         this.chatroomNameTextField.Size = new System.Drawing.Size(222, 23);
-         this.chatroomNameTextField.TabIndex = 0;
-         this.chatroomNameTextField.UseSystemPasswordChar = false;
+         this.joinBtn.Depth = 0;
+         this.joinBtn.Location = new System.Drawing.Point(82, 164);
+         this.joinBtn.MouseState = MaterialSkin.MouseState.HOVER;
+         this.joinBtn.Name = "joinBtn";
+         this.joinBtn.Primary = true;
+         this.joinBtn.Size = new System.Drawing.Size(75, 23);
+         this.joinBtn.TabIndex = 5;
+         this.joinBtn.Text = "Join";
+         this.joinBtn.UseVisualStyleBackColor = true;
          // 
          // materialSingleLineTextField1
          // 
@@ -60,40 +57,43 @@
          this.materialSingleLineTextField1.SelectionLength = 0;
          this.materialSingleLineTextField1.SelectionStart = 0;
          this.materialSingleLineTextField1.Size = new System.Drawing.Size(222, 23);
-         this.materialSingleLineTextField1.TabIndex = 1;
+         this.materialSingleLineTextField1.TabIndex = 4;
          this.materialSingleLineTextField1.UseSystemPasswordChar = false;
          // 
-         // createBtn
+         // chatroomNameTextField
          // 
-         this.createBtn.Depth = 0;
-         this.createBtn.Location = new System.Drawing.Point(82, 164);
-         this.createBtn.MouseState = MaterialSkin.MouseState.HOVER;
-         this.createBtn.Name = "createBtn";
-         this.createBtn.Primary = true;
-         this.createBtn.Size = new System.Drawing.Size(75, 23);
-         this.createBtn.TabIndex = 2;
-         this.createBtn.Text = "Create";
-         this.createBtn.UseVisualStyleBackColor = true;
+         this.chatroomNameTextField.Depth = 0;
+         this.chatroomNameTextField.Hint = "chatroom name";
+         this.chatroomNameTextField.Location = new System.Drawing.Point(12, 92);
+         this.chatroomNameTextField.MouseState = MaterialSkin.MouseState.HOVER;
+         this.chatroomNameTextField.Name = "chatroomNameTextField";
+         this.chatroomNameTextField.PasswordChar = '\0';
+         this.chatroomNameTextField.SelectedText = "";
+         this.chatroomNameTextField.SelectionLength = 0;
+         this.chatroomNameTextField.SelectionStart = 0;
+         this.chatroomNameTextField.Size = new System.Drawing.Size(222, 23);
+         this.chatroomNameTextField.TabIndex = 3;
+         this.chatroomNameTextField.UseSystemPasswordChar = false;
          // 
-         // CreateChatroom
+         // SubscribeChatroomForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(246, 222);
-         this.Controls.Add(this.createBtn);
+         this.Controls.Add(this.joinBtn);
          this.Controls.Add(this.materialSingleLineTextField1);
          this.Controls.Add(this.chatroomNameTextField);
-         this.Name = "CreateChatroom";
+         this.Name = "SubscribeChatroomForm";
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-         this.Text = "Create Chatroom";
+         this.Text = "Subscribe to Chatroom";
          this.ResumeLayout(false);
 
       }
 
       #endregion
 
-      private MaterialSkin.Controls.MaterialSingleLineTextField chatroomNameTextField;
+      private MaterialSkin.Controls.MaterialRaisedButton joinBtn;
       private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextField1;
-      private MaterialSkin.Controls.MaterialRaisedButton createBtn;
+      private MaterialSkin.Controls.MaterialSingleLineTextField chatroomNameTextField;
    }
 }

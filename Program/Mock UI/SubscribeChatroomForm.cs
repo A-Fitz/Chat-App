@@ -15,13 +15,13 @@ using System.Windows.Forms;
 
 namespace Mock_UI
 {
-   public partial class CreateChatroom : MaterialForm
+   public partial class SubscribeChatroomForm : MaterialForm
    {
       private readonly IServerConnection serverConnection;
       private readonly IMessageService messageService;
       private MaterialSkinManager materialSkinManager;
 
-      public CreateChatroom(IServerConnection serverConnection, IMessageService messageService)
+      public SubscribeChatroomForm(IServerConnection serverConnection, IMessageService messageService)
       {
          this.serverConnection = serverConnection;
          this.messageService = messageService;
@@ -33,7 +33,7 @@ namespace Mock_UI
       {
          this.MaximizeBox = false;
 
-         MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+         materialSkinManager = MaterialSkinManager.Instance;
          materialSkinManager.AddFormToManage(this);
          if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
          {
