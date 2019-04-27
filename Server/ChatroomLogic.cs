@@ -13,13 +13,13 @@ namespace Server
    /// </summary>
    class ChatroomLogic : System.IObservable<Message>, IDisposable
    {
-      private static int numChatRoomsCreated = 0;
+      public static int numChatRoomsCreated { get; set; } = 0;
 
       public string name { get; set; }
       public int chatroomID { get; set; }
 
       private List<IObserver<Message>> observers;
-      public List<string> RegisteredUsers { get; set; } = new List<string>();
+      public List<int> RegisteredUsers { get; set; } = new List<int>();
 
       /// <summary>
       /// Constructor for a chatroom. Assigns a chatroomID

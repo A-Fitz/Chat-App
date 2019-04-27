@@ -109,31 +109,36 @@ namespace Server
 
       private static bool LoadSaveData(ChatroomList chatroomList)
       {
-         int hightestChatroomID = 0;
-         ChatroomServices chatroomServices = new ChatroomServices();
-         UserService userService = new UserService();
-         DataTable dataTable = chatroomServices.GetAllChatrooms();
-         if (dataTable.Rows.Count != 0)
+         try
          {
-            foreach (DataRow row in dataTable.Rows)
+            int hightestChatroomID = 0;
+            ChatroomServices chatroomServices = new ChatroomServices();
+            UserService userService = new UserService();
+            DataTable dataTable = chatroomServices.GetAllChatrooms();
+            if (dataTable.Rows.Count != 0)
             {
-               string name = row["chatroomname"].ToString();
-               int id = int.Parse(row["chatroomid"].ToString());
-               ChatroomLogic temp = new ChatroomLogic();
-               temp.name = name;
-               temp.chatroomID = id;
-               hightestChatroomID = hightestChatroomID < id ? hightestChatroomID : id;
-               chatroomList.addChat(temp);
-               DataTable userTable = chatroomServices.GetChatUsers(temp.chatroomID);
-               foreach (DataRow userRow in userTable.Rows)
+               foreach (DataRow row in dataTable.Rows)
                {
-                  int userId = int.Parse(row["user_id"].ToString());
-                  //temp.RegisteredUsers.Add();//TODO: Convert Userid to userName
+                  string name = row["chatroomname"].ToString();
+                  int id = int.Parse(row["chatroomid"].ToString());
+                  ChatroomLogic temp = new ChatroomLogic();
+                  temp.name = name;
+                  temp.chatroomID = id;
+                  hightestChatroomID = hightestChatroomID < id ? hightestChatroomID : id;
+                  chatroomList.addChat(temp);
+                  DataTable userTable = chatroomServices.GetChatUsers(temp.chatroomID);
+                  foreach (DataRow userRow in userTable.Rows)
+                  {
+                     int userId = int.Parse(row["user_id"].ToString());
+                     temp.RegisteredUsers.Add(userId);
+                  }
                }
+               ChatroomLogic.numChatRoomsCreated = hightestChatroomID;
+               //TODO: Call "GetUsersInChatroom" for each chatroom and append registered users to that chatroom
+               return true;
             }
-            //TODO: Call "GetUsersInChatroom" for each chatroom and append registered users to that chatroom
-            return true;
          }
+         catch(Exception e){}
          return false; 
       }
       
