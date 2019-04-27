@@ -174,8 +174,8 @@ namespace Server
          //this client's OnNext() function.
          subsribeToChat(chatroomList.idToChatroom(0));
          subsribeToChat(chatroomList.idToChatroom(1));
-         chatroomList.idToChatroom(0).RegisteredUsers.Add(this.username);
-         chatroomList.idToChatroom(1).RegisteredUsers.Add(this.username);
+         chatroomList.idToChatroom(0).RegisteredUsers.Add(this.userID);
+         chatroomList.idToChatroom(1).RegisteredUsers.Add(this.userID);
          sendClientList();
          SendChatroomList();
       }
@@ -322,14 +322,12 @@ namespace Server
          String list = "";
          List<ChatroomLogic> myChatrooms = new List<ChatroomLogic>();
          foreach (ChatroomLogic chatroom in chatroomList.chatrooms)
-            if(chatroom.RegisteredUsers.Contains(this.username))
+            if(chatroom.RegisteredUsers.Contains(this.userID))
                myChatrooms.Add(chatroom);
 
 
          foreach (ChatroomLogic c in myChatrooms)
-         {
             list += c.chatroomID + "," + c.name + ",";
-         }
          chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CHATROOMLIST", message = list });
       }
 
