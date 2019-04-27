@@ -45,6 +45,7 @@
          this.toolTip = new MaterialSkin.Controls.MaterialLabel();
          this.toolTipTimer = new System.Windows.Forms.Timer(this.components);
          this.sendButton = new MaterialSkin.Controls.MaterialRaisedButton();
+         this.btnToolTip = new System.Windows.Forms.ToolTip(this.components);
          this.subscribeChatroomBtn = new System.Windows.Forms.Button();
          this.newChatroomBtn = new System.Windows.Forms.Button();
          this.undoBtn = new System.Windows.Forms.Button();
@@ -211,6 +212,7 @@
          this.subscribeChatroomBtn.Name = "subscribeChatroomBtn";
          this.subscribeChatroomBtn.Size = new System.Drawing.Size(23, 23);
          this.subscribeChatroomBtn.TabIndex = 17;
+         this.btnToolTip.SetToolTip(this.subscribeChatroomBtn, "Subscribe to Chatroom");
          this.subscribeChatroomBtn.UseVisualStyleBackColor = false;
          // 
          // newChatroomBtn
@@ -222,6 +224,7 @@
          this.newChatroomBtn.Name = "newChatroomBtn";
          this.newChatroomBtn.Size = new System.Drawing.Size(23, 23);
          this.newChatroomBtn.TabIndex = 16;
+         this.btnToolTip.SetToolTip(this.newChatroomBtn, "Create Chatroom");
          this.newChatroomBtn.UseVisualStyleBackColor = false;
          // 
          // undoBtn
@@ -235,6 +238,7 @@
          this.undoBtn.Name = "undoBtn";
          this.undoBtn.Size = new System.Drawing.Size(23, 23);
          this.undoBtn.TabIndex = 15;
+         this.btnToolTip.SetToolTip(this.undoBtn, "Undo Chatroom Select");
          this.undoBtn.UseVisualStyleBackColor = false;
          this.undoBtn.Click += new System.EventHandler(this.undoBtn_Click);
          // 
@@ -287,6 +291,7 @@
       private System.Windows.Forms.Button undoBtn;
       private System.Windows.Forms.Button newChatroomBtn;
       private System.Windows.Forms.Button subscribeChatroomBtn;
+      private System.Windows.Forms.ToolTip btnToolTip;
    }
 }
 
