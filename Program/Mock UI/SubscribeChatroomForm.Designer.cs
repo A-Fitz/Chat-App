@@ -61,6 +61,7 @@
          this.passwordField.Size = new System.Drawing.Size(222, 23);
          this.passwordField.TabIndex = 4;
          this.passwordField.UseSystemPasswordChar = false;
+         this.passwordField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordField_KeyDown);
          // 
          // chatroomIDField
          // 
