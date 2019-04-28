@@ -41,9 +41,9 @@ namespace Server
         /// <param name="username">Username to get password for</param>
         /// <param name="password">Password to check against</param>
         /// <returns></returns>
-        public bool VerifyLogin(string username, string password)
+        public int VerifyLogin(string username, string password)
         {
-            return UserDatabridge.GetUserHash(username) == password;
+            return UserDatabridge.GetUserHash(username) == password ? UserDatabridge.GetUserId(username) : 1;
         }
     }
 }

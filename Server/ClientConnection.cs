@@ -219,7 +219,7 @@ namespace Server
                      {
                         MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is already logged in." }, networkStream);
                      }
-                     else if (userService.VerifyLogin(usernamePassword[0], usernamePassword[1])//0 <= (userID = userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))
+                     else if (0 <= (userID = userService.VerifyLogin(usernamePassword[0], usernamePassword[1])))//
                      {
                         username = usernamePassword[0];
                         Thread.CurrentThread.Name = username;
