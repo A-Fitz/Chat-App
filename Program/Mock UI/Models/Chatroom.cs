@@ -44,7 +44,7 @@ namespace Mock_UI
       /// <returns></returns>
       public override string ToString()
       {
-         return name + " [" + id + " ]";
+         return name + " [#" + id + "]";
       }
    }
 }
