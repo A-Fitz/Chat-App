@@ -7,11 +7,12 @@ using ChatApp.Interfaces;
 
 namespace ChatApp.Services
 {
+   /// <summary>
+   /// Implementation of IMessageService that handles sending and recieving messages with a server connection.
+   /// </summary>
    public class MessageService : IMessageService
    {
-      
       private readonly IServerConnection serverConnection;
-
 
       /// <summary>
       /// Creates a new MessageService with a network stream.
@@ -62,7 +63,7 @@ namespace ChatApp.Services
             serializedMessage = serializedMessage.Length + ":" + serializedMessage;
             byte[] data = Encoding.ASCII.GetBytes(serializedMessage);
 
-                serverConnection.Write(data, 0, data.Length);
+            serverConnection.Write(data, 0, data.Length);
             return EnumMessageStatus.successful;
          }
          catch (ArgumentNullException)
@@ -98,7 +99,7 @@ namespace ChatApp.Services
          }
          int length = int.Parse(new string(integerStringList.ToArray()));
          byte[] data = new byte[length];
-            serverConnection.Read(data, 0, data.Length);
+         serverConnection.Read(data, 0, data.Length);
          return data;
 
       }

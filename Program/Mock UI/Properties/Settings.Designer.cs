@@ -34,5 +34,35 @@ namespace Mock_UI.Properties {
                 this["Theme"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF484848")]
+        public string dark_grey {
+            get {
+                return ((string)(this["dark_grey"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFEBEBEB")]
+        public string light_grey {
+            get {
+                return ((string)(this["light_grey"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int timer_duration {
+            get {
+                return ((int)(this["timer_duration"]));
+            }
+            set {
+                this["timer_duration"] = value;
+            }
+        }
     }
 }

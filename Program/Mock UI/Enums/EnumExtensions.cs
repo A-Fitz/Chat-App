@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace ChatApp
 {
+   /// <summary>
+   /// Used to handle our custom enums that contain a description string.
+   /// </summary>
     public static class EnumExtensions
     {
-        // Returns the Description of an enum in a String
-        public static string GetEnumDescription(Enum value)
+      /// <summary>
+      /// Returns the description of a specified enum in a string.
+      /// https://stackoverflow.com/questions/2905342/how-can-i-internationalize-strings-representing-c-sharp-enum-values
+      /// </summary>
+      /// <param name="value">The specified enum</param>
+      /// <returns></returns>
+      public static string GetEnumDescription(Enum value)
         {
             System.Reflection.FieldInfo fi = value.GetType().GetField(value.ToString());
 

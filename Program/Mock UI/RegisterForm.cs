@@ -30,6 +30,10 @@ namespace ChatApp
          setupTheme();
       }
 
+      /// <summary>
+      /// Sets up the form theming by creating and initializing a MaterialSkinManager as well as adding it to the form.
+      /// Makes the form non resizable and sets the MaterialSkinManager theme to light/dark according to the user settings.
+      /// </summary>
       private void setupTheme()
       {
          this.MaximizeBox = false;
@@ -148,6 +152,11 @@ namespace ChatApp
          startupForm.Show();
       }
 
+      /// <summary>
+      /// If the user presses the enter key in the password field, then act like the clicked the register button.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void passwordText_KeyDown(object sender, KeyEventArgs e)
       {
          if(e.KeyCode == Keys.Enter)

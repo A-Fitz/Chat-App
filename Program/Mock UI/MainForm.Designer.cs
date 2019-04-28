@@ -42,13 +42,13 @@
          this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-         this.toolTip = new MaterialSkin.Controls.MaterialLabel();
-         this.toolTipTimer = new System.Windows.Forms.Timer(this.components);
+         this.messageResponse = new MaterialSkin.Controls.MaterialLabel();
+         this.messageResponseTimer = new System.Windows.Forms.Timer(this.components);
          this.sendButton = new MaterialSkin.Controls.MaterialRaisedButton();
          this.btnToolTip = new System.Windows.Forms.ToolTip(this.components);
          this.subscribeChatroomBtn = new System.Windows.Forms.Button();
          this.newChatroomBtn = new System.Windows.Forms.Button();
-         this.undoBtn = new System.Windows.Forms.Button();
+         this.undoChatroomChangeBtn = new System.Windows.Forms.Button();
          this.materialContextMenuStrip1.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -100,12 +100,12 @@
          // 
          this.materialLabel1.AutoSize = true;
          this.materialLabel1.Depth = 0;
-         this.materialLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+         this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
          this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
          this.materialLabel1.Location = new System.Drawing.Point(6, 87);
          this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
          this.materialLabel1.Name = "materialLabel1";
-         this.materialLabel1.Size = new System.Drawing.Size(83, 18);
+         this.materialLabel1.Size = new System.Drawing.Size(84, 19);
          this.materialLabel1.TabIndex = 11;
          this.materialLabel1.Text = "Chatrooms";
          // 
@@ -113,12 +113,12 @@
          // 
          this.materialLabel2.AutoSize = true;
          this.materialLabel2.Depth = 0;
-         this.materialLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+         this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
          this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
          this.materialLabel2.Location = new System.Drawing.Point(6, 385);
          this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
          this.materialLabel2.Name = "materialLabel2";
-         this.materialLabel2.Size = new System.Drawing.Size(83, 18);
+         this.materialLabel2.Size = new System.Drawing.Size(83, 19);
          this.materialLabel2.TabIndex = 12;
          this.materialLabel2.Text = "Chat Users";
          // 
@@ -171,24 +171,24 @@
          this.logOutToolStripMenuItem.Text = "Log out";
          this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
          // 
-         // toolTip
+         // messageResponse
          // 
-         this.toolTip.AutoSize = true;
-         this.toolTip.BackColor = System.Drawing.Color.Transparent;
-         this.toolTip.Depth = 0;
-         this.toolTip.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-         this.toolTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-         this.toolTip.Location = new System.Drawing.Point(204, 462);
-         this.toolTip.MouseState = MaterialSkin.MouseState.HOVER;
-         this.toolTip.Name = "toolTip";
-         this.toolTip.Size = new System.Drawing.Size(0, 18);
-         this.toolTip.TabIndex = 13;
+         this.messageResponse.AutoSize = true;
+         this.messageResponse.BackColor = System.Drawing.Color.Transparent;
+         this.messageResponse.Depth = 0;
+         this.messageResponse.Font = new System.Drawing.Font("Roboto", 11F);
+         this.messageResponse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+         this.messageResponse.Location = new System.Drawing.Point(204, 462);
+         this.messageResponse.MouseState = MaterialSkin.MouseState.HOVER;
+         this.messageResponse.Name = "messageResponse";
+         this.messageResponse.Size = new System.Drawing.Size(0, 19);
+         this.messageResponse.TabIndex = 13;
          // 
-         // toolTipTimer
+         // messageResponseTimer
          // 
-         this.toolTipTimer.Enabled = true;
-         this.toolTipTimer.Interval = 5000;
-         this.toolTipTimer.Tick += new System.EventHandler(this.toolTipTimer_Tick);
+         this.messageResponseTimer.Enabled = true;
+         this.messageResponseTimer.Interval = 5000;
+         this.messageResponseTimer.Tick += new System.EventHandler(this.messageResponseTimer_Tick);
          // 
          // sendButton
          // 
@@ -227,20 +227,20 @@
          this.btnToolTip.SetToolTip(this.newChatroomBtn, "Create Chatroom");
          this.newChatroomBtn.UseVisualStyleBackColor = false;
          // 
-         // undoBtn
+         // undoChatroomChangeBtn
          // 
-         this.undoBtn.BackColor = System.Drawing.Color.Transparent;
-         this.undoBtn.Enabled = false;
-         this.undoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-         this.undoBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-         this.undoBtn.Image = global::Mock_UI.Properties.Resources.Undo_16x;
-         this.undoBtn.Location = new System.Drawing.Point(10, 348);
-         this.undoBtn.Name = "undoBtn";
-         this.undoBtn.Size = new System.Drawing.Size(23, 23);
-         this.undoBtn.TabIndex = 15;
-         this.btnToolTip.SetToolTip(this.undoBtn, "Undo Chatroom Select");
-         this.undoBtn.UseVisualStyleBackColor = false;
-         this.undoBtn.Click += new System.EventHandler(this.undoBtn_Click);
+         this.undoChatroomChangeBtn.BackColor = System.Drawing.Color.Transparent;
+         this.undoChatroomChangeBtn.Enabled = false;
+         this.undoChatroomChangeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.undoChatroomChangeBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+         this.undoChatroomChangeBtn.Image = global::Mock_UI.Properties.Resources.Undo_16x;
+         this.undoChatroomChangeBtn.Location = new System.Drawing.Point(10, 348);
+         this.undoChatroomChangeBtn.Name = "undoChatroomChangeBtn";
+         this.undoChatroomChangeBtn.Size = new System.Drawing.Size(23, 23);
+         this.undoChatroomChangeBtn.TabIndex = 15;
+         this.btnToolTip.SetToolTip(this.undoChatroomChangeBtn, "Undo Chatroom Select");
+         this.undoChatroomChangeBtn.UseVisualStyleBackColor = false;
+         this.undoChatroomChangeBtn.Click += new System.EventHandler(this.undoChatroomChangeBtn_Click);
          // 
          // MainForm
          // 
@@ -250,9 +250,9 @@
          this.ContextMenuStrip = this.materialContextMenuStrip1;
          this.Controls.Add(this.subscribeChatroomBtn);
          this.Controls.Add(this.newChatroomBtn);
-         this.Controls.Add(this.undoBtn);
+         this.Controls.Add(this.undoChatroomChangeBtn);
          this.Controls.Add(this.sendButton);
-         this.Controls.Add(this.toolTip);
+         this.Controls.Add(this.messageResponse);
          this.Controls.Add(this.materialLabel2);
          this.Controls.Add(this.materialLabel1);
          this.Controls.Add(this.chatListBox);
@@ -285,10 +285,10 @@
       private System.Windows.Forms.ToolStripMenuItem logOutToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem lightToolStripMenuItem;
       private System.Windows.Forms.ToolStripMenuItem darkToolStripMenuItem;
-      private MaterialSkin.Controls.MaterialLabel toolTip;
-      private System.Windows.Forms.Timer toolTipTimer;
+      private MaterialSkin.Controls.MaterialLabel messageResponse;
+      private System.Windows.Forms.Timer messageResponseTimer;
       private MaterialSkin.Controls.MaterialRaisedButton sendButton;
-      private System.Windows.Forms.Button undoBtn;
+      private System.Windows.Forms.Button undoChatroomChangeBtn;
       private System.Windows.Forms.Button newChatroomBtn;
       private System.Windows.Forms.Button subscribeChatroomBtn;
       private System.Windows.Forms.ToolTip btnToolTip;

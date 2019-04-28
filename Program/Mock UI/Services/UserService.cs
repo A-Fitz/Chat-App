@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 
 namespace ChatApp.Services
 {
+   /// <summary>
+   /// Implementation of a IUserService that handles logging in and registering.
+   /// </summary>
    public class UserService : IUserService
    {
       private readonly IMessageService messageService;

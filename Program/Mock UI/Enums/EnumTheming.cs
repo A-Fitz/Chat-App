@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Mock_UI.Enums
 {
+   /// <summary>
+   /// Enums for theming - contains descriptions used in UI.
+   /// </summary>
    public enum EnumTheming
    {
       [Description("light")]
