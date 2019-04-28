@@ -119,29 +119,33 @@ namespace Server
                             }
 
                             break;
-                        case "SUSCRIBE"://and like the video down below
-
-                            ChatroomLogic tempChatroom2 = chatroomList.idToChatroom(incomingMsg.chatID);
-                            if (tempChatroom2 != null)
+                        case "JOIN_CHAT"://and like the video down below
+                            string hashword2 = incomingMsg.message.Substring(0, 20);
+                            int id = -1;
+                            
+                            if (int.TryParse(incomingMsg.message.Substring(20, incomingMsg.message.Length - 20), out id))
                             {
-
-                                //TODO: Check that the password matches the chatrooms password and break out if it is incorrect
-                                if (ChatroomList.chatroomServices.AddUser(tempChatroom2.chatroomID, this.userID, incomingMsg.message))
+                                ChatroomLogic tempChatroom2 = chatroomList.idToChatroom(id);
+                                if (tempChatroom2 != null)
                                 {
-                                    tempChatroom2.Subscribe(this);
-                                    tempChatroom2.RegisteredUsers.Add(this.userID);
-                                    SendChatroomList();
-                                    SendChatHistory(tempChatroom2.chatroomID);
+                                    //TODO: Check that the password matches the chatrooms password and break out if it is incorrect
+                                    if (ChatroomList.chatroomServices.AddUser(tempChatroom2.chatroomID, this.userID, hashword2))
+                                    {
+                                        tempChatroom2.Subscribe(this);
+                                        tempChatroom2.RegisteredUsers.Add(this.userID);
+                                        MessageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom login succeded" }, networkStream);
+                                        SendChatroomList();
+                                        SendChatHistory(tempChatroom2.chatroomID);
+                                    }
+                                    else
+                                    {
+                                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom login failed" }, networkStream);
+                                        break;
+                                    }
                                 }
-                                else
-                                {
-                                    MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom login failed" }, networkStream);
-                                    break;
-                                }
-
-                                //TODO: Get previous messages for this chatroom and send them to this specific user
-
                             }
+                            else
+                                MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Bad chatroom id" }, networkStream);
 
                             break;
                         case "CLOSE":
@@ -188,8 +192,8 @@ namespace Server
             subsribeToChat(chatroomList.idToChatroom(1));
             chatroomList.idToChatroom(0).RegisteredUsers.Add(this.userID);
             chatroomList.idToChatroom(1).RegisteredUsers.Add(this.userID);
-            ChatroomList.chatroomServices.AddUser(0, userID, "1234");
-            ChatroomList.chatroomServices.AddUser(1, userID, "1234");
+            ChatroomList.chatroomServices.AddUser(0, userID, "pass");
+            ChatroomList.chatroomServices.AddUser(1, userID, "pass");
             SendChatroomList();
             foreach (ChatroomLogic chatroom in chatroomList.chatrooms)
             {

@@ -169,7 +169,7 @@ namespace Server
         /// <param name="chatid"></param>
         /// <param name="userid"></param>
         /// <param name="chatpw"></param>
-        public bool AddUser(int chatid, int userid, String chatpw)
+        public bool AddUser(int chatid, int userid, string chatpw)
         {
             using (var connection = new OracleConnection(connectionString))
             {
@@ -180,9 +180,9 @@ namespace Server
                     var command = connection.CreateCommand();
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "ADD_USER_TO_CHATROOM";
-                    command.Parameters.Add("CHAT_ID", OracleDbType.Int32).Value = chatid;
                     command.Parameters.Add("USER_ID", OracleDbType.Int32).Value = userid;
-                    command.Parameters.Add("CHATROOMPASSWORD", OracleDbType.Varchar2).Value = chatpw;
+                    command.Parameters.Add("CHAT_ID", OracleDbType.Int32).Value = chatid;
+                    command.Parameters.Add("CHATROOM_PASSWORD", OracleDbType.Varchar2).Value = chatpw;
 
                     command.ExecuteNonQuery();
                     connection.Close();
