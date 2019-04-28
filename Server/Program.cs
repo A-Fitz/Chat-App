@@ -42,7 +42,7 @@ namespace Server
             ChatroomList chatroomList = new ChatroomList();
 
             Console.WriteLine("Loading...");
-            if (false)//LoadSaveData(chatroomList))
+            if (LoadSaveData(chatroomList))
             {
                Console.WriteLine("Loading successful");
             }
@@ -113,9 +113,7 @@ namespace Server
          try
          {
             int hightestChatroomID = 0;
-            ChatroomService chatroomServices = new ChatroomService();
-            UserService userService = new UserService();
-            DataTable dataTable = chatroomServices.GetAllChatrooms();
+            DataTable dataTable = ChatroomList.chatroomServices.GetAllChatrooms();
             if (dataTable.Rows.Count != 0)
             {
                foreach (DataRow row in dataTable.Rows)
@@ -127,11 +125,12 @@ namespace Server
                   temp.chatroomID = id;
                   hightestChatroomID = hightestChatroomID < id ? hightestChatroomID : id;
                   chatroomList.addChat(temp);
-                  DataTable userTable = chatroomServices.GetChatUsers(temp.chatroomID);
+                  DataTable userTable = ChatroomList.chatroomServices.GetChatUsers(temp.chatroomID);
                   foreach (DataRow userRow in userTable.Rows)
                   {
-                     int userId = int.Parse(row["user_id"].ToString());
-                     temp.RegisteredUsers.Add(userId);
+                     int userId = -1;
+                     if(int.TryParse(userRow["userid"].ToString(), out userId)) //int.Parse(row["user_id"].ToString());
+                        temp.RegisteredUsers.Add(userId);
                   }
                }
                ChatroomLogic.numChatRoomsCreated = hightestChatroomID;

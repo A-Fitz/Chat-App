@@ -27,9 +27,9 @@ namespace Server
         /// </summary>
         /// <param name="chatroomID"></param>
         /// <param name="msg"></param>
-        public void AddMessage(int chatroomID, string msg)
+        public void AddMessage(int chatroomID, int userid, string msg)
         {
-            ChatroomDatabridge.AddMessage(chatroomID, msg);
+            ChatroomDatabridge.AddMessage(chatroomID, userid, msg);
         }
 
         /// <summary>

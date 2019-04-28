@@ -32,13 +32,13 @@ namespace Server
       /// if the ChatroomLogic object is not found.
       /// </summary>
       /// <param name="msg"></param>
-      public void update(Message msg)
+      public void update(Message msg, int userId)
       {
 
          ChatroomLogic chatroom = idToChatroom(msg.chatID);
-         if (chatrooms.Contains(chatroom))
+         if (chatroom != null)
          {
-            chatroomServices.AddMessage(msg.chatID, msg.message);
+            chatroomServices.AddMessage(msg.chatID, userId, msg.message);
             chatroom.update(msg);
          }
       }

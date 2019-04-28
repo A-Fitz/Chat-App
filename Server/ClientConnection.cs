@@ -93,7 +93,7 @@ namespace Server
                {
                   case "SEND":
                      incomingMsg.message = DateTime.Now.ToString() + " : " +  username + " : " + incomingMsg.message;
-                     chatroomList.update(incomingMsg);
+                     chatroomList.update(incomingMsg, userID);
                      break;
                   case "NEW_CHAT":
                      //message = password for chatroom
@@ -219,7 +219,7 @@ namespace Server
                      {
                         MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is already logged in." }, networkStream);
                      }
-                     else if (userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))//0 <= (userID = userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))
+                     else if (userService.VerifyLogin(usernamePassword[0], usernamePassword[1])//0 <= (userID = userService.VerifyLogin(usernamePassword[0], usernamePassword[1]))
                      {
                         username = usernamePassword[0];
                         Thread.CurrentThread.Name = username;
