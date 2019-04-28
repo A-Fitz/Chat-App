@@ -48,7 +48,7 @@
          this.btnToolTip = new System.Windows.Forms.ToolTip(this.components);
          this.subscribeChatroomBtn = new System.Windows.Forms.Button();
          this.newChatroomBtn = new System.Windows.Forms.Button();
-         this.undoChatroomChangeBtn = new System.Windows.Forms.Button();
+         this.undoBtn = new System.Windows.Forms.Button();
          this.materialContextMenuStrip1.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -147,7 +147,7 @@
             this.lightToolStripMenuItem,
             this.darkToolStripMenuItem});
          this.visualPreferencesToolStripMenuItem.Name = "visualPreferencesToolStripMenuItem";
-         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
          this.visualPreferencesToolStripMenuItem.Text = "Theme";
          // 
          // lightToolStripMenuItem
@@ -229,20 +229,20 @@
          this.newChatroomBtn.UseVisualStyleBackColor = false;
          this.newChatroomBtn.Click += new System.EventHandler(this.newChatroomBtn_Click);
          // 
-         // undoChatroomChangeBtn
+         // undoBtn
          // 
-         this.undoChatroomChangeBtn.BackColor = System.Drawing.Color.Transparent;
-         this.undoChatroomChangeBtn.Enabled = false;
-         this.undoChatroomChangeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-         this.undoChatroomChangeBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-         this.undoChatroomChangeBtn.Image = global::Mock_UI.Properties.Resources.Undo_16x;
-         this.undoChatroomChangeBtn.Location = new System.Drawing.Point(10, 348);
-         this.undoChatroomChangeBtn.Name = "undoChatroomChangeBtn";
-         this.undoChatroomChangeBtn.Size = new System.Drawing.Size(23, 23);
-         this.undoChatroomChangeBtn.TabIndex = 15;
-         this.btnToolTip.SetToolTip(this.undoChatroomChangeBtn, "Undo Chatroom Select");
-         this.undoChatroomChangeBtn.UseVisualStyleBackColor = false;
-         this.undoChatroomChangeBtn.Click += new System.EventHandler(this.undoChatroomChangeBtn_Click);
+         this.undoBtn.BackColor = System.Drawing.Color.Transparent;
+         this.undoBtn.Enabled = false;
+         this.undoBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+         this.undoBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+         this.undoBtn.Image = global::Mock_UI.Properties.Resources.Undo_16x;
+         this.undoBtn.Location = new System.Drawing.Point(10, 348);
+         this.undoBtn.Name = "undoBtn";
+         this.undoBtn.Size = new System.Drawing.Size(23, 23);
+         this.undoBtn.TabIndex = 15;
+         this.btnToolTip.SetToolTip(this.undoBtn, "Undo last Chatroom/Theme select");
+         this.undoBtn.UseVisualStyleBackColor = false;
+         this.undoBtn.Click += new System.EventHandler(this.undoChatroomChangeBtn_Click);
          // 
          // MainForm
          // 
@@ -252,7 +252,7 @@
          this.ContextMenuStrip = this.materialContextMenuStrip1;
          this.Controls.Add(this.subscribeChatroomBtn);
          this.Controls.Add(this.newChatroomBtn);
-         this.Controls.Add(this.undoChatroomChangeBtn);
+         this.Controls.Add(this.undoBtn);
          this.Controls.Add(this.sendButton);
          this.Controls.Add(this.messageResponse);
          this.Controls.Add(this.materialLabel2);
@@ -290,7 +290,7 @@
       private MaterialSkin.Controls.MaterialLabel messageResponse;
       private System.Windows.Forms.Timer messageResponseTimer;
       private MaterialSkin.Controls.MaterialRaisedButton sendButton;
-      private System.Windows.Forms.Button undoChatroomChangeBtn;
+      private System.Windows.Forms.Button undoBtn;
       private System.Windows.Forms.Button newChatroomBtn;
       private System.Windows.Forms.Button subscribeChatroomBtn;
       private System.Windows.Forms.ToolTip btnToolTip;
