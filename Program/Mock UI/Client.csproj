@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ChangeChatroomCommand.cs" />
+    <Compile Include="Commands\ChangeThemeCommand.cs" />
     <Compile Include="Models\Chatroom.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\CommandManager.cs" />

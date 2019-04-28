@@ -2,6 +2,7 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Mock_UI;
+using Mock_UI.Commands;
 using Mock_UI.Enums;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace ChatApp
       /// <summary>
       /// Sets the UI properties for the dark theme.
       /// </summary>
-      private void setDarkTheme()
+      public void setDarkTheme()
       {
          // Default MaterialSkinManager dark theme
          materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
@@ -87,7 +88,7 @@ namespace ChatApp
       /// <summary>
       /// Sets the UI properties for the light theme.
       /// </summary>
-      private void setLightTheme()
+      public void setLightTheme()
       {
          // Default MaterialSkinManager light theme
          materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -222,7 +223,7 @@ namespace ChatApp
 
          chatroomListBox.SetSelected(0, true);
          selectedChatroomInListBox = chatroomListBox.SelectedItem;
-         undoChatroomChangeBtn.Enabled = false;
+         undoBtn.Enabled = false;
       }
 
       /// <summary>
@@ -349,10 +350,7 @@ namespace ChatApp
       /// <param name="e"></param>
       private void lightToolStripMenuItem_Click(object sender, EventArgs e)
       {
-         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.light);
-         Mock_UI.Properties.Settings.Default.Save();
-
-         setLightTheme();
+         commandManager.ExecuteCommand(new ChangeThemeCommand(EnumTheming.light, this));
       }
 
       /// <summary>
@@ -363,10 +361,7 @@ namespace ChatApp
       /// <param name="e"></param>
       private void darkToolStripMenuItem_Click(object sender, EventArgs e)
       {
-         Mock_UI.Properties.Settings.Default.Theme = EnumExtensions.GetEnumDescription(EnumTheming.dark);
-         Mock_UI.Properties.Settings.Default.Save();
-
-         setDarkTheme();
+         commandManager.ExecuteCommand(new ChangeThemeCommand(EnumTheming.dark, this));
       }
 
       /// <summary>
@@ -381,7 +376,7 @@ namespace ChatApp
 
          selectedChatroomInListBox = chatroomListBox.SelectedItem;
 
-         undoChatroomChangeBtn.Enabled = true;
+         undoBtn.Enabled = true;
       }
 
       /// <summary>
