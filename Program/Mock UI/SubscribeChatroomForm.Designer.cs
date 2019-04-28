@@ -84,6 +84,7 @@
          this.Controls.Add(this.materialSingleLineTextField1);
          this.Controls.Add(this.chatroomNameTextField);
          this.Name = "SubscribeChatroomForm";
+         this.Sizable = false;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Subscribe to Chatroom";
          this.ResumeLayout(false);

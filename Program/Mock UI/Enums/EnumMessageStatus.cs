@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChatApp
 {
+   /// <summary>
+   /// Enums used for message status responses - contains custom descriptions used for UI.
+   /// </summary>
     public enum EnumMessageStatus
     {
             [Description("Invalid message.")]

@@ -65,6 +65,10 @@ namespace ChatApp
          registerButton.Enabled = true;
       }
 
+      /// <summary>
+      /// Sets up the form theming by creating and initializing a MaterialSkinManager as well as adding it to the form.
+      /// Makes the form non resizable and sets the MaterialSkinManager theme to light/dark according to the user settings.
+      /// </summary>
       private void setupTheme()
       {
          this.MaximizeBox = false;
@@ -101,20 +105,10 @@ namespace ChatApp
       /// <param name="e"></param>
       private void registerButton_Click(object sender, EventArgs e)
       {
-         Hide();
+         this.Hide();
          var registerForm = new RegisterForm(serverConnection, messageService);
          registerForm.FormClosed += (s, args) => Close();
          registerForm.Show();
-      }
-
-      /// <summary>
-      /// If this form is manually closed then disconnect from the server safely.
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
-      private void StartupForm_FormClosed(object sender, FormClosedEventArgs e)
-      {
-         // nevermind fuck this
       }
    }
 }

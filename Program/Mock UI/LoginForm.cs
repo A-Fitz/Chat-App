@@ -22,12 +22,16 @@ namespace ChatApp
       public LoginForm(IServerConnection serverConnection, IMessageService messageService)
       {
          this.serverConnection = serverConnection;
-            this.messageService = messageService;
+         this.messageService = messageService;
          userService = new UserService(serverConnection, messageService);
          InitializeComponent();
          setupTheme();
       }
 
+      /// <summary>
+      /// Sets up the form theming by creating and initializing a MaterialSkinManager as well as adding it to the form.
+      /// Makes the form non resizable and sets the MaterialSkinManager theme to light/dark according to the user settings.
+      /// </summary>
       private void setupTheme()
       {
          this.MaximizeBox = false;
@@ -57,14 +61,14 @@ namespace ChatApp
          {
             try
             {
-                    // Open main form with connection
-                    if (login())
-                    {
-                        Hide();
-                        var mainForm = new MainForm(serverConnection, messageService);
-                        mainForm.FormClosed += (s, args) => this.Close();
-                        mainForm.Show();
-                    }
+               // Open main form with connection
+               if (login())
+               {
+                  Hide();
+                  var mainForm = new MainForm(serverConnection, messageService);
+                  mainForm.FormClosed += (s, args) => this.Close();
+                  mainForm.Show();
+               }
             }
             catch (SocketException)
             {
@@ -97,18 +101,27 @@ namespace ChatApp
       /// </summary>
       /// <returns>true if valid login, false otherwise</returns>
       private bool login()
-      { 
+      {
          var response = userService.Login(userNameText.Text, passwordText.Text);
          setLoginStatus(response.message);
          return response.command == "SUCCESS";
       }
 
+      /// <summary>
+      /// Set the login status label to a specified message for a set amount of time.
+      /// </summary>
+      /// <param name="message"></param>
       private void setLoginStatus(String message)
       {
          loginStatus.Text = message;
          loginStatusTimer.Start();
       }
 
+      /// <summary>
+      /// After the login status message period has elapsed then clear the label.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void loginStatusTimer_Tick(object sender, EventArgs e)
       {
          loginStatus.Text = "";
@@ -148,9 +161,14 @@ namespace ChatApp
          startupForm.Show();
       }
 
+      /// <summary>
+      /// If the user presses enter in the password field then act like they pressed the login button.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
       private void passwordText_KeyDown(object sender, KeyEventArgs e)
       {
-         if(e.KeyCode == Keys.Enter)
+         if (e.KeyCode == Keys.Enter)
          {
             connectButton_Click(this, new EventArgs());
          }

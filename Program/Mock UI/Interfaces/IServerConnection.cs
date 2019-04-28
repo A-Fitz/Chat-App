@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Interfaces
 {
+   /// <summary>
+   /// Interface used for the implementation of a ServerConnection. 
+   /// </summary>
     public interface IServerConnection
     {
         int Read([In, Out] byte[] buffer, int offset, int size);
