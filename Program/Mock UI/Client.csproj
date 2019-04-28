@@ -160,9 +160,5 @@
   <ItemGroup>
     <None Include="Resources\AddScreen_16x.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\AddComment_16x.png" />
-    <Content Include="Resources\NewWindow_16x1.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

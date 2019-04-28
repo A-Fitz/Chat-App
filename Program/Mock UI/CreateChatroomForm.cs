@@ -3,15 +3,6 @@ using ChatApp.Interfaces;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Mock_UI.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Mock_UI
 {
@@ -21,6 +12,11 @@ namespace Mock_UI
       private readonly IMessageService messageService;
       private MaterialSkinManager materialSkinManager;
 
+      /// <summary>
+      /// Initializes a new CreateChatroomForm with given ServerConnection and MessageService. Sets up theme.
+      /// </summary>
+      /// <param name="serverConnection">connection to use</param>
+      /// <param name="messageService">message service to use</param>
       public CreateChatroomForm(IServerConnection serverConnection, IMessageService messageService)
       {
          this.serverConnection = serverConnection;
@@ -29,9 +25,14 @@ namespace Mock_UI
          setupTheme();
       }
 
+      /// <summary>
+      /// Sets up the form theming by creating and initializing a MaterialSkinManager as well as adding it to the form.
+      /// Makes the form non resizable, ontop of MainForm, and sets the MaterialSkinManager theme to light/dark according to the user settings.
+      /// </summary>
       private void setupTheme()
       {
          this.MaximizeBox = false;
+         this.TopMost = true;
 
          materialSkinManager = MaterialSkinManager.Instance;
          materialSkinManager.AddFormToManage(this);

@@ -105,7 +105,7 @@ namespace ChatApp
       /// <param name="e"></param>
       private void registerButton_Click(object sender, EventArgs e)
       {
-         Hide();
+         this.Hide();
          var registerForm = new RegisterForm(serverConnection, messageService);
          registerForm.FormClosed += (s, args) => Close();
          registerForm.Show();

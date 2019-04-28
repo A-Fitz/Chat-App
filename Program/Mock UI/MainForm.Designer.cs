@@ -214,6 +214,7 @@
          this.subscribeChatroomBtn.TabIndex = 17;
          this.btnToolTip.SetToolTip(this.subscribeChatroomBtn, "Subscribe to Chatroom");
          this.subscribeChatroomBtn.UseVisualStyleBackColor = false;
+         this.subscribeChatroomBtn.Click += new System.EventHandler(this.subscribeChatroomBtn_Click);
          // 
          // newChatroomBtn
          // 
@@ -226,6 +227,7 @@
          this.newChatroomBtn.TabIndex = 16;
          this.btnToolTip.SetToolTip(this.newChatroomBtn, "Create Chatroom");
          this.newChatroomBtn.UseVisualStyleBackColor = false;
+         this.newChatroomBtn.Click += new System.EventHandler(this.newChatroomBtn_Click);
          // 
          // undoChatroomChangeBtn
          // 

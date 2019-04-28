@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using ChatApp.Interfaces;
+﻿using ChatApp.Interfaces;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Mock_UI;
 using Mock_UI.Enums;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ChatApp
 {
@@ -392,6 +392,28 @@ namespace ChatApp
       private void undoChatroomChangeBtn_Click(object sender, EventArgs e)
       {
          commandManager.Undo();
+      }
+
+      /// <summary>
+      /// Open a new CreateChatroomForm dialog.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void newChatroomBtn_Click(object sender, EventArgs e)
+      {
+         var createChatroomForm = new CreateChatroomForm(serverConnection, messageService);
+         createChatroomForm.Show();
+      }
+
+      /// <summary>
+      /// Opens a new SubscribeChatroomForm dialog.
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      private void subscribeChatroomBtn_Click(object sender, EventArgs e)
+      {
+         var subscribeChatroomForm = new SubscribeChatroomForm(serverConnection, messageService);
+         subscribeChatroomForm.Show();
       }
    }
 }
