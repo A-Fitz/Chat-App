@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using ChatApp.Interfaces;
 using MaterialSkin;
@@ -17,6 +18,8 @@ namespace ChatApp
       private readonly IMessageService messageService;
       private MaterialSkinManager materialSkinManager;
       private List<Chatroom> chatroomList;
+      private object selectedChatroomInListBox;
+      private CommandManager commandManager = new CommandManager();
 
       /// <summary>
       /// The main application form. Handles chat logic.
@@ -99,14 +102,19 @@ namespace ChatApp
       {
          TCPMessage tcpMessage = new TCPMessage();
          tcpMessage.message = messageField.Text;
-         tcpMessage.chatID = ((Chatroom)(chatroomListBox.SelectedItem)).id;
+
+         // send chatroom message
+         if (chatroomListBox.SelectedIndex >= 0)
+            tcpMessage.chatID = ((Chatroom)(chatroomListBox.SelectedItem)).id;
+         else if (userListBox.SelectedIndex >= 0) // TODO send direct message
+         {
+            //String temp = "000" + (userListBox.SelectedItem.ToString()).to;
+         }
 
          EnumMessageStatus status = messageService.SendMessage(tcpMessage);
 
          if (status == EnumMessageStatus.successful)
             messageField.Clear();
-
-         //messageStatusLabel.Text = EnumExtensions.GetEnumDescription(status);
 
          setToolTip(EnumExtensions.GetEnumDescription(status));
       }
@@ -149,12 +157,12 @@ namespace ChatApp
                      }
                      break;
                   case "CHATROOMLIST":
-                     //TODO: Parse list and update local list of chatrooms with id and name
-                     ParseChatroomList(t);//TODO: Finish this function
+                     ParseChatroomList(t);
                      break;
                   default:
                      Chatroom room = chatroomList.Find(x => x.id == t.chatID);
                      room.messages.Add(t);
+                     // TODO change chatroomListBox chatroom name for new message to bold
                      if(((Chatroom)chatroomListBox.SelectedItem).id == t.chatID)
                      {
                         chatListBox.Items.Add(t.message);
@@ -167,15 +175,7 @@ namespace ChatApp
          }
       }
 
-      private void populateChatListBox(Chatroom room)
-      {
-         foreach(TCPMessage t in room.messages)
-         {
-            chatListBox.Items.Add(t.message);
-            chatListBox.SelectedIndex = chatListBox.Items.Count - 1;
-            chatListBox.SelectedIndex = -1;
-         }
-      }
+      
 
       /// <summary>
       /// Parses through a list of all the current chatrooms
@@ -183,12 +183,15 @@ namespace ChatApp
       /// <param name="message">Message with the chatroom list.</param>
       private void ParseChatroomList(TCPMessage message)
       {
-         //TODO: Might want to reset the chatroomlist before or in this function
          string[] idNames = message.message.Split(',');
          if(idNames.Length % 2 == 1)
          {
             for (int i = 0; i < idNames.Length - 1; i += 2)
             {
+               if(chatroomList.Any(x => x.id == int.Parse(idNames[i])))
+               {
+                  continue;
+               }
                Chatroom temp = new Chatroom(int.Parse(idNames[i]), idNames[i + 1]);
                chatroomListBox.Items.Add(temp);
                chatroomList.Add(temp);
@@ -197,6 +200,8 @@ namespace ChatApp
          else{}//Bad formating
 
          chatroomListBox.SetSelected(0, true);
+         selectedChatroomInListBox = chatroomListBox.SelectedItem;
+         undoBtn.Enabled = false;
       }
 
       /// <summary>
@@ -311,8 +316,16 @@ namespace ChatApp
 
       private void chatroomListBox_SelectedIndexChanged(object sender, EventArgs e)
       {
-         chatListBox.Items.Clear();
-         populateChatListBox((Chatroom)(chatroomListBox.SelectedItem));
+         commandManager.ExecuteCommand(new ChangeChatroomCommand(chatroomListBox, chatListBox, selectedChatroomInListBox));
+
+         selectedChatroomInListBox = chatroomListBox.SelectedItem;
+
+         undoBtn.Enabled = true;
+      }
+
+      private void undoBtn_Click(object sender, EventArgs e)
+      {
+         commandManager.Undo();
       }
    }
 }
