@@ -36,7 +36,7 @@ namespace Mock_UI
       private void setupTheme()
       {
          this.MaximizeBox = false;
-         this.TopMost = true;
+         //this.TopMost = true;
 
          materialSkinManager = MaterialSkinManager.Instance;
          materialSkinManager.AddFormToManage(this);
@@ -68,7 +68,7 @@ namespace Mock_UI
          if (response.command != failedLogin)
          {
             responseLabel.Text = response.message;
-            this.Close();
+            this.Hide();
          }
          else
             responseLabel.Text = response.message;
@@ -88,7 +88,7 @@ namespace Mock_UI
             Thread.Sleep(1000);
          }
 
-         return messageService.GetMessages().First();
+         return messageService.ReadInFirstMessage();
       }
    }
 }

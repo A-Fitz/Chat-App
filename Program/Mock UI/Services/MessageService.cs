@@ -47,6 +47,21 @@ namespace ChatApp.Services
          return messageList;
       }
 
+        public virtual TCPMessage ReadInFirstMessage()
+        {
+            List<char> integerStringList = new List<char>();
+            char character = serverConnection.ReadByte();
+            while (character != ':')
+            {
+                integerStringList.Add(character);
+                character = serverConnection.ReadByte();
+            }
+            int length = int.Parse(new string(integerStringList.ToArray()));
+            byte[] data = new byte[length];
+            serverConnection.Read(data, 0, data.Length);
+            return JsonConvert.DeserializeObject<TCPMessage>(ASCIIEncoding.ASCII.GetString(data));
+        }
+
       /// <summary>
       /// Attempts to send a message. Handles errors and exceptions for invalid messages and connection issues.
       /// Serializes the TCPMessage and writes it to the network stream.
@@ -90,12 +105,12 @@ namespace ChatApp.Services
       /// <returns>a byte array containing a message</returns>
       private byte[] ReadInMessage()
       {
-         List<Char> integerStringList = new List<char>();
-         char character = (char)serverConnection.ReadByte();
+         List<char> integerStringList = new List<char>();
+         char character = serverConnection.ReadByte();
          while (character != ':')
          {
             integerStringList.Add(character);
-            character = (char)serverConnection.ReadByte();
+            character = serverConnection.ReadByte();
          }
          int length = int.Parse(new string(integerStringList.ToArray()));
          byte[] data = new byte[length];

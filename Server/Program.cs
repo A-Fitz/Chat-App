@@ -123,7 +123,7 @@ namespace Server
                         ChatroomLogic temp = new ChatroomLogic();
                         temp.name = name;
                         temp.chatroomID = id;
-                        hightestChatroomID = hightestChatroomID < id ? hightestChatroomID : id;
+                        hightestChatroomID = hightestChatroomID > id ? hightestChatroomID : id;
                         chatroomList.addChat(temp);
                         DataTable userTable = ChatroomList.chatroomServices.GetChatUsers(temp.chatroomID);
                         foreach (DataRow userRow in userTable.Rows)
@@ -133,7 +133,7 @@ namespace Server
                                 temp.RegisteredUsers.Add(userId);
                         }
                     }
-                    ChatroomLogic.numChatRoomsCreated = hightestChatroomID;
+                    ChatroomLogic.numChatRoomsCreated = hightestChatroomID + 1;
                     //TODO: Call "GetUsersInChatroom" for each chatroom and append registered users to that chatroom
                     return true;
                 }

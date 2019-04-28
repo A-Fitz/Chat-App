@@ -100,11 +100,18 @@ namespace Server
                             //message = password for chatroom
                             //chatID = wether it is a private room. 1 = direct message room, 0 = normal password protected room
                             ChatroomLogic tempChatroom = new ChatroomLogic();
-                            if (ChatroomList.chatroomServices.CreateChatroom(incomingMsg.message.Substring(20, incomingMsg.message.Length), tempChatroom.chatroomID, this.userID, incomingMsg.message.Substring(0, 20), incomingMsg.chatID))
+                            string chatname = incomingMsg.message.Substring(20, incomingMsg.message.Length - 20);
+                            string hashword = incomingMsg.message.Substring(0, 20);
+                            if (ChatroomList.chatroomServices.CreateChatroom(chatname, tempChatroom.chatroomID, this.userID, hashword, incomingMsg.chatID))
                             {
+                                
                                 chatroomList.addChat(tempChatroom);
+                                tempChatroom.name = chatname;
                                 tempChatroom.Subscribe(this);
+                                tempChatroom.RegisteredUsers.Add(this.userID);
+                                MessageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom has been created" }, networkStream);
                                 SendChatroomList();
+                                SendChatHistory(tempChatroom.chatroomID);
                             }
                             else
                             {
@@ -122,6 +129,9 @@ namespace Server
                                 if (ChatroomList.chatroomServices.AddUser(tempChatroom2.chatroomID, this.userID, incomingMsg.message))
                                 {
                                     tempChatroom2.Subscribe(this);
+                                    tempChatroom2.RegisteredUsers.Add(this.userID);
+                                    SendChatroomList();
+                                    SendChatHistory(tempChatroom2.chatroomID);
                                 }
                                 else
                                 {
@@ -194,6 +204,14 @@ namespace Server
 
             sendClientList();
 
+        }
+
+
+        private void SendChatHistory(int chatID)
+        {
+            DataTable messages = ChatroomList.chatroomServices.ChatHistory(chatID);
+            foreach (DataRow message in messages.Rows)
+                OnNext(new Message { chatID = chatID, command = "", message = message["message"].ToString() });
         }
 
 
@@ -335,7 +353,7 @@ namespace Server
         }
         private void SendChatroomList()
         {
-            String list = "";
+            string list = "";
             List<ChatroomLogic> myChatrooms = new List<ChatroomLogic>();
             foreach (ChatroomLogic chatroom in chatroomList.chatrooms)
                 if (chatroom.RegisteredUsers.Contains(this.userID))

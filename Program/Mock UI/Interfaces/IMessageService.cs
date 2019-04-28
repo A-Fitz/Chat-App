@@ -13,6 +13,7 @@ namespace ChatApp.Interfaces
    {
       EnumMessageStatus SendMessage(TCPMessage message);
       IList<TCPMessage> GetMessages();
+      TCPMessage ReadInFirstMessage();
       bool CheckForMessages();
       bool ValidateMessage(string message);
    }
