@@ -28,45 +28,46 @@
       /// </summary>
       private void InitializeComponent()
       {
-         this.chatroomNameTextField = new MaterialSkin.Controls.MaterialSingleLineTextField();
-         this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialSingleLineTextField();
+         this.nameField = new MaterialSkin.Controls.MaterialSingleLineTextField();
+         this.passwordField = new MaterialSkin.Controls.MaterialSingleLineTextField();
          this.createBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+         this.responseLabel = new MaterialSkin.Controls.MaterialLabel();
          this.SuspendLayout();
          // 
-         // chatroomNameTextField
+         // nameField
          // 
-         this.chatroomNameTextField.Depth = 0;
-         this.chatroomNameTextField.Hint = "chatroom name";
-         this.chatroomNameTextField.Location = new System.Drawing.Point(12, 92);
-         this.chatroomNameTextField.MouseState = MaterialSkin.MouseState.HOVER;
-         this.chatroomNameTextField.Name = "chatroomNameTextField";
-         this.chatroomNameTextField.PasswordChar = '\0';
-         this.chatroomNameTextField.SelectedText = "";
-         this.chatroomNameTextField.SelectionLength = 0;
-         this.chatroomNameTextField.SelectionStart = 0;
-         this.chatroomNameTextField.Size = new System.Drawing.Size(222, 23);
-         this.chatroomNameTextField.TabIndex = 0;
-         this.chatroomNameTextField.UseSystemPasswordChar = false;
+         this.nameField.Depth = 0;
+         this.nameField.Hint = "chatroom name";
+         this.nameField.Location = new System.Drawing.Point(12, 107);
+         this.nameField.MouseState = MaterialSkin.MouseState.HOVER;
+         this.nameField.Name = "nameField";
+         this.nameField.PasswordChar = '\0';
+         this.nameField.SelectedText = "";
+         this.nameField.SelectionLength = 0;
+         this.nameField.SelectionStart = 0;
+         this.nameField.Size = new System.Drawing.Size(222, 23);
+         this.nameField.TabIndex = 0;
+         this.nameField.UseSystemPasswordChar = false;
          // 
-         // materialSingleLineTextField1
+         // passwordField
          // 
-         this.materialSingleLineTextField1.Depth = 0;
-         this.materialSingleLineTextField1.Hint = "password";
-         this.materialSingleLineTextField1.Location = new System.Drawing.Point(12, 121);
-         this.materialSingleLineTextField1.MouseState = MaterialSkin.MouseState.HOVER;
-         this.materialSingleLineTextField1.Name = "materialSingleLineTextField1";
-         this.materialSingleLineTextField1.PasswordChar = '*';
-         this.materialSingleLineTextField1.SelectedText = "";
-         this.materialSingleLineTextField1.SelectionLength = 0;
-         this.materialSingleLineTextField1.SelectionStart = 0;
-         this.materialSingleLineTextField1.Size = new System.Drawing.Size(222, 23);
-         this.materialSingleLineTextField1.TabIndex = 1;
-         this.materialSingleLineTextField1.UseSystemPasswordChar = false;
+         this.passwordField.Depth = 0;
+         this.passwordField.Hint = "password";
+         this.passwordField.Location = new System.Drawing.Point(12, 135);
+         this.passwordField.MouseState = MaterialSkin.MouseState.HOVER;
+         this.passwordField.Name = "passwordField";
+         this.passwordField.PasswordChar = '*';
+         this.passwordField.SelectedText = "";
+         this.passwordField.SelectionLength = 0;
+         this.passwordField.SelectionStart = 0;
+         this.passwordField.Size = new System.Drawing.Size(222, 23);
+         this.passwordField.TabIndex = 1;
+         this.passwordField.UseSystemPasswordChar = false;
          // 
          // createBtn
          // 
          this.createBtn.Depth = 0;
-         this.createBtn.Location = new System.Drawing.Point(82, 164);
+         this.createBtn.Location = new System.Drawing.Point(82, 173);
          this.createBtn.MouseState = MaterialSkin.MouseState.HOVER;
          this.createBtn.Name = "createBtn";
          this.createBtn.Primary = true;
@@ -74,27 +75,43 @@
          this.createBtn.TabIndex = 2;
          this.createBtn.Text = "Create";
          this.createBtn.UseVisualStyleBackColor = true;
+         this.createBtn.Click += new System.EventHandler(this.createBtn_Click);
+         // 
+         // responseLabel
+         // 
+         this.responseLabel.AutoSize = true;
+         this.responseLabel.Depth = 0;
+         this.responseLabel.Font = new System.Drawing.Font("Roboto", 11F);
+         this.responseLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+         this.responseLabel.Location = new System.Drawing.Point(12, 74);
+         this.responseLabel.MouseState = MaterialSkin.MouseState.HOVER;
+         this.responseLabel.Name = "responseLabel";
+         this.responseLabel.Size = new System.Drawing.Size(0, 19);
+         this.responseLabel.TabIndex = 3;
          // 
          // CreateChatroomForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(246, 222);
+         this.Controls.Add(this.responseLabel);
          this.Controls.Add(this.createBtn);
-         this.Controls.Add(this.materialSingleLineTextField1);
-         this.Controls.Add(this.chatroomNameTextField);
+         this.Controls.Add(this.passwordField);
+         this.Controls.Add(this.nameField);
          this.Name = "CreateChatroomForm";
          this.Sizable = false;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.Text = "Create Chatroom";
          this.ResumeLayout(false);
+         this.PerformLayout();
 
       }
 
       #endregion
 
-      private MaterialSkin.Controls.MaterialSingleLineTextField chatroomNameTextField;
-      private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextField1;
+      private MaterialSkin.Controls.MaterialSingleLineTextField nameField;
+      private MaterialSkin.Controls.MaterialSingleLineTextField passwordField;
       private MaterialSkin.Controls.MaterialRaisedButton createBtn;
+      private MaterialSkin.Controls.MaterialLabel responseLabel;
    }
 }

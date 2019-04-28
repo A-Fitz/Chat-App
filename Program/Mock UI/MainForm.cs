@@ -179,7 +179,7 @@ namespace ChatApp
                   case "CHATROOMLIST":
                      ParseChatroomList(t);
                      break;
-                  default:
+                  default: // no command - is message
                      Chatroom room = chatroomList.Find(x => x.id == t.chatID);
                      room.messages.Add(t);
                      // TODO add notification system if new messages are for not currently selected chatroom

@@ -3,6 +3,8 @@ using ChatApp.Interfaces;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Mock_UI.Enums;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Mock_UI
 {
@@ -36,14 +38,23 @@ namespace Mock_UI
 
          materialSkinManager = MaterialSkinManager.Instance;
          materialSkinManager.AddFormToManage(this);
-         if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
+         if (Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.light))
          {
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
          }
-         else if (Mock_UI.Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
+         else if (Properties.Settings.Default.Theme == EnumExtensions.GetEnumDescription(EnumTheming.dark))
          {
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
          }
+      }
+
+      private string hashPassword(string password)
+      {
+         SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
+         byte[] data = Encoding.ASCII.GetBytes(password);
+         byte[] sha1data = sha1.ComputeHash(data);
+
+         return new string(Encoding.ASCII.GetChars(sha1data));
       }
    }
 }
