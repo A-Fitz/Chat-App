@@ -42,7 +42,7 @@ namespace Server
             ChatroomList chatroomList = new ChatroomList();
 
             Console.WriteLine("Loading...");
-            if (LoadSaveData(chatroomList))
+            if (false)//LoadSaveData(chatroomList))
             {
                Console.WriteLine("Loading successful");
             }
@@ -55,7 +55,8 @@ namespace Server
                mainRoom2.name = "Global 2";
                chatroomList.addChat(mainRoom);
                chatroomList.addChat(mainRoom2);
-               //TODO: Add default chatrooms to SQL server
+               ChatroomList.chatroomServices.CreateChatroom(mainRoom.name, mainRoom.chatroomID, 795914, "pass", 0); //Test is automatically in all chatrooms.
+               ChatroomList.chatroomServices.CreateChatroom(mainRoom2.name, mainRoom2.chatroomID, 795914, "pass", 0);
             }
 
             TcpListener serverSocket = new TcpListener(System.Net.IPAddress.Loopback, PORT);
@@ -112,7 +113,7 @@ namespace Server
          try
          {
             int hightestChatroomID = 0;
-            ChatroomServices chatroomServices = new ChatroomServices();
+            ChatroomService chatroomServices = new ChatroomService();
             UserService userService = new UserService();
             DataTable dataTable = chatroomServices.GetAllChatrooms();
             if (dataTable.Rows.Count != 0)

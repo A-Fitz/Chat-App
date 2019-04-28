@@ -8,7 +8,7 @@ using System.Data;
 
 namespace Server
 {
-    class ChatroomServices
+    class ChatroomService
     {
         ChatroomDatabridge ChatroomDatabridge = new ChatroomDatabridge();
 
@@ -27,7 +27,7 @@ namespace Server
         /// </summary>
         /// <param name="chatroomID"></param>
         /// <param name="msg"></param>
-        public void AddMessage(int chatroomID, String msg)
+        public void AddMessage(int chatroomID, string msg)
         {
             ChatroomDatabridge.AddMessage(chatroomID, msg);
         }
@@ -39,9 +39,9 @@ namespace Server
         /// <param name="userid"></param>
         /// <param name="hashword"></param>
         /// <param name="directmsg"></param>
-        public bool CreateChatroom(int chatid, int userid, String hashword, int directmsg)
+        public bool CreateChatroom(string chatroomName, int chatid, int userid, string hashword, int directmsg)
         {
-            return ChatroomDatabridge.CreateChatroom(chatid, userid, hashword, directmsg);
+            return ChatroomDatabridge.CreateChatroom(chatroomName, chatid, userid, hashword, directmsg);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Server
         /// <param name="chatid"></param>
         /// <param name="userid"></param>
         /// <param name="chatpw"></param>
-        public bool AddUser(int chatid, int userid, String chatpw)
+        public bool AddUser(int chatid, int userid, string chatpw)
         {
             return ChatroomDatabridge.AddUser(chatid, userid, chatpw);
         }

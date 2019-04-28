@@ -79,7 +79,7 @@ namespace Server
         /// <param name="userid"></param>
         /// <param name="hashword"></param>
         /// <param name="directmsg"></param>
-        public bool CreateChatroom(int chatid, int userid, String hashword, int directmsg)
+        public bool CreateChatroom(string chatroomName, int chatid, int userid, String hashword, int directmsg)
         {
             using (var connection = new OracleConnection(connectionString))
             {
@@ -94,6 +94,7 @@ namespace Server
                     command.Parameters.Add("USER_ID", OracleDbType.Int32).Value = userid;
                     command.Parameters.Add("HASHWORD", OracleDbType.Varchar2).Value = hashword;
                     command.Parameters.Add("DIRECTMESSAGE", OracleDbType.Int32).Value = directmsg;
+                    command.Parameters.Add("CHAT_NAME", OracleDbType.Varchar2).Value = chatroomName;
 
                     command.ExecuteNonQuery();
                     connection.Close();

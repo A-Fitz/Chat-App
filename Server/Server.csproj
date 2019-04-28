@@ -51,7 +51,7 @@
     <Compile Include="ChatroomDatabridge.cs" />
     <Compile Include="ChatroomList.cs" />
     <Compile Include="ChatroomLogic.cs" />
-    <Compile Include="ChatroomServices.cs" />
+    <Compile Include="ChatroomService.cs" />
     <Compile Include="ClientConnection.cs" />
     <Compile Include="MessageService.cs" />
     <Compile Include="Program.cs" />

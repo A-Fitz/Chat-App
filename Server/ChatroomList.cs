@@ -13,7 +13,7 @@ namespace Server
    class ChatroomList
    {
       public List<ChatroomLogic> chatrooms { get; set;} = new List<ChatroomLogic>();
-      public static ChatroomServices chatroomServices { get; set; } = new ChatroomServices();
+      public static ChatroomService chatroomServices { get; set; } = new ChatroomService();
       /// <summary>
       /// Adds a ChatroomLogic object to the list managed by this
       /// class.

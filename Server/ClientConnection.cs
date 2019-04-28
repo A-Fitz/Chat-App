@@ -99,7 +99,7 @@ namespace Server
                      //message = password for chatroom
                      //chatID = wether it is a private room. 1 = direct message room, 0 = normal password protected room
                      ChatroomLogic tempChatroom = new ChatroomLogic();
-                     if (ChatroomList.chatroomServices.CreateChatroom(tempChatroom.chatroomID, this.userID, incomingMsg.message, incomingMsg.chatID))
+                     if (ChatroomList.chatroomServices.CreateChatroom(incomingMsg.message.Substring(20, incomingMsg.message.Length), tempChatroom.chatroomID, this.userID, incomingMsg.message.Substring(0, 20), incomingMsg.chatID))
                      {
                         chatroomList.addChat(tempChatroom);
                         tempChatroom.Subscribe(this);
@@ -176,6 +176,8 @@ namespace Server
          subsribeToChat(chatroomList.idToChatroom(1));
          chatroomList.idToChatroom(0).RegisteredUsers.Add(this.userID);
          chatroomList.idToChatroom(1).RegisteredUsers.Add(this.userID);
+         ChatroomList.chatroomServices.AddUser(0, userID, "1234");
+         ChatroomList.chatroomServices.AddUser(1, userID, "1234");
          sendClientList();
          SendChatroomList();
       }
