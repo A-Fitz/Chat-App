@@ -30,9 +30,8 @@ namespace Server
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "GET_CHAT_HISTORY";
-                    command.Parameters.Add("CHATID", OracleDbType.Int32).Value = chatroomID;
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "select message from ChatHistory where chatroomId = " + chatroomID + " order by dateSent";
 
                     OracleDataAdapter da = new OracleDataAdapter(command);
                     da.Fill(datatable);
