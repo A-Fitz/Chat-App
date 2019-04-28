@@ -5,6 +5,7 @@ using MaterialSkin.Controls;
 using Mock_UI.Enums;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace Mock_UI
 {
@@ -55,6 +56,36 @@ namespace Mock_UI
          byte[] sha1data = sha1.ComputeHash(data);
 
          return new string(Encoding.ASCII.GetChars(sha1data));
+      }
+
+      private TCPMessage joinChatroom()
+      {
+         messageService.SendMessage(new TCPMessage { chatID = 0, command = "JOIN_CHAT", message = hashPassword(passwordField.Text) + chatroomIDField.Text });
+
+         return waitForResponse();
+      }
+
+      private TCPMessage waitForResponse()
+      {
+         while (!messageService.CheckForMessages())
+         {
+            Thread.Sleep(1000);
+         }
+
+         return messageService.ReadInFirstMessage();
+      }
+
+      private void joinBtn_Click(object sender, System.EventArgs e)
+      {
+         string failed = "EXCEPTION";
+         var response = joinChatroom();
+         if (response.command != failed)
+         {
+            responseLabel.Text = response.message;
+            this.Hide();
+         }
+         else
+            responseLabel.Text = response.message;
       }
    }
 }

@@ -63,9 +63,9 @@ namespace Mock_UI
       {
          responseLabel.Text = "Creating chatroom...";
 
-         string failedLogin = "EXCEPTION";
+         string failed = "EXCEPTION";
          var response = createChatroom();
-         if (response.command != failedLogin)
+         if (response.command != failed)
          {
             responseLabel.Text = response.message;
             this.Hide();
