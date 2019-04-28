@@ -30,9 +30,8 @@ namespace Server
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "GET_CHAT_HISTORY";
-                    command.Parameters.Add("CHATID", OracleDbType.Int32).Value = chatroomID;
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "select message from ChatHistory where chatroomId = " + chatroomID + " order by dateSent";
 
                     OracleDataAdapter da = new OracleDataAdapter(command);
                     da.Fill(datatable);
@@ -50,7 +49,7 @@ namespace Server
         /// </summary>
         /// <param name="chatroomID"></param>
         /// <param name="msg"></param>
-        public void AddMessage(int chatroomID, String msg)
+        public void AddMessage(int chatroomID, int userid, string msg)
         {
             using (var connection = new OracleConnection(connectionString))
             {
@@ -62,7 +61,8 @@ namespace Server
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "ADD_MESSAGE";
                     command.Parameters.Add("CURRENTCHATROOM", OracleDbType.Int32).Value = chatroomID;
-                    command.Parameters.Add("MESSAGE", OracleDbType.Varchar2).Value = msg;
+                    command.Parameters.Add("user_id", OracleDbType.Int32).Value = userid;
+                    command.Parameters.Add("NEWMESSAGE", OracleDbType.Varchar2).Value = msg;
 
                     command.ExecuteNonQuery();
                     connection.Close();
@@ -121,9 +121,8 @@ namespace Server
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "GET_CHATROOM_USERS";
-                    command.Parameters.Add("CHATROOM_ID", OracleDbType.Int32).Value = chatid;
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "select userid from ChatroomUserLink where chatroomId = " + chatid;
 
                     OracleDataAdapter da = new OracleDataAdapter(command);
                     da.Fill(datatable);
@@ -151,13 +150,12 @@ namespace Server
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "GET_ALL_CHATROOMS";
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "select chatroomId, chatroomName from Chatroom";
 
                     OracleDataAdapter da = new OracleDataAdapter(command);
                     da.Fill(datatable);
                     connection.Close();
-                    da.Dispose();
                 }
                 catch (Exception e)
                 { }
