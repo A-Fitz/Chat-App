@@ -49,17 +49,8 @@ namespace ChatApp.Services
 
         public virtual TCPMessage ReadInFirstMessage()
         {
-            List<char> integerStringList = new List<char>();
-            char character = serverConnection.ReadByte();
-            while (character != ':')
-            {
-                integerStringList.Add(character);
-                character = serverConnection.ReadByte();
-            }
-            int length = int.Parse(new string(integerStringList.ToArray()));
-            byte[] data = new byte[length];
-            serverConnection.Read(data, 0, data.Length);
-            return JsonConvert.DeserializeObject<TCPMessage>(ASCIIEncoding.ASCII.GetString(data));
+            var message = ReadInMessage();
+            return JsonConvert.DeserializeObject<TCPMessage>(ASCIIEncoding.ASCII.GetString(message));
         }
 
       /// <summary>

@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
+using System.Configuration;
 
 namespace Server
 {
     public class ChatroomDatabridge
     {
-        string connectionString = "Data Source=(DESCRIPTION ="
-               + "(ADDRESS = (PROTOCOL = TCP)(HOST = maize.oit.uwplatt.edu)(PORT = 1521))"
-               + "(CONNECT_DATA = (SID=EDDB) (SERVER = DEDICATED)));"
-               + "User Id= vancemi;Password=Cathy1965Vanc@;";
+        string connectionString = ConfigurationManager.AppSettings["OracleConnectionString"];
 
         /// <summary>
         /// 
