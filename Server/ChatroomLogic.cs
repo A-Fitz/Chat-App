@@ -64,7 +64,6 @@ namespace Server
             {
                observers.Add(observer);
             }
-            //TODO LATER: Update the client with all past history or some of it.
          }
          return new Unsubscriber<Message>(observers, observer);
       }
@@ -81,11 +80,14 @@ namespace Server
          private IObserver<Message> _observer;
 
          /// <summary>
-         /// Creates an object that allows the user to unsubscribe the client from the observable.
+         /// Creates an object that allows the 
+         /// user to unsubscribe the client from the observable.
          /// </summary>
-         /// <param name="observers">Reference to the observers in the chatroom.</param>
+         /// <param name="observers">Reference to the observers 
+         /// in the chatroom.</param>
          /// <param name="observer">The observer that subscribed.</param>
-         internal Unsubscriber(List<IObserver<Message>> observers, IObserver<Message> observer)
+         internal Unsubscriber(List<IObserver<Message>> observers, 
+            IObserver<Message> observer)
          {
             this._observers = observers;
             this._observer = observer;

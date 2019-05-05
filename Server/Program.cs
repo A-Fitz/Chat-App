@@ -30,10 +30,12 @@ namespace Server
 
       private static string HELP_EXIT = "Safely shuts down the server" +
          "and saves.";
-      private static string HELP_RESTART = "Safely shutdown and startup the server while saving data.";
+      private static string HELP_RESTART = 
+         "Safely shutdown and startup the server while saving data.";
 
       /// <summary>
-      /// Main entrypoint of the program. Starts the server, then listens for user commands.
+      /// Main entrypoint of the program. 
+      /// Starts the server, then listens for user commands.
       /// </summary>
       /// <param name="args">Command line arguments</param>
       static void Main(string[] args)
@@ -64,13 +66,17 @@ namespace Server
                mainRoom2.name = "Global 2";
                chatroomList.addChat(mainRoom);
                chatroomList.addChat(mainRoom2);
-               ChatroomList.chatroomServices.CreateChatroom(mainRoom.name, mainRoom.chatroomID, 795914, "pass", 0); //Test is automatically in all chatrooms.
-               ChatroomList.chatroomServices.CreateChatroom(mainRoom2.name, mainRoom2.chatroomID, 795914, "pass", 0);
+               ChatroomList.chatroomServices.CreateChatroom(
+                  mainRoom.name, mainRoom.chatroomID, 795914, "pass", 0); 
+               ChatroomList.chatroomServices.CreateChatroom(
+                  mainRoom2.name, mainRoom2.chatroomID, 795914, "pass", 0);
             }
 
-            TcpListener serverSocket = new TcpListener(System.Net.IPAddress.Loopback, PORT);
+            TcpListener serverSocket 
+               = new TcpListener(System.Net.IPAddress.Loopback, PORT);
             serverSocket.Start();
-            Thread connectorThread = new Thread(() => handleIncomingConnections(serverSocket, chatroomList));
+            Thread connectorThread = new Thread(
+               () => handleIncomingConnections(serverSocket, chatroomList));
             connectorThread.Name = "Connector Thread";
             connectorThread.Priority = ThreadPriority.Lowest;
             connectorThread.Start();
@@ -99,14 +105,19 @@ namespace Server
                      restart = true;
                      break;
                   default:
-                     Console.WriteLine(input + " is not recognized as a command. Use ? or help for options.");
+                     Console.WriteLine(input 
+                        + " is not recognized as a command."
+                        +" Use ? or help for options.");
                      break;
 
                }
             }
             Console.WriteLine("Saving...");
             serverSocket.Stop();
-            chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CLOSING", message = "0" });
+            chatroomList.SendGlobalMessage(new Message {
+               chatID = -1,
+               command = "CLOSING",
+               message = "0" });
             chatroomList.Stop();
             if (restart == true)
             {
@@ -120,13 +131,15 @@ namespace Server
       /// Helper function for loading in SQL database data.
       /// </summary>
       /// <param name="chatroomList"></param>
-      /// <returns>Returns true if load was successful, false otherwise.</returns>
+      /// <returns>Returns true if load was successful, 
+      /// false otherwise.</returns>
       private static bool LoadSaveData(ChatroomList chatroomList)
       {
          try
          {
             int hightestChatroomID = 0;
-            DataTable dataTable = ChatroomList.chatroomServices.GetAllChatrooms();
+            DataTable dataTable
+               = ChatroomList.chatroomServices.GetAllChatrooms();
             if (dataTable.Rows.Count != 0)
             {
                foreach (DataRow row in dataTable.Rows)
@@ -136,18 +149,21 @@ namespace Server
                   ChatroomLogic temp = new ChatroomLogic();
                   temp.name = name;
                   temp.chatroomID = id;
-                  hightestChatroomID = hightestChatroomID > id ? hightestChatroomID : id;
+                  hightestChatroomID = 
+                     hightestChatroomID > id ? hightestChatroomID : id;
                   chatroomList.addChat(temp);
-                  DataTable userTable = ChatroomList.chatroomServices.GetChatUsers(temp.chatroomID);
+                  DataTable userTable 
+                     = ChatroomList.chatroomServices.GetChatUsers(
+                        temp.chatroomID);
                   foreach (DataRow userRow in userTable.Rows)
                   {
                      int userId = -1;
-                     if (int.TryParse(userRow["userid"].ToString(), out userId)) //int.Parse(row["user_id"].ToString());
+                     if (int.TryParse(userRow["userid"].ToString(), 
+                        out userId))
                         temp.RegisteredUsers.Add(userId);
                   }
                }
                ChatroomLogic.numChatRoomsCreated = hightestChatroomID + 1;
-               //TODO: Call "GetUsersInChatroom" for each chatroom and append registered users to that chatroom
                return true;
             }
          }
@@ -157,12 +173,15 @@ namespace Server
 
 
       /// <summary>
-      /// One thread will be assigned to handling new connections and will create a new
+      /// One thread will be assigned to
+      /// handling new connections and will create a new
       /// ClientConnection object for every new connection.
       /// </summary>
-      /// <param name="serverSocket">The socket to listen for incoming connections</param>
+      /// <param name="serverSocket">The socket to listen for 
+      /// incoming connections</param>
       /// <param name="chatroomList">The current chatroomList</param>
-      private static void handleIncomingConnections(TcpListener serverSocket, ChatroomList chatroomList)
+      private static void handleIncomingConnections(
+         TcpListener serverSocket, ChatroomList chatroomList)
       {
          try
          {
@@ -171,7 +190,8 @@ namespace Server
                TcpClient socket = serverSocket.AcceptTcpClient();
                Console.WriteLine("A new client has connected");
                NetworkStream stream = socket.GetStream();
-               ClientConnection client = new ClientConnection(stream, chatroomList);
+               ClientConnection client 
+                  = new ClientConnection(stream, chatroomList);
                client.StartAsync();
 
 

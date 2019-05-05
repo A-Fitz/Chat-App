@@ -15,8 +15,10 @@ namespace Server
    /// </summary>
    public class ChatroomList
    {
-      public List<ChatroomLogic> chatrooms { get; set; } = new List<ChatroomLogic>();
-      public static ChatroomService chatroomServices { get; set; } = new ChatroomService();
+      public List<ChatroomLogic> chatrooms
+      { get; set; } = new List<ChatroomLogic>();
+      public static ChatroomService chatroomServices
+      { get; set; } = new ChatroomService();
       /// <summary>
       /// Adds a ChatroomLogic object to the list managed by this
       /// class.

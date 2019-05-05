@@ -20,12 +20,14 @@ namespace Server
       public int userID { get; set; } = -1;
       private static int numClients = 0;
       private ChatroomList chatroomList;
-      public static List<ClientConnection> clients { get; set; } = new List<ClientConnection>();
+      public static List<ClientConnection> clients { get; set; } = 
+         new List<ClientConnection>();
       private List<ChatroomLogic> chatrooms = new List<ChatroomLogic>();
       private MessageService messageService;
 
       /// <summary>
-      /// Constructor that requires a network stream to listen to and a chatroom list.
+      /// Constructor that requires a network stream to listen to and 
+      /// a chatroom list.
       /// </summary>
       /// <param name="ns"></param>
       /// <param name="chatroomList"></param>
@@ -38,7 +40,8 @@ namespace Server
 
       /// <summary>
       /// Cleans up the stream.
-      /// This method is not reasonably testable. It would validate NetworkStream.
+      /// This method is not reasonably testable. It would 
+      /// validate NetworkStream.
       /// </summary>
       public void disconnect()
       {
@@ -48,7 +51,8 @@ namespace Server
 
       /// <summary>
       /// Subscribes to a chat. Any new information to the ChatroomLogic that
-      /// this object is subsribed to will come through the OnNext() function.
+      /// this object is subsribed to will come through the 
+      /// OnNext() function.
       /// </summary>
       /// <param name="crl"></param>
       public void subsribeToChat(ChatroomLogic crl)
@@ -72,7 +76,8 @@ namespace Server
       }
 
       /// <summary>
-      /// Main client loop that takes in data and does certain operations based
+      /// Main client loop that takes in data and does
+      /// certain operations based
       /// on the command.
       /// </summary>
       private void getMessages()
@@ -94,33 +99,44 @@ namespace Server
                switch (incomingMsg.command)
                {
                   case "SEND":
-                     incomingMsg.message = DateTime.Now.ToString() + " : " + username + " : " + incomingMsg.message;
-                     ChatroomLogic sendChatroom = chatroomList.idToChatroom(incomingMsg.chatID);
-                     if (sendChatroom != null && sendChatroom.RegisteredUsers.Contains(userID))
+                     incomingMsg.message = DateTime.Now.ToString() 
+                        + " : " + username + " : " + incomingMsg.message;
+                     ChatroomLogic sendChatroom 
+                        = chatroomList.idToChatroom(incomingMsg.chatID);
+                     if (sendChatroom != null 
+                        && sendChatroom.RegisteredUsers.Contains(userID))
                         chatroomList.update(incomingMsg, userID);
                      else
                         Console.WriteLine("Bad SEND message chatID");
                      break;
                   case "NEW_CHAT":
                      //message = password for chatroom
-                     //chatID = wether it is a private room. 1 = direct message room, 0 = normal password protected room
+                     //chatID = wether it is a private room. 1 = direct message
+                     //room, 0 = normal password protected room
                      ChatroomLogic tempChatroom = new ChatroomLogic();
-                     string chatname = incomingMsg.message.Substring(20, incomingMsg.message.Length - 20);
+                     string chatname = incomingMsg.message.Substring(20, 
+                        incomingMsg.message.Length - 20);
                      string hashword = incomingMsg.message.Substring(0, 20);
-                     if (ChatroomList.chatroomServices.CreateChatroom(chatname, tempChatroom.chatroomID, this.userID, hashword, incomingMsg.chatID))
+                     if (ChatroomList.chatroomServices.CreateChatroom(chatname,
+                        tempChatroom.chatroomID,
+                        this.userID, hashword, incomingMsg.chatID))
                      {
 
                         chatroomList.addChat(tempChatroom);
                         tempChatroom.name = chatname;
                         tempChatroom.Subscribe(this);
                         tempChatroom.RegisteredUsers.Add(this.userID);
-                        messageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom has been created" });
+                        messageService.SendMessage(new Message { chatID = -1,
+                           command = "ACK",
+                           message = "Chatroom has been created" });
                         SendChatroomList();
                         SendChatHistory(tempChatroom.chatroomID);
                      }
                      else
                      {
-                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom name already taken" });
+                        messageService.SendMessage(new Message { chatID = -1,
+                           command = "EXCEPTION",
+                           message = "Chatroom name already taken" });
                      }
 
                      break;
@@ -128,39 +144,55 @@ namespace Server
                      string hashword2 = incomingMsg.message.Substring(0, 20);
                      int id = -1;
 
-                     if (int.TryParse(incomingMsg.message.Substring(20, incomingMsg.message.Length - 20), out id))
+                     if (int.TryParse(incomingMsg.message.Substring(20, 
+                        incomingMsg.message.Length - 20), out id))
                      {
-                        ChatroomLogic tempChatroom2 = chatroomList.idToChatroom(id);
+                        ChatroomLogic tempChatroom2 = 
+                           chatroomList.idToChatroom(id);
                         if (tempChatroom2 != null)
                         {
-                           //TODO: Check that the password matches the chatrooms password and break out if it is incorrect
-                           if (ChatroomList.chatroomServices.AddUser(tempChatroom2.chatroomID, this.userID, hashword2))
+                           
+                           if (ChatroomList.chatroomServices.AddUser(
+                              tempChatroom2.chatroomID, 
+                              this.userID, hashword2))
                            {
                               tempChatroom2.Subscribe(this);
                               tempChatroom2.RegisteredUsers.Add(this.userID);
-                              messageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom login succeded" });
+                              messageService.SendMessage(
+                                 new Message { chatID = -1,
+                                    command = "ACK",
+                                    message = "Chatroom login succeded" });
                               SendChatroomList();
                               SendChatHistory(tempChatroom2.chatroomID);
                            }
                            else
                            {
-                              messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom login failed" });
+                              messageService.SendMessage(
+                                 new Message { chatID = -1,
+                                    command = "EXCEPTION",
+                                    message = "Chatroom login failed" });
                               break;
                            }
                         }
                      }
                      else
-                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Bad chatroom id" });
+                        messageService.SendMessage(
+                           new Message { chatID = -1,
+                              command = "EXCEPTION",
+                              message = "Bad chatroom id" });
 
                      break;
                   case "CLOSE":
                      disconnect();
                      clients.Remove(this);
                      sendClientList();
-                     Console.Out.WriteLine((username == "" ? "Someone disconected." : username + " disconnected."));
+                     Console.Out.WriteLine((username == "" ? 
+                        "Someone disconected." : username + " disconnected."));
                      return;
                   default:
-                     Console.WriteLine("Incorrect Command: Message = " + incomingMsg.chatID + " : " + incomingMsg.command + " : " + incomingMsg.message);
+                     Console.WriteLine("Incorrect Command: Message = " 
+                        + incomingMsg.chatID + " : " + incomingMsg.command 
+                        + " : " + incomingMsg.message);
                      break;
                }
 
@@ -171,7 +203,8 @@ namespace Server
             disconnect();
             clients.Remove(this);
             sendClientList();
-            Console.Out.WriteLine((username == "" ? "Someone disconected." : username + " disconnected."));
+            Console.Out.WriteLine((username == "" ? 
+               "Someone disconected." : username + " disconnected."));
          }
          finally
          {
@@ -188,9 +221,7 @@ namespace Server
          bool ack = false;
          while (!ack)
             ack = (messageService.GetMessage().command == "ACK");
-         //TODO LATER: Request data from SQL server on this client and send messages to
 
-         //this client's OnNext() function.
          subsribeToChat(chatroomList.idToChatroom(0));
          subsribeToChat(chatroomList.idToChatroom(1));
          chatroomList.idToChatroom(0).RegisteredUsers.Add(this.userID);
@@ -203,9 +234,11 @@ namespace Server
             if (chatroom.RegisteredUsers.Contains(userID))
             {
                chatroom.Subscribe(this);
-               DataTable messages = ChatroomList.chatroomServices.ChatHistory(chatroom.chatroomID);
+               DataTable messages = ChatroomList.chatroomServices.ChatHistory(
+                  chatroom.chatroomID);
                foreach (DataRow message in messages.Rows)
-                  OnNext(new Message { chatID = chatroom.chatroomID, command = "", message = message["message"].ToString() });
+                  OnNext(new Message { chatID = chatroom.chatroomID,
+                     command = "", message = message["message"].ToString() });
             }
          }
 
@@ -216,9 +249,11 @@ namespace Server
 
       private void SendChatHistory(int chatID)
       {
-         DataTable messages = ChatroomList.chatroomServices.ChatHistory(chatID);
+         DataTable messages = 
+            ChatroomList.chatroomServices.ChatHistory(chatID);
          foreach (DataRow message in messages.Rows)
-            OnNext(new Message { chatID = chatID, command = "", message = message["message"].ToString() });
+            OnNext(new Message { chatID = chatID,
+               command = "", message = message["message"].ToString() });
       }
 
 
@@ -244,39 +279,59 @@ namespace Server
                   case "REGISTER":
                      if (userService.CheckUsername(usernamePassword[0]))
                      {
-                        if (!userService.RegisterUser(usernamePassword[0], usernamePassword[1]))
-                           messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed" });
+                        if (!userService.RegisterUser(usernamePassword[0], 
+                           usernamePassword[1]))
+                           messageService.SendMessage(new Message{
+                              chatID = -1,
+                              command = "EXCEPTION",
+                              message = "Login failed" });
                      }
                      else
                      {
-                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is taken." });
+                        messageService.SendMessage(
+                           new Message { chatID = -1, command = "EXCEPTION",
+                              message = usernamePassword[0] + " is taken." });
                      }
-                     messageService.SendMessage(new Message { chatID = -1, command = "SUCCESS", message = "Registration successful!" });
+                     messageService.SendMessage(new Message {
+                        chatID = -1,
+                        command = "SUCCESS",
+                        message = "Registration successful!" });
                      break;
                   case "LOGIN":
                      if (isLoggedIn(usernamePassword[0]))
                      {
-                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is already logged in." });
+                        messageService.SendMessage(new Message { chatID = -1,
+                           command = "EXCEPTION",
+                           message = usernamePassword[0] 
+                           + " is already logged in." });
                      }
-                     else if (0 <= (userID = userService.VerifyLogin(usernamePassword[0], usernamePassword[1])))//
+                     else if (0 <= (userID 
+                        = userService.VerifyLogin(usernamePassword[0], 
+                        usernamePassword[1])))
                      {
                         username = usernamePassword[0];
                         Thread.CurrentThread.Name = username;
-                        messageService.SendMessage(new Message { chatID = -1, command = "SUCCESS", message = "Login successful!" });
+                        messageService.SendMessage(new Message {
+                           chatID = -1,
+                           command = "SUCCESS",
+                           message = "Login successful!" });
                         return true;
                      }
                      else
-                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed. Username or password is incorrect." });
+                        messageService.SendMessage(new Message {
+                           chatID = -1,
+                           command = "EXCEPTION",
+                           message = 
+                           "Login failed. "
+                           +"Username or password is incorrect." });
                      if (0 >= 1)
                      {
 
                      }
                      break;
                   default:
-                     Console.WriteLine("Incorrect Command: Message = " + a.chatID + " : " + a.command + " : " + a.message);
-                     //Console.WriteLine("Incorrect Command syntax found. Defaulting to sending message to chat.");
-                     //a.message = DateTime.Now.ToString() + " : " + username + " : " + a.message;
-                     //chatroomList.update(a);
+                     Console.WriteLine("Incorrect Command: Message = " 
+                        + a.chatID + " : " + a.command + " : " + a.message);
                      break;
                }
 
@@ -345,7 +400,8 @@ namespace Server
       }
 
       /// <summary>
-      /// Stops all clients and sends a message to each client that the connection is being halted.
+      /// Stops all clients and sends a message to each 
+      /// client that the connection is being halted.
       /// </summary>
       public static void StopAllClients()
       {
@@ -369,13 +425,17 @@ namespace Server
 
          foreach (ChatroomLogic c in myChatrooms)
             list += c.chatroomID + "," + c.name + ",";
-         messageService.SendMessage(new Message { chatID = -1, command = "CHATROOMLIST", message = list });
+         messageService.SendMessage(new Message {
+            chatID = -1,
+            command = "CHATROOMLIST",
+            message = list });
       }
 
 
 
       /// <summary>
-      /// Updates all clients with the current client username list. Called when a client disconnects or connects;
+      /// Updates all clients with the current client 
+      /// username list. Called when a client disconnects or connects;
       /// </summary>
       /// <param name="client"></param>
       /// <param name="chatroomList"></param>
@@ -386,7 +446,10 @@ namespace Server
          {
             list += c.username + ",";
          }
-         chatroomList.SendGlobalMessage(new Message { chatID = -1, command = "CLIENTLIST", message = list });
+         chatroomList.SendGlobalMessage(new Message {
+            chatID = -1,
+            command = "CLIENTLIST",
+            message = list });
       }
    }
 }
