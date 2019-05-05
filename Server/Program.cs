@@ -1,4 +1,5 @@
-﻿//#define TESTING
+﻿// Main of our program. Starts the program and listens for user input.
+// Author(s): Ryan
 
 using Newtonsoft.Json;
 using System;
@@ -14,6 +15,9 @@ using System.Data;
 
 namespace Server
 {
+   /// <summary>
+   /// Main of our program. Starts the program and listens for user input.
+   /// </summary>
    public class Program
    {
       public static int PORT = 12345;
@@ -28,7 +32,10 @@ namespace Server
          "and saves.";
       private static string HELP_RESTART = "Safely shutdown and startup the server while saving data.";
 
-
+      /// <summary>
+      /// Main entrypoint of the program. Starts the server, then listens for user commands.
+      /// </summary>
+      /// <param name="args">Command line arguments</param>
       static void Main(string[] args)
       {
 
@@ -109,7 +116,11 @@ namespace Server
       }
 
 
-
+      /// <summary>
+      /// Helper function for loading in SQL database data.
+      /// </summary>
+      /// <param name="chatroomList"></param>
+      /// <returns>Returns true if load was successful, false otherwise.</returns>
       private static bool LoadSaveData(ChatroomList chatroomList)
       {
          try
@@ -166,18 +177,8 @@ namespace Server
 
             }
          }
-         catch (ThreadAbortException tae)
-         {
-            //Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
-         }
-         catch (SocketException se)
-         {
-            //Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left");
-         }
-         finally
-         {
-            //Console.WriteLine("Connector thread \"" + Thread.CurrentThread.Name + "\" left finally block");
-         }
+         catch (ThreadAbortException tae){}
+         catch (SocketException se){}
       }
 
    }

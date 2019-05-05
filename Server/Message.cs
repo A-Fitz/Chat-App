@@ -1,4 +1,7 @@
-﻿using System;
+﻿//This is our main package class we will use for networking 
+//purposes.
+//Author(s): Ryan, Mitch, Liam, Austin
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Server
 {
+   /// <summary>
+   /// This is our main package class we will use for networking 
+   /// purposes.
+   /// </summary>
    public class Message
    {
       /// <summary>
@@ -27,7 +34,8 @@ namespace Server
       public string command { get; set; }
 
       /// <summary>
-      /// Empty default constructor needed for JSON serialization and deserialization.
+      /// Empty default constructor needed for JSON serialization and 
+      /// deserialization.
       /// </summary>
       public Message() { }
 

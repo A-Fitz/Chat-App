@@ -1,4 +1,7 @@
-﻿using System;
+﻿//
+//Author(s):
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,7 +78,6 @@ namespace Server
       public void Stop()
       {
          ClientConnection.StopAllClients();
-         //TODO cleanup any resources being held up
       }
 
    }
