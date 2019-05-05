@@ -10,13 +10,21 @@ namespace Server
 {
    public class MessageService
    {
+
+      private NetworkStream networkStream;
+
+      public MessageService(NetworkStream networkStream)
+      {
+         this.networkStream = networkStream;
+      }
+
       /// <summary>
       /// Takes a Message object and writes it to the stream
       /// so that the client can parse it and deserialize it.
       /// </summary>
       /// <param name="message">Message to be sent</param>
       /// <param name="networkStream">Network stream to send it through</param>
-      public static void SendMessage(Message message, NetworkStream networkStream)
+      public void SendMessage(Message message)
       {
          try
          {
@@ -36,7 +44,7 @@ namespace Server
       /// </summary>
       /// <param name="networkStream">Network stream to send it through</param>
       /// <returns></returns>
-      public static Message GetMessage(NetworkStream networkStream)
+      public Message GetMessage()
       {
          Message output = null;
          try

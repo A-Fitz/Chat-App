@@ -20,6 +20,7 @@ namespace Server
       private ChatroomList chatroomList;
       public static List<ClientConnection> clients { get; set; } = new List<ClientConnection>();
       private List<ChatroomLogic> chatrooms = new List<ChatroomLogic>();
+      private MessageService messageService;
 
       /// <summary>
       /// Constructor that requires a network stream to listen to and a chatroom list.
@@ -30,19 +31,17 @@ namespace Server
       {
          this.networkStream = ns;
          this.chatroomList = chatroomList;
-
+         messageService = new MessageService(ns);
       }
 
       /// <summary>
-      /// Cleans up the stream
+      /// Cleans up the stream.
+      /// This method is not reasonably testable. It would validate NetworkStream.
       /// </summary>
       public void disconnect()
       {
-         //TODO wait for the rest of a message or timeout
          networkStream.Dispose();
          networkStream.Close();
-
-         //TODO Kill the thread if its still alive
       }
 
       /// <summary>
@@ -86,7 +85,7 @@ namespace Server
             //TODO Make sure client is not recieving messages before login
             while (true)
             {
-               Message incomingMsg = MessageService.GetMessage(networkStream);
+               Message incomingMsg = messageService.GetMessage();
 
                if (incomingMsg == null)
                   return;
@@ -113,13 +112,13 @@ namespace Server
                         tempChatroom.name = chatname;
                         tempChatroom.Subscribe(this);
                         tempChatroom.RegisteredUsers.Add(this.userID);
-                        MessageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom has been created" }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom has been created" });
                         SendChatroomList();
                         SendChatHistory(tempChatroom.chatroomID);
                      }
                      else
                      {
-                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom name already taken" }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom name already taken" });
                      }
 
                      break;
@@ -137,19 +136,19 @@ namespace Server
                            {
                               tempChatroom2.Subscribe(this);
                               tempChatroom2.RegisteredUsers.Add(this.userID);
-                              MessageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom login succeded" }, networkStream);
+                              messageService.SendMessage(new Message { chatID = -1, command = "ACK", message = "Chatroom login succeded" });
                               SendChatroomList();
                               SendChatHistory(tempChatroom2.chatroomID);
                            }
                            else
                            {
-                              MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom login failed" }, networkStream);
+                              messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Chatroom login failed" });
                               break;
                            }
                         }
                      }
                      else
-                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Bad chatroom id" }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Bad chatroom id" });
 
                      break;
                   case "CLOSE":
@@ -160,8 +159,6 @@ namespace Server
                      return;
                   default:
                      Console.WriteLine("Incorrect Command: Message = " + incomingMsg.chatID + " : " + incomingMsg.command + " : " + incomingMsg.message);
-                     //a.message = DateTime.Now.ToString() + " : " +  username + " : " + a.message;
-                     //chatroomList.update(a);
                      break;
                }
 
@@ -188,7 +185,7 @@ namespace Server
       {
          bool ack = false;
          while (!ack)
-            ack = (MessageService.GetMessage(networkStream).command == "ACK");
+            ack = (messageService.GetMessage().command == "ACK");
          //TODO LATER: Request data from SQL server on this client and send messages to
 
          //this client's OnNext() function.
@@ -234,7 +231,7 @@ namespace Server
             UserService userService = new UserService();
             while (true)
             {
-               Message a = MessageService.GetMessage(networkStream);
+               Message a = messageService.GetMessage();
 
                if (a == null)
                   return false;
@@ -246,28 +243,28 @@ namespace Server
                      if (userService.CheckUsername(usernamePassword[0]))
                      {
                         if (!userService.RegisterUser(usernamePassword[0], usernamePassword[1]))
-                           MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed" }, networkStream);
+                           messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed" });
                      }
                      else
                      {
-                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is taken." }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is taken." });
                      }
-                     MessageService.SendMessage(new Message { chatID = -1, command = "SUCCESS", message = "Registration successful!" }, networkStream);
+                     messageService.SendMessage(new Message { chatID = -1, command = "SUCCESS", message = "Registration successful!" });
                      break;
                   case "LOGIN":
                      if (isLoggedIn(usernamePassword[0]))
                      {
-                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is already logged in." }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = usernamePassword[0] + " is already logged in." });
                      }
                      else if (0 <= (userID = userService.VerifyLogin(usernamePassword[0], usernamePassword[1])))//
                      {
                         username = usernamePassword[0];
                         Thread.CurrentThread.Name = username;
-                        MessageService.SendMessage(new Message { chatID = -1, command = "SUCCESS", message = "Login successful!" }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "SUCCESS", message = "Login successful!" });
                         return true;
                      }
                      else
-                        MessageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed. Username or password is incorrect." }, networkStream);
+                        messageService.SendMessage(new Message { chatID = -1, command = "EXCEPTION", message = "Login failed. Username or password is incorrect." });
                      if (0 >= 1)
                      {
 
@@ -342,7 +339,7 @@ namespace Server
       /// <param name="value">The information to send to the client.</param>
       public void OnNext(Message value)
       {
-         MessageService.SendMessage(value, networkStream);
+         messageService.SendMessage(value);
       }
 
       /// <summary>
@@ -370,7 +367,7 @@ namespace Server
 
          foreach (ChatroomLogic c in myChatrooms)
             list += c.chatroomID + "," + c.name + ",";
-         MessageService.SendMessage(new Message { chatID = -1, command = "CHATROOMLIST", message = list }, networkStream);
+         messageService.SendMessage(new Message { chatID = -1, command = "CHATROOMLIST", message = list });
       }
 
 

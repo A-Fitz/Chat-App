@@ -11,7 +11,7 @@ namespace Server
    /// Handles subscribing and unsubscribing observers from a chatroom.
    /// Also handles incoming messages and distributes it to all observers.
    /// </summary>
-   public class ChatroomLogic : System.IObservable<Message>, IDisposable
+   public class ChatroomLogic : System.IObservable<Message>
    {
       public static int numChatRoomsCreated { get; set; } = 0;
 
@@ -67,11 +67,6 @@ namespace Server
          return new Unsubscriber<Message>(observers, observer);
       }
 
-      //TODO had to add this because it broke
-      public void Dispose()
-      {
-         throw new NotImplementedException();
-      }
 
       /// <summary>
       /// When the user wants to unsubsribe from the chat,
