@@ -104,7 +104,7 @@ namespace Mock_UITests
                         {
                             chatID = 0,
                             command = "EXCEPTION",
-                            message = "Login failed. Username or password is incorrect."
+                            message = "Username taken."
                         }
                     }
                 );
@@ -114,7 +114,7 @@ namespace Mock_UITests
 
             //Assert
             Assert.AreEqual(result.command, "EXCEPTION");
-            Assert.AreEqual(result.message, "Login failed. Username or password is incorrect.");
+            Assert.AreEqual(result.message, "Username taken.");
         }
 
         [TestMethod]
@@ -136,7 +136,7 @@ namespace Mock_UITests
                 );
 
             //Act
-            var result = userService.RegisterUser("user", "password");
+            var result = userService.Login("user", "password");
 
             //Assert
             Assert.AreEqual(result.command, "EXCEPTION");

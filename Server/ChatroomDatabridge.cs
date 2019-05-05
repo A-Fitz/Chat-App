@@ -167,12 +167,13 @@ namespace Server
         /// <param name="chatid"></param>
         /// <param name="userid"></param>
         /// <param name="chatpw"></param>
-        public bool AddUser(int chatid, int userid, string chatpw)
+        public int AddUser(int chatid, int userid, string chatpw)
         {
             using (var connection = new OracleConnection(connectionString))
             {
                 try
                 {
+                    int success = -1;
                     connection.Open();
 
                     var command = connection.CreateCommand();
@@ -181,13 +182,16 @@ namespace Server
                     command.Parameters.Add("USER_ID", OracleDbType.Int32).Value = userid;
                     command.Parameters.Add("CHAT_ID", OracleDbType.Int32).Value = chatid;
                     command.Parameters.Add("CHATROOM_PASSWORD", OracleDbType.Varchar2).Value = chatpw;
+                    command.Parameters.Add("PASSED", OracleDbType.Int32).Direction = ParameterDirection.Output;
 
                     command.ExecuteNonQuery();
+                    success = (int)((Oracle.ManagedDataAccess.Types.OracleDecimal)command.Parameters["PASSED"].Value).Value;
+
                     connection.Close();
-                    return true;
+                    return success;
                 }
                 catch (Exception e)
-                { return false; }
+                { return -1; }
             }
         }
     }

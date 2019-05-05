@@ -71,7 +71,7 @@ namespace Server
       /// <param name="chatpw"></param>
       public bool AddUser(int chatid, int userid, string chatpw)
       {
-         return ChatroomDatabridge.AddUser(chatid, userid, chatpw);
+         return ChatroomDatabridge.AddUser(chatid, userid, chatpw) == 1;
       }
    }
 }
