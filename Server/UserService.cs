@@ -43,7 +43,7 @@ namespace Server
         /// <returns></returns>
         public int VerifyLogin(string username, string password)
         {
-            return UserDatabridge.GetUserHash(username) == password ? UserDatabridge.GetUserId(username) : 1;
+            return UserDatabridge.GetUserHash(username) == password ? UserDatabridge.GetUserId(username) : -1;
         }
     }
 }
