@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Linq;
 using System.Data;
+using Server.Enums;
 
 namespace Server
 {
@@ -21,7 +22,7 @@ namespace Server
    public class Program
    {
       public static int PORT = 12345;
-
+      private static int TEST_CLIENT = 795914;
       private static String HELP =
          "help       - Shows this documentation\n" +
          "exit       - Shuts down the entire server.\n" +
@@ -32,6 +33,8 @@ namespace Server
          "and saves.";
       private static string HELP_RESTART = 
          "Safely shutdown and startup the server while saving data.";
+      private static bool exit = false;
+      private static bool restart = true;
 
       /// <summary>
       /// Main entrypoint of the program. 
@@ -40,9 +43,6 @@ namespace Server
       /// <param name="args">Command line arguments</param>
       static void Main(string[] args)
       {
-
-
-         bool exit = false, restart = true;
          while (restart)
          {
             exit = false;
@@ -67,9 +67,9 @@ namespace Server
                chatroomList.addChat(mainRoom);
                chatroomList.addChat(mainRoom2);
                ChatroomList.chatroomServices.CreateChatroom(
-                  mainRoom.name, mainRoom.chatroomID, 795914, "pass", 0); 
+                  mainRoom.name, mainRoom.chatroomID, TEST_CLIENT, "pass", ChatType.MULTIPLE_USERS); 
                ChatroomList.chatroomServices.CreateChatroom(
-                  mainRoom2.name, mainRoom2.chatroomID, 795914, "pass", 0);
+                  mainRoom2.name, mainRoom2.chatroomID, TEST_CLIENT, "pass", ChatType.MULTIPLE_USERS);
             }
 
             TcpListener serverSocket 
@@ -82,35 +82,7 @@ namespace Server
             connectorThread.Start();
             while (!exit)
             {
-               string input = Console.In.ReadLine().Trim();
-               switch (input.ToLower())
-               {
-                  case "help":
-                     Console.Write(HELP);
-                     break;
-                  case "help exit":
-                  case "help shutdown":
-                     Console.WriteLine(HELP_EXIT);
-                     break;
-                  case "help restart":
-                     Console.WriteLine(HELP_RESTART);
-                     break;
-                  case "exit":
-                  case "shutdown":
-                     exit = true;
-                     restart = false;
-                     break;
-                  case "restart":
-                     exit = true;
-                     restart = true;
-                     break;
-                  default:
-                     Console.WriteLine(input 
-                        + " is not recognized as a command."
-                        +" Use ? or help for options.");
-                     break;
-
-               }
+               RespondToUserInput();
             }
             Console.WriteLine("Saving...");
             serverSocket.Stop();
@@ -125,6 +97,41 @@ namespace Server
             }
          }
       }
+
+      private static void RespondToUserInput()
+      {
+         string input = Console.In.ReadLine().Trim();
+         switch (input.ToLower())
+         {
+            case "help":
+               Console.Write(HELP);
+               break;
+            case "help exit":
+            case "help shutdown":
+               Console.WriteLine(HELP_EXIT);
+               break;
+            case "help restart":
+               Console.WriteLine(HELP_RESTART);
+               break;
+            case "exit":
+            case "shutdown":
+               exit = true;
+               restart = false;
+               break;
+            case "restart":
+               exit = true;
+               restart = true;
+               break;
+            default:
+               Console.WriteLine(input
+                  + " is not recognized as a command."
+                  + " Use ? or help for options.");
+               break;
+
+         }
+      }
+
+
 
 
       /// <summary>
