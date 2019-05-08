@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Configuration;
@@ -14,7 +10,7 @@ namespace Server
         string connectionString = ConfigurationManager.AppSettings["OracleConnectionString"];
 
         /// <summary>
-        /// 
+        /// Get chat history for a chatroom.
         /// </summary>
         /// <param name="chatroomID"></param>
         public DataTable ChatHistory(int chatroomID)
@@ -43,7 +39,7 @@ namespace Server
         }
 
         /// <summary>
-        /// 
+        /// Add Message into chat history.
         /// </summary>
         /// <param name="chatroomID"></param>
         /// <param name="msg"></param>
@@ -71,7 +67,7 @@ namespace Server
         }
 
         /// <summary>
-        /// 
+        /// Creates a chatroom and adds the user into the new chatroom. It is setup to allow for direct messages 
         /// </summary>
         /// <param name="chatid"></param>
         /// <param name="userid"></param>
@@ -104,7 +100,7 @@ namespace Server
         }
 
         /// <summary>
-        /// 
+        /// Calls Sproc to get all users(userid) in a chatroom
         /// </summary>
         /// <param name="chatid"></param>
         /// <returns></returns>
@@ -134,7 +130,7 @@ namespace Server
         }
 
         /// <summary>
-        /// 
+        /// Calls sproc to get all chatrooms.
         /// </summary>
         /// <returns></returns>
         public DataTable GetAllChatrooms()
@@ -162,7 +158,7 @@ namespace Server
         }
 
         /// <summary>
-        /// 
+        /// Calls Sproc in database to add a user to the specified chatroom.
         /// </summary>
         /// <param name="chatid"></param>
         /// <param name="userid"></param>

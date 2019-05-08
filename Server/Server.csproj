@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatroomDatabridge.cs" />
+    <Compile Include="Databridges\ChatroomDatabridge.cs" />
     <Compile Include="Enums\ChatType.cs" />
     <Compile Include="Models\ChatroomList.cs" />
     <Compile Include="ChatroomLogic.cs" />
@@ -59,7 +59,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Message.cs" />
-    <Compile Include="UserDatabridge.cs" />
+    <Compile Include="Databridges\UserDatabridge.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

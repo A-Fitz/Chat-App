@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Configuration;
@@ -56,7 +52,7 @@ namespace Server
         }
 
         /// <summary>
-        /// 
+        /// Calls sproc to get userid corresponding to the given username.
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
