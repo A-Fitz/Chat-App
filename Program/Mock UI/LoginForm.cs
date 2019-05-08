@@ -91,7 +91,7 @@ namespace ChatApp
          }
          else
          {
-            System.Windows.Forms.MessageBox.Show(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername));
+            setLoginStatus(EnumExtensions.GetEnumDescription(EnumUserConnectionExceptions.invalidUsername));
          }
 
       }
