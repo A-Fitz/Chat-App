@@ -54,6 +54,7 @@
          // 
          // messageField
          // 
+         this.messageField.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.messageField.Location = new System.Drawing.Point(208, 484);
          this.messageField.Multiline = true;
          this.messageField.Name = "messageField";
@@ -64,24 +65,29 @@
          // 
          // chatroomListBox
          // 
+         this.chatroomListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.chatroomListBox.FormattingEnabled = true;
+         this.chatroomListBox.ItemHeight = 16;
          this.chatroomListBox.Location = new System.Drawing.Point(10, 109);
          this.chatroomListBox.Name = "chatroomListBox";
-         this.chatroomListBox.Size = new System.Drawing.Size(117, 238);
+         this.chatroomListBox.Size = new System.Drawing.Size(176, 228);
          this.chatroomListBox.TabIndex = 2;
          this.chatroomListBox.SelectedIndexChanged += new System.EventHandler(this.chatroomListBox_SelectedIndexChanged);
          // 
          // userListBox
          // 
+         this.userListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.userListBox.FormattingEnabled = true;
+         this.userListBox.ItemHeight = 16;
          this.userListBox.Location = new System.Drawing.Point(10, 407);
          this.userListBox.Name = "userListBox";
-         this.userListBox.Size = new System.Drawing.Size(117, 225);
+         this.userListBox.Size = new System.Drawing.Size(176, 212);
          this.userListBox.TabIndex = 6;
          // 
          // chatListBox
          // 
          this.chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+         this.chatListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.chatListBox.FormattingEnabled = true;
          this.chatListBox.Location = new System.Drawing.Point(208, 93);
          this.chatListBox.Name = "chatListBox";
@@ -147,7 +153,7 @@
             this.lightToolStripMenuItem,
             this.darkToolStripMenuItem});
          this.visualPreferencesToolStripMenuItem.Name = "visualPreferencesToolStripMenuItem";
-         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+         this.visualPreferencesToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
          this.visualPreferencesToolStripMenuItem.Text = "Theme";
          // 
          // lightToolStripMenuItem
@@ -208,7 +214,7 @@
          this.subscribeChatroomBtn.BackColor = System.Drawing.Color.Transparent;
          this.subscribeChatroomBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
          this.subscribeChatroomBtn.Image = global::Mock_UI.Properties.Resources.AddScreen_16x;
-         this.subscribeChatroomBtn.Location = new System.Drawing.Point(104, 348);
+         this.subscribeChatroomBtn.Location = new System.Drawing.Point(163, 348);
          this.subscribeChatroomBtn.Name = "subscribeChatroomBtn";
          this.subscribeChatroomBtn.Size = new System.Drawing.Size(23, 23);
          this.subscribeChatroomBtn.TabIndex = 17;
@@ -221,7 +227,7 @@
          this.newChatroomBtn.BackColor = System.Drawing.Color.Transparent;
          this.newChatroomBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
          this.newChatroomBtn.Image = global::Mock_UI.Properties.Resources.NewWindow_16x;
-         this.newChatroomBtn.Location = new System.Drawing.Point(80, 348);
+         this.newChatroomBtn.Location = new System.Drawing.Point(139, 348);
          this.newChatroomBtn.Name = "newChatroomBtn";
          this.newChatroomBtn.Size = new System.Drawing.Size(23, 23);
          this.newChatroomBtn.TabIndex = 16;
