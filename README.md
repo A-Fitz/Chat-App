@@ -10,9 +10,9 @@ design theme, along with a dark mode and light mode.
 ![Main menu dark theme](Documents/screenshots/main_dark.png)
 ![Main menu light theme](Documents/screenshots/main_light.png)
 
-![Client class diagram](Documents/Client Class Diagram.png)
-![Server class diagram](Documents/Server Class Diagram.png)
-![Database diagram](Documents/Database Diagram.png)
+![Client class diagram](Documents/Client&#32;Class&#32;Diagram.png)
+![Server class diagram](Documents/Server&#32;Class Diagram.png)
+![Database diagram](Documents/Database&#32;Diagram.png)
 
 ## Before running the project
 
