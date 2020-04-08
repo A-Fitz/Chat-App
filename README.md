@@ -2,7 +2,17 @@
 
 SE3330 Team NullReferenceException
 
-Our project is a chat app that uses a server and a client to connect users and allow them to talk to each other.
+Our project is a chat app that uses a server and a client to connect users and allow them to talk to each other. The server 
+uses a relational database to store user login information (SHA1 password hashing) as well as persistant chatroom information.
+Users have the ability to create public and private chatrooms and are notified of new messages. The program features a material 
+design theme, along with a dark mode and light mode.
+
+![Main menu dark theme](Documents/screenshots/main_dark.png)
+![Main menu light theme](Documents/screenshots/main_light.png)
+
+![Client class diagram](Documents/Client Class Diagram.png)
+![Server class diagram](Documents/Server Class Diagram.png)
+![Database diagram](Documents/Database Diagram.png)
 
 ## Before running the project
 
